@@ -1,0 +1,101 @@
+﻿ACCION Corte_TALLER2 ES //Brabo,Leonardo
+    AMBIENTE
+
+    FECHA = REGISTRO
+        AA:N(4);
+        MM: 1..12;
+        DD: 1..31;
+    FR;
+
+    MOTOS = REGISTRO
+        MARCA : AN(15);
+        MODELO : N(4);
+        AÑO_FABRICACION : N(4);
+        PATENTE : AN(6);
+        FECHA_REP : FECHA;
+        TIPO_REP: ("MG","MP","MC");
+        COSTO: N(8);
+    FR;
+    AMOTOS : Archivo de MOTOS ordenado por MARCA,MODELO,AÑO_FABRICACION,PATENTE,FECHA_REP;
+    RMOTOS : MOTOS;
+
+    TOTMOD_CANT, TOTMOD_COSTO,TOTAÑO_CANT, TOTAÑO_COSTO, TOTMAR_CANT, TOTMAR_COSTO,
+    R_MARCA: AN(15);
+    R_MODELO: AN(15);
+    R_AÑOFA: N(4);
+    MOSTRARMAYOR:AN(15);
+    MAYOR: N(8)
+    MARCA_DADA: AN(15);
+
+    SUBACCION CORTE_AÑOFA ES    
+        ESC("Para el año de fabricacion:", R_AÑOFA);
+        ESC("la cantidad de reparaciones es,"TOTAÑO_CANT)
+        ESC("El costo de las reparaciones es:", TOTAÑO_COSTO);
+        TOTMOD_CANT:= TOTMOD_CANT + TOTAÑO_CANT;
+        TOTMOD_COSTO:= TOTMOD_COSTO + TOTAÑO_COSTO;
+        R_AÑOFA:= RMOTOS.AÑO_FABRICACION;
+        TOTAÑO_CANT:= 0;
+        TOTAÑO_COSTO:= 0;
+    FSUB;
+    SUBACCION CORTE_MODELO ES
+        CORTE_AÑOFA;
+        ESC("Para el modelo", R_MODELO);
+        ESC("La cantidad de reparaciones es,"TOTMOD_CANT);
+        ESC("El costo total de las reparaciones es", TOTMOD_COSTO);
+        TOTMAR_CANT:= TOTMAR_CANT + TOTMOD_CANT;
+        TOTMAR_COSTO:= TOTMAR_COSTO + TOTMOD_COSTO;
+        SI TOTMOD_CANT > MAYOR ENTONCES
+            MAYOR:= TOTMOD_CANT
+            MOSTRARMAYOR:= R_MODELO;
+        FS;
+        R_MODELO:= RMOTOS.MODELO;
+        TOTMOD_CANT:=0;
+        TOTMOD_COSTO:= 0;
+    FSUB;
+
+    PROCESO
+    ABRIR E/(AMOTOS) LEER(AMOTOS,RMOTOS);
+    TOTMOD_CANT:=0; TOTMOD_COSTO:=0;
+    TOTAÑO_CANT:=0; TOTAÑO_COSTO:=0; 
+    TOTMAR_CANT:=0; TOTMAR_COSTO:=0;
+    MAYOR:=0;
+    ESC("Ingrese una marca de moto:");
+    LEER(MARCA_DADA);
+    MIENTRAS (RMOTOS.MARCA <> MARCA_DADA) HACER
+        LEER(AMOTOS,RMOTOS);
+    FM;
+    R_MARCA:= RMOTOS.MARCA;
+    R_MODELO:= RMOTOS.MODELO;
+    R_AÑOFA:= RMOTOS.AÑO_FABRICACION;
+    MIENTRAS NFDA(AMOTOS) v (R_MARCA = RMOTOS.MARCA) HACER
+        SI R_MODELO <> RMOTOS.MODELO ENTONCES
+            CORTE_MODELO;
+        SINO
+            SI R_AÑOFA <> RMOTOS.AÑO_FABRICACION ENTONCES
+                CORTE_AÑOFA;
+            FS;
+        FS;
+        SI RMOTOS.TIPO_REP = "MC" ENTONCES
+            TOTAÑO_CANT:= TOTMOD_CANT + 1;
+            TOTAÑO_COSTO:= TOTMOD_COSTO + RMOTOS.COSTO;
+        FS
+        LEER(AMOTOS,RMOTOS);
+    FM;
+    CORTE_MODELO;
+    ESC(" para la marca", R_MARCA);
+    ESC("El total de reparaciones fue:", TOTMAR_CANT);
+    ESC("El costo total de las reparaciones fue:", TOTMAR_COSTO);
+    ESC("El modelo con mayor cantidad de reparaciones por mantenimiento correctivo fue:", MOSTRARMAYOR);
+    CERRAR(AMOTOS);
+Fin_Accion.
+
+
+
+
+
+
+
+
+
+
+    

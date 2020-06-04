@@ -1,0 +1,97 @@
+﻿ACCION Corte_Farmacia ES //Brabo,Leonardo
+
+    AMBIENTE
+
+    FECHA = REGISTRO 
+        AA: N(4);
+        MM:1..12;
+        DD: 1..31;
+    FR;
+
+    FARMACIA = REGISTRO
+        LABORATORIO: N(3);
+        CODIGO_PROD: N(4);
+        LOTE: AN(5);
+        DESCRIPCION: AN(150);
+        CANTIDAD: N(4);
+        FECHA_VENCIMIENTO: FECHA;
+    FR;
+    
+    AFARMA: Archivo de FARMACIA ordenado por LABORATORIO,CODIGO_PROD, LOTE;
+    RFARMA: FARMACIA;
+
+    SALIDA = REGISTRO
+        LABORATORIO: N(3);
+        CODIGO_PROD: N(4);
+        LOTE: AN(5);
+        CANTIDAD: N(4);
+        FECHA_VENCIMIENTO: FECHA;
+    FR;
+
+    ASALIDA: Archivo de SALIDA
+    RSALIDA: SALIDA;
+
+    FECHA_DADA: FECHA;
+    TOTGEN, TOTLAB, TOTCOD,MAYOR: N(6);
+    R_LAB,MOSTRARMAYOR: N(3);
+    R_CODPROD: N(4);
+    
+
+    SUBACCION CORTE_CODPROD ES
+        ESC("Para el producto:",R_CODPROD)
+        ESC("La cantidad de productos vencidos es", TOTCOD);
+        TOTLAB:= TOTLAB + TOTCOD;
+        R_CODPROD:= RFARMA.CODIGO_PROD;
+        TOTCOD:=0;
+    FSUB;
+
+    SUBACCION CORTE_LAB ES
+        ESC("Para el laboratorio:", R_LAB);
+        ESC("La cantidad de productos vencidos es:", TOTLAB);
+        TOTGEN:= TOTGEN + TOTLAB;
+        SI TOTLAB > MAYOR ENTONCES
+            MOSTRARMAYOR:= R_LAB;
+            MAYOR:= TOTLAB;
+        FS;
+        R_LAB:= RFARMA.LABORATORIO;
+        TOTLAB:=0;
+    FSUB;
+
+
+    PROCESO
+    ABRIR E/(AFARMA); ABRIR S/(ASALIDA); LEER(AFARMA,RFARMA);
+
+    R_LAB:= RFARMA.LABORATORIO; R_CODPROD:= RFARMA.CODIGO_PROD;
+    TOTGEN:=0; TOTLAB:=0; TOTCOD:=0; MAYOR:=0;
+
+    ESC("Ingrese la fecha actual en año,mes,dia");
+    LEER(FECHA_DADA.AA);LEER(FECHA_DADA.MM);LEER(FECHA_DADA.DD);
+
+    MIENTRAS NFDA(AFARMA) HACER
+        SI R_LAB <> RFARMA.LABORATORIO ENTONCES
+            CORTE_LAB;
+        SINO 
+            SI R_CODPROD <> RFARMA.CODIGO_PROD ENTONCES
+                CORTE_CODPROD;
+            FS;
+        FS;
+        SI RFARMA.FECHA_VENCIMIENTO < FECHA_DADA ENTONCES
+            TOTCOD:= TOTCOD + 1;
+            RSALIDA.LABORATORIO:= R_LAB;
+            RSALIDA.CODIGO_PROD:= R_CODPROD
+            RSALIDA.LOTE:= RFARMA.LOTE;
+            RSALIDA.CANTIDAD:= RFARMA.CANTIDAD;
+            RSALIDA.FECHA_VENCIMIENTO:= RFARMA.FECHA_VENCIMIENTO;
+            ESC(ASALIDA,RSALIDA);
+        FS;
+        LEER(AFARMA,RFARMA);
+    FM;
+    CORTE_LAB;
+    ESC("El total general de productos vencidos es:",TOTGEN);
+    ESC("El laboratorio con mayor cantidad de productos vencidos fue", MOSTRARMAYOR);
+    CERRAR(AFARMA); CERRAR(ASALIDA);
+Fin_Accion.
+
+
+
+

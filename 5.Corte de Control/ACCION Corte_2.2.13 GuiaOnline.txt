@@ -1,0 +1,118 @@
+ACCION Corte_2.2.13 ES //Leonardo,Brabo
+    AMBIENTE
+
+    REPARACIONES = REGISTRO
+        COD_SUCURSAL: N(3);
+        MARCA: AN(15);
+        MODELO: N(4);
+        COD_TRAGAMONEDAS: N(5);
+        FECHA_REPARACION = REGISTRO
+            AA: N(4);
+            MM: 1..12;
+            DD: 1..31;
+        FR;
+        COSTO_REPARACION: N(6);
+    FR;
+    ARCH_REP: Archivo de REPARACIONES ordenado por COD_SUCURSAL,MARCA,MODELO,COD_TRAGAMONEDAS;
+    REG_REP: REPARACIONES;
+    R_CODSUC: N(3);
+    R_MAR: AN(15);
+    R_MOD: N(4);
+    R_CODTRA :N(5);
+    TOTCODTRA_COSTO, TOTCODTRA_CANT : N(5)
+    TOTMOD_COSTO, TOTMOD_CANT: N(5)
+    TOTMAR_COSTO, TOTMOD_CANT : N(5)
+    TOTCODSUC_COSTO, TOTCODSUC_CANT : N(5)
+    TOTGEN_COSTO, TOTGEN_CANT : N(5)
+
+    SUBACCION CORTE_TRAGAMONEDAS ES 
+        ESC("Para el tragamonedas de codigo:", R_CODTRA);
+        ESC("La cantidad de reparaciones es de:",TOTCODTRA_CANT);
+        ESC("El costo de las reparaciones es:", TOTCODTRA_COSTO);
+        TOTMOD_CANT:= TOTMOD_CANT + TOTCODTRA_CANT;
+        TOTMOD_COSTO:= TOTMOD_CANT + TOTCODTRA_COSTO;
+        R_CODTRA:= REG_REP.COD_TRAGAMONEDAS;
+        TOTCODTRA_CANT:= 0;
+        TOTCODTRA_COSTO:= 0;
+    FSUB;
+    SUBACCION CORTE_MODELO ES
+        CORTE_TRAGAMONEDAS;   
+        ESC("Para el modelo:", R_MOD);
+        ESC("La cantidad de reparacion es de:", TOTMOD_CANT)
+        ESC("El costo de las reparaciones es de:", TOTMOD_COSTO);
+        TOTMAR_CANT:= TOTMAR_CANT + TOTMOD_CANT;
+        TOTMAR_COSTO:= TOTMAR_COSTO + TOTMOD_COSTO;
+        R_MOD:= REG_REP.MODELO;
+        TOTMOD_CANT:= 0;
+        TOTMOD_COSTO:= 0;
+    FSUB;
+    SUBACCION CORTE_MARCA ES
+        CORTE_MODELOS;
+        ESC("Para la marca:",R_MAR);
+        ESC("La cantidad de reparaciones es de:,"TOTMAR_CANT);
+        ESC("El costo de las reparaciones es de :", TOTMAR_COSTO);
+        TOTCODSUC_CANT:=TOTCODSUC_CANT + TOTMAR_CANT;
+        TOTOCODSUC_COSTO:= TOTCODSUC_COSTO + TOTMAR_COSTO;
+        R_MAR:= REG_REP.MARCA;
+        TOTMAR_CANT:= 0;
+        TOTMAR_COSTO:= 0;
+    FSUB;
+
+    SUBACCION CORTE_SUCURSAL ES 
+        CORTE_MARCA;
+        ESC("Para la sucursal:", R_CODSUC);
+        ESC("La cantidad de reparaciones es de:", TOTCODSUC_CANT);
+        ESC("El costo de las reparaciones es:", TOTOCODSUC_COSTO);
+        TOTGEN_CANT:= TOTGEN_CANT + TOTCODSUC_CANT;
+        TOTGEN_COSTO:= TOTGEN_COSTO + TOTCODSUC_COSTO;
+        R_CODSUC:= REG_REP.COD_SUCURSAL;
+        TOTCODSUC:= 0;
+        TOTCODSUC:= 0;
+    FSUB;
+
+    PROCESO
+    ABRIR E/(ARCH_REP); LEER(ARCH_REP,REG_REP);
+    R_CODSUC:= REG_REP.COD_SUCURSAL;
+    R_MAR:= REG_REP.MARCA;
+    R_MOD:= REG_REP.MODELO;
+    R_CODTRA:= REG_REP.COD_TRAGAMONEDAS;
+    TOTCODTRA_COSTO:= 0; TOTCODTRA_CANT:= 0;
+    TOTMOD_COSTO:= 0; TOTMOD_CANT:= 0;
+    TOTMAR_COSTO:= 0;TOTMOD_CANT:= 0;
+    TOTCODSUC_COSTO:= 0;TOTCODSUC_CANT:= 0;
+    TOTGEN_COSTO:= 0; TOTGEN_CANT:= 0;
+    MIENTRAS NFDA(ARCH_REP) HACER
+        SI R_CODSUC <> REG_REP.COD_SUCURSAL ENTONCES
+            CORTE_SUCURSAL;
+        SINO    
+            SI R_MAR <> REG_REP.MARCA ENTONCES  
+                CORTE_MARCA;
+            SINO
+                SI R_MOD <> REG_REP.MODELO ENTONCES
+                    CORTE_MODELO;
+                SINO
+                    SI R_CODTRA <> REG_REP.COD_TRAGAMONEDAS ENTONCES
+                        CORTE_TRAGAMONEDAS;
+                    FS;
+                FS;
+            FS;
+        FS;
+        TOTCODTRA_CANT:= TOTCODTRA_CANT + 1;
+        TOTCODTRA_COSTO:= TOTCODTRA_COSTO + REG_REP.COSTO_REPARACION;
+        LEER(ARCH_REP,REG_REP);
+    FM;
+    CORTE_SUCURSAL;
+    ESC("total general de reparaciones:", TOTGEN_CANT);
+    ESC("costo total de las reparaciones:", TOTGEN_COSTO);
+    CERRAR(ARCH_REP);
+Fin_Accion.
+
+    
+    
+
+
+    
+
+
+    
+    

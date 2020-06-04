@@ -1,0 +1,83 @@
+﻿ACCION Corte_2.2.15 ES //Brabo,Leonardo
+
+    AMBIENTE
+
+    ALUMNOS = REGISTRO 
+        ESCUELA: N(6);
+        AÑO: N(4);
+        DIVISION: N(1);
+        NOMBRE: AN(30);
+        CANT_INASISTENCIAS: N(3);
+    FR;
+
+    ARCHIVO1: Archivo de ALUMNOS ordenado por ESCUELA,AÑO,DIVISION;
+    REGISTRO1: ALUMNOS;
+    R_ESCUELA: N(6);
+    R_AÑO: N(4);
+    R_DIVISION: N(1);
+    LIB,REGU, TOTDIV, TOTAÑO, TOTESC, LIBGEN,TOTINA, CANTDIAS,TOTGEN: N(5);
+
+    SUBACCION CORTE_DIVISION ES
+        ESC("Para la division:", R_DIVISION);
+        ESC("El total de alumnos es de:", TOTDIV);
+        TOTAÑO:= TOTAÑO + TOTDIV;
+        R_DIVISION:= REGISTRO1.DIVISION;
+        TOTDIV:= 0;
+    FSUB;
+    SUBACCION CORTE_AÑO ES
+        CORTE_DIVISION;
+        ESC("Para el año:", R_AÑO)
+        ESC("el total de alumnos es:", TOTAÑO);
+        ESC("El total de alumnos libres es:",LIB);
+        ESC("El total de alumnos regulares es:", REGU);
+        TOTESC:= TOTESC + TOTAÑO;
+        LIBGEN:= LIBGEN + LIB;
+        R_AÑO:REGISTRO1.AÑO;
+        TOTAÑO:=0;
+        LIB:=0;
+        REGU:=0;
+    FSUB;
+    SUBACCION CORTE_ESCUELA ES  
+        CORTE_AÑO;
+        TOTGEN:= TOTGEN + TOTESC;
+        R_ESCUELA:= REGISTRO1.ESCUELA;
+        TOTESC:= 0;
+    FSUB;
+
+    PROCESO
+
+    ABRIR E/(ARCHIVO1); LEER(ARCHIVO1,REGISTRO1);
+    R_ESCUELA:= REGISTRO1.ESCUELA;
+    R_AÑO:= REGISTRO1.AÑO;
+    R_DIVISION:= REGISTRO1.DIVISION;
+    LIB,REGU:=0; TOTDIV:=0; TOTAÑO:=0; TOTESC:=0; 
+    LIBGEN:=0;TOTINA:=0;
+    ESC("Ingrese cantidad de dias de clase:");
+    LEER(CANTDIAS);
+    MIENTRAS NFDA(ARCHIVO1) HACER
+        SI R_ESCUELA <> REGISTRO1.ESCUELA ENTONCES
+            CORTE_ESCUELA;
+        SINO 
+            SI R_AÑO <> REGISTRO1.AÑO ENTONCES
+                CORTE_AÑO;
+            SINO    
+                SI R_DIVISION <> REGISTRO1.DIVISION ENTONCES
+                    CORTE_DIVISION;
+                FS;
+            FS;
+        FS;
+        TOTDIV:=TOTDIV + 1;
+        TOTINA:= TOTINA + REGISTRO1.CANT_INASISTENCIAS;
+        SI ((REGISTRO1.CANT_INASISTENCIAS *100)/ CANTDIAS) > 20 ENTONCES
+            LIB:= LIB + 1;
+        SINO  
+            REGU:= REGU + 1;
+        FS;
+        LEER(ARCHIVO1,REGISTRO1);
+    FM
+    CORTE_ESCUELA;
+    ESC("El total de alumnos de todas las escuelas es de:", TOTGEN);
+    ESC("El porcentaje de alumnos libres es de:", (LIBGEN *100)/TOTGEN);
+    ESC("El promedio de inasistencias por alumnos es de :", TOTINA/TOTGEN);
+    CERRAR(ARCHIVO1);
+Fin_Accion.

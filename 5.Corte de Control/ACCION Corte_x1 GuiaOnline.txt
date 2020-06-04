@@ -1,0 +1,114 @@
+ACCION Poder_Judicial ES //Brabo,Leonardo
+    AMBIENTE
+
+    FECHA = REGISTRO    
+        AA:N(4);
+        MM: 1..12;
+        DD: 1..31;
+    FR;
+
+    EXPEDIENTES = REGISTRO
+        JURIDICCION : 1..6;
+        FUERO: ("P","C","F","A");
+        NRO_EXPED: N(8);
+        CARATULA: N(8);
+        FECHA_INGRESO: FECHA;
+        ESTADO : 1..3;
+    FR;
+    ARCHIVO1 : Archivo de EXPENDIENTES ordenado por JURIDICCION, FUERO, NRO_EXPED;
+    REGISTRO1: EXPEDIENTES;
+
+    SALIDA = REGISTRO 
+        JURIDICCION : 1..6;
+        FUERO: ("P","C","F","A");
+        CANT_INICIADOS: N(4);
+        CANT_EP: N(4);
+        CANT_FIN : N(4);
+    FR;
+    ARCHIVO2 : Archivo de SALIDA
+    REGISTRO2 : SALIDA;
+
+    RES_JURIDICCION: 1..6;
+    RES_FUERO: ("P","C","F","A");
+
+    TOTGEN_FIN, TOTGE_ING, TOTJUR_FIN; TOTJUR_ING, TOTFUE_FIN, TOTFUE_ING: N(4);
+    INICIADOS,ENPROCESO: N(4);
+
+    SUBACCION CORTE_FUERO ES
+        ESC("Para el fuero:", RES_FUERO);
+        ESC("Total de" expedientes ingresados:",TOTFUE_ING);
+        ESC("Total de expedientes finalizados", TOTFUE_FIN);
+        ESC("El porcentaje de finalizados sobre el total ingresado es:", (TOTFUE_FIN*100)DIV TOTFUE_ING,"%");
+        
+        REGISTRO2.JURIDICCION:= RES_JURIDICCION;
+        REGISTRO2.FUERO:= RES_FUERO;
+        REGISTRO2.CANT_INICIADOS:= INICIADOS;
+        REGISTRO2.CANT_EP:= ENPROCESO;
+        REGISTRO2.CANT_FIN:= TOTFUE_FIN;
+        ESCRIBIR(ARCHIVO2,REGISTRO2);
+
+        TOTJUR_ING:=TOTJUR_ING +TOTFUE_ING;
+        TOTJUR_FIN:= TOTJUR_FIN + TOTFUE_FIN;
+
+        RES_FUERO:= REGISTRO1.FUERO;
+        TOTFUE_FIN:= 0;
+        TOTFUE_ING:= 0;
+        INCIADOS:= 0;
+        ENPROCESO:=0;
+    FSUB
+
+    SUBACCION CORTE_JURIDICCION ES
+        CORTE_FUERO;    
+        ESC("Para la juridiccion:", RES_JURIDICCION);
+        ESC("Total de" expedientes ingresados:",TOTJUR_ING);
+        ESC("Total de expedientes finalizados", TOTJUR_FIN);
+        ESC("El porcentaje de finalizados sobre el total ingresado es:", (TOTJUR_FIN*100)DIV TOTJUR_ING,"%");
+        TOTGEN_ING:=TOTGEN_ING +TOTJUR_ING;
+        TOTGEN_FIN:= TOTGEN_FIN + TOTJUR_FIN;
+        RES_JURIDICCION:= REGISTRO1.JURIDICCION;
+        TOTJUR_ING:= 0;
+        TOTJUR_FIN:= 0;
+    FSUB;
+
+
+    PROCESO
+
+    ABRIR E/(ARCHIVO1); ABRIR S/(ARCHIVO2);
+    LEER (ARCHIVO1, REGISTRO1);
+    RES_JURIDICCION:= REGISTRO1.JURIDICCION;
+    RES_FUERO:= REGISTRO1.FUERO;
+    TOTGEN_FIN:= 0; TOTGE_ING:=0; 
+    TOTJUR_FIN:=0; TOTJUR_ING:=0; 
+    TOTFUE_FIN:=0; TOTFUE_ING:=0;
+    INICIADOS:=0; ENPROCESO:=0;
+    ESC("Para el fuero Penal:")
+    ESC("|NRO_EXPED|   |CARATULA| |FECHA_INGRESO| |ESTADO|");
+    MIENTRAS NFDA(ARCHIVO1) HACER
+        SI RES_JURIDICCION <> REGISTRO1.JURIDICCION ENTONCES
+            CORTE_JURIDICCION;
+        SINO 
+            SI RES_FUERO <> REGISTRO1.FUERO ENTONCES
+                CORTE_FUERO;
+            FS;
+        FS;
+        
+        SI REGISTRO1.FUERO = "P" ENTONCES   
+            ESC(REGISTRO1.NRO_EXPED, REGISTRO1.CARATULA, REGISTRO1.DD,REGISTRO1.MM,REGISTRO1.AA, REGISTRO1.ESTADO );
+        FS;
+        TOTFUE_ING:= TOTFUE_ING + 1;
+        SEGUN REGISTRO1.ESTADO HACER
+            1: INCIADOS:= INCIADOS + 1
+            2: ENPROCESO := ENPROCESO +1;
+            3: TOTFUE_FIN:= TOTFUE_FIN +1;
+        FS;
+        LEER(ARCHIVO1,REGISTRO1);
+    FM;
+    CORTE_JURIDICCION
+    CERRAR(ARCHIVO1); CERRAR(ARCHIVO2);
+    ESC("Total de" expedientes ingresados:",TOTGEN_ING);
+    ESC("Total de  expedientes finalizados", TOTGEN_FIN);
+    ESC("El porcentaje de finalizados sobre el total ingresado es:", (TOTGEN_FIN*100)DIV TOTGEN_ING,"%");
+Fin_Accion.
+    
+
+            

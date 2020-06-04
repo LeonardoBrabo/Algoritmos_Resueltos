@@ -1,0 +1,99 @@
+﻿ACCION Corte_TALLER ES //Brabo, Leonardo
+    
+    AMBIENTE
+
+    FECHA = REGISTRO
+        AA:N(4);
+        MM: 1..12;
+        DD: 1..31;
+    FR;
+
+    MOTOS = REGISTRO
+        MARCA : AN(15);
+        MODELO : N(4);
+        AÑO_FABRICACION : N(4);
+        PATENTE : AN(6);
+        FECHA_REP : FECHA;
+        TIPO_REP: ("MG","MP","MC");
+        COSTO: N(8);
+    FR;
+    AMOTOS : Archivo de MOTOS ordenado por MARCA,MODELO,AÑO_FABRICACION,PATENTE,FECHA_REP;
+    RMOTOS : MOTOS;
+
+    R_MARCA: AN(15);
+    R_MODELO: N(4);
+   
+    TOTMAR_CANT,TOTMAR_COSTO,TOTMOD_CANT,TOTMOD_COSTO: N(8);
+    TOTMG,TOTMP,TOTMC: N(8);
+
+    FUNCION MAYOR(A,B,C : Real): Alfanumerico ES
+        SI (A > B) y (A > C) ENTONCES
+            MAYOR:= "Mantenimiento por Garantia";
+        SINO
+            SI B > A Y B > C ENTONCES
+                MAYOR := "Mantenimiento Preventivo";
+            SINO
+                MAYOR:= "Mantenimiento correctivo";
+            FS;
+        FS;
+    FF;
+
+    SUBACCION CORTE_MODELO ES   
+        ESC("Para el modelo:",R_MODELO);
+        ESC("Cantidad de reparaciones:", TOTMOD_CANT);
+        ESC("Costo total de las reparaciones:", TOTMOD_COSTO);
+        TOTMAR_CANT:= TOTMAR_CANT + TOTMOD_CANT;
+        TOTMAR_COSTO:= TOTMAR_COSTO + TOTMOD_COSTO;
+        R_MODELO:= RMOTOS.MODELO;
+        TOTMOD_CANT:=0;
+        TOTMOD_COSTO:= 0;
+    FS;
+
+    SUBACCION CORTE_MARCA ES
+        CORTE_MODELO;
+        ESC("Para la marca:", R_MARCA);
+        ESC("Cantidad de reparaciones:", TOTMAR_CANT);
+        ESC("Costo total de las reparaciones:", TOTMAR_COSTO);
+        R_MARCA:= RMOTOS.MARCA;
+        TOTMAR_CANT:= 0;
+        TOTMAR_COSTO:= 0;
+    FS;
+
+    PROCESO
+
+    ABRIR E/(AMOTOS); LEER(AMOTOS,RMOTOS);
+    R_MARCA:= RMOTOS.MARCA;
+    R_MODELO:= RMOTOS.MODELO;
+    TOTMAR_CANT:=0;TOTMAR_COSTO:=0;TOTMOD_CANT:=0;TOTMOD_COSTO:=0;
+    TOTMG:=0;TOTMP:=0;TOTMC:=0;
+    MIENTRAS NFDA(AMOTOS) HACER
+        SI R_MARCA <> RMOTOS.MARCAS ENTONCES
+            CORTE_MARCA;
+        SINO
+            SI R_MODELO <> RMOTOS.MODELO ENTONCES
+                CORTE_MODELO;
+            FS;
+        FS;
+        TOTMOD_CANT:= TOTMOD_CANT + 1;
+        TOTMOD_COSTO := TOTMOD_COSTO + RMOTOS.COSTO
+        SEGUN RMOTOS.TIPO_REP HACER 
+            "MG": TOTMG:= TOTMG + RMOTOS.COSTO;
+            "MP": TOTMP:= TOTMP + RMOTOS.COSTO;
+            "MC": TOTMC:= TOTMC + RMOTOS.COSTO;
+        FS;
+        LEER(AMOTOS,RMOTOS);
+    FM;
+    CORTE_MARCA;  
+    ESC("el monto total para mantenimiento por garantias es:", TOTMG);
+    ESC("El monto total para el mantenimiento preventivo es:", TOTMP);
+    ESC("El monto total para el mantenimiento correctivo es:", TOTMC);
+    ESC("El que tuvo el mayor ingreso fue:",MAYOR(TOTMG,TOTMP,TOTMC));
+    CERRAR(AMOTOS);
+Fin_Accion.
+
+    
+
+
+
+   
+

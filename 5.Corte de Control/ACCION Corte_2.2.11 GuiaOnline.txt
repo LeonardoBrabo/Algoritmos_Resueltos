@@ -1,0 +1,75 @@
+ACCION Corte_2.2.11  ES //Brabo,Leonardo
+    AMBIENTE 
+
+    FACULTAD = REGISTRO
+        SEXO: ("F","M");
+        CARRERA : ("ISI","IEM","IQ");
+        NRO_LEGAJO:N(5);
+        FECHA_INGRESO = REGISTRO
+            AA:N(4);
+            MM: 1..12;
+            DD: 1..31;
+        FR;
+        TOTAL_MATERIAS_APROBADAS: N(2);
+    FR;
+    ARCHIVO1 : Archivo de Facultad ordenado por SEXO,CARRERA,NRO_LEGAJO;
+    REGISTRO1 : FACULTAD;
+
+    RES_SEXO: ("F","M");
+    RES_CARRERA:("ISI","IEM","IQ");
+    TOTS_MAS, TOTS_MEN, TOTC_MAS, TOTC_MEN,TOTG_MAS,TOTG_MEN: N(5)
+
+    SUBACCION CORTE_CARRERA ES  
+        ESC("Para la carrera :",RES_CARRERA);
+        ESC("El total de alumnos que ingresaron en el 2009 con mas de 20 materias aprobadas es ", TOTC_MAS);
+        ESC("El total de alumnos que ingresaron en el 2009 con menos de 20 materias aprobadas es:",TOTC_MEN);
+        TOTS_MAS := TOTS_MAS + TOTC_MAS;
+        TOTS_MEN := TOTS_MEN + TOTC_MEN;
+        RES_CARRERA: REGISTRO1.CARRERA;
+        TOTC_MAS:= 0;
+        TOTC_MEN:= 0;
+    FSUB;
+
+    SUBACCION CORTE_SEXO ES
+        CORTE_CARRERA; 
+        ESC ("Para el sexo:",RES_SEXO);
+        ESC("El total de alumnos que ingresaron en el 2009 con mas de 20 materias aprobadas es ", TOTS_MAS);
+        ESC("El total de alumnos que ingresaron en el 2009 con menos de 20 materias aprobadas es:",TOTS_MEN);
+        TOTG_MAS := TOTG_MAS + TOTS_MAS;
+        TOTG_MEN := TOTG_MEN + TOTS_MEN;
+        RES_SEXO: REGISTRO1.SEXO;
+        TOTS_MAS:= 0;
+        TOTS_MEN:= 0;
+    FR;
+
+    PROCESO
+    ABRIR E/(ARCHIVO1); LEER(ARCHIVO1,REGISTRO1);
+    RES_CARRERA:= REGISTRO1.CARRERA;
+    RES_SEXO:= REGISTRO1.SEXO;
+    TOTC_MAS:= 0; TOTC_MEN:=0; TOTS_GEN:=0; TOTS_MAS:=0; TOTS_MEN:=0; TOTG_MAS:=0; TOTG_MEN:=0;
+    MIENTRAS NFDA(ARCHIVO1) HACER
+        SI REGISTRO1.SEXO <> RES_SEXO ENTONCES
+            CORTE_SEXO
+        SINO 
+            SI REGISTRO1.CARRERA <> RES_CARRERA ENTONCES
+                CORTE_CARRERA;
+            FS;
+        FS;
+        SI REGISTRO1.FECHA_INGRESO.AA = 2009 ENTONCES   
+            SI REGISTRO1.TOTAL_MATERIAS_APROBADAS > 20 ENTONCES
+                TOTC_MAS:= TOTC_MAS + 1;
+            SINO
+                TOTC_MEN:= TOTC_MEN + 1;
+            FS;
+        FS;
+        LEER(ARCHIVO1,REGISTRO1);
+    FM;
+    CORTE_SEXO;
+    ESC("El total general de alumno que ingresaron en el 2009 con mas de 20 materias aprobadas es:", TOTG_MAS);
+    ESC("El total general de alumno que ingresaron en el 2009 con menos de 20 materias aprobadas es:", TOTG_MEN);
+    CERRAR(ARCHIVO1);
+FIN_ACCION.
+
+
+
+

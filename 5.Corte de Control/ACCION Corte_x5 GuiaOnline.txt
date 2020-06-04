@@ -1,0 +1,70 @@
+ACCION Corte_Ministerio ES //Brabo,Leonardo
+
+    AMBIENTE
+
+    FECHA = REGISTRO
+        AA: N(4);
+        MM: 1..12;
+        DD: 1..31;
+    FR;
+
+    CASOS = REGISTRO
+        COD_CIU: AN(4);
+        COD_HOSP: AN(4);
+        FCH_ANALISIS: FECHA
+        VERIFICADOS: N(3);
+        SOSPECHADOS: N(3);
+    FR;
+
+    ACASOS: Archivo de CASOS ordenado por COD_CIU,COD_HOSP,FCH_ANALISIS;
+    RCASOS: CASOS;
+
+    MAYOR,TOTH_VERIF, TOTH_SOS, TOTC_SOS: N(6);
+    
+    MOSTRARMAYOR,R_HOSPITAL,R_CIUDAD: AN(4)
+    
+    SUBACCION CORTE_HOSPITAL ES
+        ESC(R_CIUDAD, R_HOSPITAL, TOTH_VERIF, TOTH_SOS)
+        TOTC_SOS:= TOTC_SOS + TOTH_SOS;
+        R_HOSPITAL:= RCASOS.COD_HOSP;
+        TOTH_SOS:= 0;
+        TOTH_VERIF:= 0;
+    FSUB;
+
+    SUBACCION CORTE_CIUDAD ES
+        CORTE_HOSPITAL;
+        SI TOTC_SOS > MAYOR ENTONCES
+            MOSTRARMAYOR:= R_CIUDAD;
+            MAYOR:= TOTC_SOS;
+        FS;
+        R_CIUDAD:= RCASOS.COD_CIU;
+        TOTC_SOS:=0;
+    FSUB;
+
+    PROCESO
+
+    ABRIR E/(ACASOS); LEER(ACASOS,RCASOS);
+    R_CIUDAD:= RCASOS.COD_CIU; R_HOSPITAL:= RCASOS.COD_HOSP;
+    TOTC_SOS:=0;TOTH_SOS:= 0; TOTH_VERIF:=0;
+    ESC("|CIUDAD| |HOSPITAL| |TOTAL CASOS VERIFICADOS| |TOTAL CASOS SOSPECHADOS|")
+    MIENTRAS NFDA(ACASOS) HACER
+        SI R_CIUDAD <> RCASOS.COD_CIU ENTONCES
+            CORTE_CIUDAD;
+        SINO 
+            SI R_HOSPITAL <> RCASOS.COD_HOSP ENTONCES
+                CORTE_HOSPITAL;
+            FS;
+        FS;
+        SI RCASOS.FCH_ANALISIS.MM = 6 ENTONCES                            //junio
+            TOTH_VERIF:= TOTH_VERIF + RCASOS.VERIFICADOS;
+            TOTH_SOS:= TOTH_SOS + RCASOS.SOSPECHADOS;
+        FS;
+        LEER(ACASOS,RCASOS);
+    FM;
+    CORTE_CIUDAD;
+    ESC("la ciudad con mayor cantidad de casos sospechados es:", MOSTRARMAYOR);
+    CERRAR(ACASOS);
+Fin_Accion.
+
+        
+        

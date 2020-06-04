@@ -1,0 +1,57 @@
+ACCION Corte_2.2.14 ES //Brabo,Leonardo
+    AMBIENTE
+
+    CENSO = REGISTRO
+        RADIO: N(6)
+        MANZANA: N(6);
+        NRO_VIVIENDA: N(4);
+        CONDICION_VIVIENDA: ("MB","B","M");
+        CANT_HABIT: N(6);
+    FR;
+    ARCH: Archivo de CENSO ordenado por RADIO, MANZANA, NRO_VIVIENDA;
+    REG: CENSO;
+    RES_RADIO: REG.RADIO;
+    RES_MANZANA: REG.MANZANA;
+    TOT_MAN, TOT_RAD, TOT_GEN: N(6);
+
+    SUBACCION CORTE_MANZANA ES  
+        ESC("Para la manzana:",RES_MANZANA);
+        ESC("El total de personas que habitan con viviendas muy buenas es:", TOT_MAN);
+        TOT_RAD:= TOTRAD + TOT_MAN;
+        RES_MANZANA:= REG.MANZANA;
+        TOT_MAN:=0;
+    FS;
+    
+    SUBACCION CORTE_RADIO ES
+        ESC("para el radio:", RES_RADIO);
+        ESC("El total de personas que habitan con viviendas muy buenas es:", TOT_RAD);
+        TOT_GEN:= TOT_GEN + TOT_RAD;
+        RES_RADIO:= REG.RADIO;
+        TOT_RAD:=0;
+    FS;
+    
+    PROCESO
+    ABRIR E/(ARCH); LEER(ARCH,REG);
+    RES_MANZANA:= REG.MANZANA;
+    RES_RADIO:= REG.RADIO;
+    TOT_MAN:=0; TOT_RAD:=0; TOT_GEN:=0;
+    MIENTRAS NFDA(ARCH) HACER
+        SI RES_RADIO <> REG.RADIO ENTONCES
+            CORTE_RADIO;
+        SINO 
+            SI RES_MANZANA <> REG.MANZANA ENTONCES  
+                CORTE_MANZANA;
+            FS;
+        FS;
+        SI REG.CONDICION_VIVIENDA = "MB" ENTONCES   
+            TOT_MAN:= TOT_MAN + 1;
+        FS;
+        LEER(ARCH,REG);
+    FM;
+    CORTE_RADIO;
+    ESC("El total de personas que habitan en viviendas de condiciones muy buena es:",TOT_GEN);
+    CERRAR(ARCH); 
+Fin_Accion.     
+
+
+

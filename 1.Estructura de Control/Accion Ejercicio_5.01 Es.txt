@@ -1,4 +1,4 @@
-Accion Ejercicio_5.01 Es
+﻿Accion Ejercicio_5.01 Es
 	AMBIENTE
 
 	R= 0.04;
