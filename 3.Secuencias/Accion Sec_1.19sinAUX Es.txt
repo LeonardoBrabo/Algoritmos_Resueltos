@@ -1,0 +1,54 @@
+Accion Sec_1.19sinAUX Es
+
+	AMBIENTE
+
+	SEC,SAL:Secuencia de Enteros;
+	V,C1,C2,C3: Caracter;
+	CL,CP,CP3: Entero;
+	PORCENT: Real;
+
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo genera una secuencia con todas las palabras de 3 letras, y muetras un % de las mismas:");
+	ARR(SEC); CREAR(SAL); AVZ(SEC,V); CP:= 0 CP3:= 0;
+	MIENTRAS NFDS(SEC) HACER
+		CL:= 0;                         {se inicializa el contador de letras para que no se sumen las letras de las palabras}
+		MIENTRAS (V = " ") HACER		{se limpian los blancos}
+			AVZ(SEC,V);
+		}
+		FM;	
+		CP:= (CP + 1);						{se cuenta las palabras para luego obtener el porcentaje de sobre el total}
+		SI NFDS(SEC) ^ (V <> " ") HACER		{este condicional se lo podria quitar, pero lo dejo para que quede mas claro el procedimientos}
+			C1:= V;							{almaceno el primer caracter en una variable}
+			CL:= (CL + 1);					{sumo 1 en el contador de letras}
+			AVZ(SEC,V)						
+		FS;
+		SI NFDS(SEC) ^ (V <> " ") HACER		{pregunto por si en la proxima ventana aparece un blanco(palabra de un solo caracter)o llgo al FDS}
+			C2:= V;							{almaceno el segundo caracter en una variable}
+			CL:= (CL + 1);					{sumo nuevamente, ahora el CL es 2}
+			AVZ(SEC,V)	
+		FS;
+		SI NFDS(SEC) ^ (V <> " ") HACER		{tambien se pregunta por si la palabra es solo de 2 caracteres y luego hay un blanco}
+			C3:= V;							{almaceno el tercer caracter en otra variable}
+			CL:= (CL + 1);					{ahora el CL es 3}
+			AVZ(SEC,V);
+		FS;
+		MIENTRAS NFDS(SEC) ^ (V <> " ") HACER	{si la palabra es de mas caracteres, trato los siguiente caracteres para avanzarlos}
+			CL:= (CL + 1);						{sigo sumando las letras en el contador de letras para tratar el condicional}
+			AVZ(SEC,V);
+		FM;	
+		SI CL = 3 ENTONCES			{con este condicional simple si se cumplieron los tres primeros condicionales entra, sino descarta lo demas}
+			ESCRIBIR(SAL,C1);		{escribo uno tras otro los caracteres de la palabra de 3 letras}
+			ESCRIBIR(SAL,C2);
+			ESCRIBIR(SAL,C3);
+			CP3:= (CP3 + 1);		{cuento para obtener luego un porcentaje de las palabras de 3 letras}
+			ESCRIBIR(SAL," ");		{agrego un espacio en blanco en la salida para que no se junten las palabras de 3 letras}
+		FS;
+	FM;
+	CERRAR(SEC); CERRAR(SAL);
+	PORCENT:= ((CP3*100)/CP);      	{calculo el porcentaje de palabras de 3 letras}
+	ESCRIBIR("El porcentaje de palabras de 3 letras sobre el total de palabras es: ", PORCENT);
+	ESCRIBIR("Se ha creado con exito la secuencia de salida!");
+
+Fin_Accion.

@@ -1,0 +1,18 @@
+Accion Ejercicio_5.02 Es
+	AMBIENTE
+
+	A,B,C,VAL: ENTERO;
+
+	PROCESO
+
+	Escribir("Este programa permite leer los coeficiente de una ecuacion de segundo grado y verificar el resultado del discriminante");
+	Escribir("Ingrese el valor del coeficiente de termino cuadratico(a)"); Leer(A);
+	Escribir("Ingrese el valor del coeficiente de termino lineal(b)"); Leer(B);
+	Escribir("Ingrese el valor del coeficiente de termino independiente(c)"); Leer(C);
+	VAL:= ((B**2)-4*A*C);	
+	Escribir("El valor del Discriminate es:",VAL);
+
+FinAccion.
+
+
+

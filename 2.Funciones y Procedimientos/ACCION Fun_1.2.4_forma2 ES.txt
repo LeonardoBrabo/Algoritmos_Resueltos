@@ -1,0 +1,37 @@
+ACCION Fun_1.2.4_forma2 ES  				
+	
+	AMBIENTE
+
+	op: Caracter;
+	Numero: Entero;												
+
+	FUNCION Cripto(N : Entero): Entero
+		AMBIENTE
+
+		Suma:Entero;
+
+		PROCESO
+
+		SI N < 0 ENTONCES
+
+			Cripto:= -1;
+		SINO		
+			Suma:=0;
+			MIENTRAS (N>0) HACER
+				Suma:= Suma+(N MOD 10);
+				N:=N DIV 10;
+			FM;	
+			Cripto:= Suma MOD 7;
+		FM;	
+	F_FUNCION;
+
+	PROCESO
+	
+	REPETIR
+		ESC("Este programa devuelve una clave segun el numero que ingrese, y si es negativo devuelve -1");
+		ESC("Ingrese su numero para generar una clave:"); LEER(N);
+		ESC("La clave para el numero es:",Cripto(Numero));
+		ESC("Quiere Continuar? s/n"); LEER(op);
+	HASTA QUE op = "n"
+
+F_ACCION.

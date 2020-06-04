@@ -1,0 +1,24 @@
+Accion Ejercicio_15_c Es
+	AMBIENTE
+
+	ALTURA,EDIFICIO: REAL;
+	PISOS ,CONTADOR: ENTERO;
+	DESICION : ALFANUMERICO;
+
+	
+	PROCESO
+
+	Escribir ("este programa calcula la altura aproximada de un edificio en pies, ingresando la cant de pisos y la altura promedio de cada piso en metros de :);
+	CONTADOR:=1;
+	REPETIR
+		Escribir ("Edificio Nº " , CONTADOR , ":");
+		Escribir ("Ingrese cantidad de pisos: "); Leer(PISOS);
+		Escribir ("Ingrese la altura promedio de los pisos: "); Leer(ALTURA);
+		ALTURA:= (ALTURA * 3.28);
+		EDIFICIO:= (PISOS * ALTURA);
+		Escribir (" La altura promedio del edificio Nº ",CONTADOR, "es:", EDIFICIO );
+		CONTADOR:= CONTADOR + 1;
+		Escribir ("¿Desea calcular la altura de otro edificio? (S/N):"); Leer(DESICION);
+	HASTA QUE DESICION = "N" ;
+FinAccion.
+

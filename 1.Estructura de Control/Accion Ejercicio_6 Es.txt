@@ -1,0 +1,47 @@
+Accion Ejercicio_6 Es
+	AMBIENTE
+
+	a, b, c, Mayor, Menor, Medio: ENTERO
+
+	PROCESO
+
+	Escribir ("Este programa permite ingresar 3 numero y determinar cual es el mayor, el medio y el menor:");
+	Escribir ("Ingrese el primer numero:"); Leer(a);
+	Escribir ("Ingrese el segundo numero:"); Leer(b);
+	Escribir ("Ingrese el tercer numero:"); Leer(c);
+	Mayor:= a;
+	SI b > a ENTONCES
+		Mayor:= b;
+	FinSI;
+
+	SI c > Mayor ENTONCES
+		Mayor:= c;
+	FinSI;
+	Escribir ("El mayor es:", Mayor);
+
+	Menor:=a;
+	SI b < a ENTONCES
+		Menor:= b;
+	FinSI;
+
+	SI c < Menor ENTONCES
+		Mayor:= c;
+	FinSI;
+	Escribir ("El menor es:", Menor);
+
+	Medio:= (a+b+c) - (Mayor+Menor);
+
+	SEGUN Medio HACER
+		=a: Escribir("El medio es:",a);
+		=b: Escribir("El medio es:",b);
+		=c: Escribir("El medio es:",c);
+	FinSEGUN;
+FinAccion.
+
+
+
+
+
+
+
+

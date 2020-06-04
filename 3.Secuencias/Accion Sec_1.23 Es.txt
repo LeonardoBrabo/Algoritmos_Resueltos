@@ -1,0 +1,73 @@
+Accion Sec_1.23 Es     
+
+	AMBIENTE
+
+	NOMBRES,DNI,SALIDA : Secuencia de Caracteres
+	VN, VD: Caracter;
+	I,PRIMER_C : Entero;
+
+	PROCESO
+
+	ESCRIBIR("Este algoritmo crea una secuencia nueva con los numero de dni y los nombres, de los dni de las personas que comienzan con un numero impar");
+	ARR(NOMBRES); ARR(DNI); CREAR(SALIDA);
+	AVZ(NOMBRES,VN); AVZ(DNI,VD);
+	MIENTRAS NFDS(NOMBRES) ^ NFDS(DNI) HACER		{cualquiera que termine sale la secuencia}
+		SEGUN VD HACER								{Convierte los caracteres a numeros para operarlos con mod}
+			"0": PRIMER_C:= 0;
+			"1": PRIMER_C:= 1;
+			"2": PRIMER_C:= 2:
+			"3": PRIMER_C:= 3;
+			"4": PRIMER_C:= 4;
+			"5": PRIMER_C:= 5;
+			"6": PRIMER_C:= 6;
+			"7": PRIMER_C:= 7;
+			"8": PRIMER_C:= 8;
+			"9": PRIMER_C:= 9;
+		FS;
+
+		SI (PRIMER_C mod 2 <> 0) ENTONCES		{si es impar el primer numero de documento}
+
+			PARA I := 1 HASTA 8 HACER
+				ESCRIBIR(SALIDA,VD)
+				AVZ(DNI,VD);					{escribe hasta el ultimo digito y avanza, hacia el primer digito del proximo dni}
+			FP;
+			ESCRIBIR(SALIDA,",");				{escribe en la salida una coma}	
+
+			MIENTRAS VN = " " HACER				{limpio los blancos}
+				AVZ(NOMBRES, VN);
+			FM;
+			
+			MIENTRAS VN <> " " HACER			{escribo el nombre en la secuencia de salida}
+				ESCRIBIR(SALIDA, VN);
+				AVZ(NOMBRES, VN);
+			FM;
+			ESCRIBIR(SALIDA, "#");  			{escribe en la secuencia de salida un numeral}
+		SINO									{si no es impar el primer numero de documento}
+			PARA I:= 1 HASTA 8 HACER			{avanzo el numero de documento}
+				AVZ(DNI,VD);
+			FP;
+
+			MIENTRAS V = " " HACER				{limpio los blancos}
+				AVZ(NOMBRES, VN);
+			FM;
+
+			MIENTRAS VN <> " " HACER			{avanzo el nombre que esta en posicion par}
+				AVZ(NOMBRES, VN);
+			FM;	
+		FS;
+	FM;
+	CERRAR(NOMBRES); CERRAR(DNI); CERRAR(SALIDA);
+	ESCRIBIR("La secuencia de salida ha sido creada con exito!");
+
+Fin_Accion.
+
+
+
+
+
+
+
+
+
+
+

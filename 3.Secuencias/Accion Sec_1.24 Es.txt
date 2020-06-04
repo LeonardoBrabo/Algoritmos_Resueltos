@@ -1,0 +1,57 @@
+Accion Sec_1.24 Es     
+
+	AMBIENTE
+
+	NOMBRES,DNI,SALIDA : Secuencia de Caracteres
+	VN, VD: Caracter;
+	I : Entero;
+	VOCAL = ("A","E","I","O","U"); 
+
+	PROCESO
+
+	ESCRIBIR("Este algoritmo crea una secuencia nueva con los numero de dni y los nombres, de los nombres que no conmienzan con una vocal");
+	ARR(NOMBRES); ARR(DNI); CREAR(SALIDA);
+	AVZ(NOMBRES,VN); AVZ(DNI,VD); 
+	MIENTRAS NFDS(NOMBRES) ^ NFDS(DNI) HACER				{cualquiera que termine sale la secuencia}
+		
+		MIENTRAS (VN = " ") HACER							{limpio los blancos}
+			AVZ(NOMBRES, VN);
+		FM;			
+		SI (VN NO EN VOCAL) ENTONCES						{si el nombre no comienza en vocal}
+
+			PARA I := 1 HASTA 8 HACER
+				ESCRIBIR(SALIDA,VD)
+				AVZ(DNI,VD);								{escribe hasta el ultimo digito y avanza, hacia el primer digito del proximo dni}
+			FP;
+			ESCRIBIR(SALIDA,",");							{escribe en la salida una coma}	
+
+			MIENTRAS NFDS(NOMBRES) ^  (VN <> " ") HACER		{escribo el nombre en la secuencia de salida}
+				ESCRIBIR(SALIDA, VN);						{se pregunta por nfds(nombres) para que salga despues del ultimo caracter consecutivo al final}
+				AVZ(NOMBRES, VN);							{porque no tiene un blanco entre el ultimo caracter y el final de la secuencia}
+			FM;
+			ESCRIBIR(SALIDA, "#");  						{escribe en la secuencia de salida un numeral}
+		SINO												{si el nombre comienza en vocal}
+			PARA I:= 1 HASTA 8 HACER						{avanzo el numero de documento}
+				AVZ(DNI,VD);
+			FP;
+
+			MIENTRAS NFDS(NOMBRES) ^  (VN <> " ") HACER		{avanzo el nombre que esta en posicion par}
+				AVZ(NOMBRES, VN);						    {se pregunta por nfds(nombres) para que salga despues del ultimo caracter consecutivo al final}
+			FM;											    {porque no tiene un blanco entre el ultimo caracter y el final de la secuencia}
+		FS;
+	FM;
+	CERRAR(NOMBRES); CERRAR(DNI); CERRAR(SALIDA);
+	ESCRIBIR("La secuencia de salida ha sido creada con exito!");
+
+Fin_Accion.
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,30 @@
+PROCEDIMIENTOS Ejercicio 1.2.7  //LeonardoBrabo
+
+Repita el ejercicio del punto 5 pero utilice procedimiento en lugar de función.
+(Escribir una función que verifique si un caracter introducido es un dígito o no.)
+
+
+ACCION Pro_1.2.7 ES
+	
+	AMBIENTE
+
+	car: Caracter;
+
+	PROCEDIMIENTO comprobacion(c: Caracter) ES
+		AMBIENTE
+		dig= {"0","1","2","3","4","5","6","7","8","9"}
+
+		PROCESO
+		SI c NO EN dig ENTONCES
+			ESC("No es un digito");
+		SINO
+			ESC("Es un digito");
+		FS;
+	FPROC;
+
+	PROCESO
+
+	ESC("Ingrese un caracter para determinar si es un digito o no");
+	LEER(car);
+	comprobacion(car);
+F_ACCION.

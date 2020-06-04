@@ -1,0 +1,21 @@
+Accion Ejercicio_16_a Es
+	AMBIENTE
+
+ 	P_ISI, P_IEM , P_IQ : REAL;
+ 	TOTAL_E ,E_ISI ,E_IQ ,E_IEM : ENTERO;
+
+	PROCESO
+
+	Escribir ("este programa obtiene el porcentaje de alumnos de ISI, IQ E IEM sobre el total de egresados de la UTN:");
+	Escribir ("Ingrese el total de alumnos egresados de ISI:"); Leer(E_ISI); 
+	Escribir ("Ingrese el total de alumnos egresados de IQ:"); Leer(E_IQ);   
+	Escribir ("Ingrese el total de alumnos egresados de IEM:"); Leer(E_IEM); 
+	TOTAL_E := (E_ISI + E_IQ + E_IEM);
+	P_ISI := (E_ISI * 100) div TOTAL_E;
+	P_IQ  := (E_IQ * 100) div TOTAL_E;
+	P_IEM := (E_IEM * 100) div TOTAL_E;
+	Escribir (" el porcentaje de egresados de ISI es:", P_ISI);
+	Escribir (" el porcentaje de egresados de IQ es:", P_IQ);
+	Escribir (" el porcentaje de egresados de IEM es:", P_IEM);
+FinAccion.
+

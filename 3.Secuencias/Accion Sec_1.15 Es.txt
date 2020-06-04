@@ -1,0 +1,40 @@
+Accion Sec_1.15 Es
+
+	AMBIENTE
+
+	SEC : Secuencia de Caracteres;
+	V: Caracter;
+	CONT_P,CONT_O : Entero;
+	PROM : Real;
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina la cantidad promedio de palabras que contiene las oraciones en una secuencia de caracteres:")
+
+	ARR(SEC), AVZ(SEC,V);
+	CONT_O:= 0; CONT_P:= 0;
+	MIENTRAS NFDS(SEC) HACER
+		CONT_O:= CONT_O + 1;
+		MIENTRAS V = "." HACER	
+			AVZ(SEC,V)
+		FM;
+		MIENTRAS NFDS(SEC) ^ (V <> ".") HACER
+			MIENTRAS (V = ",") HACER
+				AVZ(SEC,V);
+			FM;
+			MIENTRAS (V <> ".") ^ (V <> ",") HACER
+				MIENTRAS (V = " ") HACER
+					AVZ(SEC,V);
+				FM;
+				CONT_P:= (CONT_P + 1);
+				MIENTRAS (V <> ",") ^ (V <> " ") HACER
+					AVZ(SEC,V)
+				FM;
+			FM;
+		FM;
+	FM;
+	PROM:= (CONT_P / CONT_O);
+	ESCRIBIR("La cantidad promedio de palabras por oracion es:", PROM);
+	CERRAR(SEC);
+
+Fin_Accion.

@@ -1,0 +1,20 @@
+Accion Ejercicio_5.03 Es
+	AMBIENTE
+
+	IVA= 0.21;
+	GV_PC= 0.12;
+	GV_IMP= 0.07;
+	COST_PC, COST_IMP: REAL;
+	PRECIO_PC, PRECIO_IMP, PRECIO_TOTAL: REAL;
+
+	PROCESO
+	Escribir ("Este programa calcula el precio de una pc y una impresora, en conjunto con el iva y los porcentaje de ganancia del vendedor:");
+	Escribir ("Ingrese Costo de la PC:"); Leer(COST_PC);
+	Escribir ("Ingrese Costo de la Impresora:"); Leer(COST_IMP);
+	PRECIO_PC:=	(COST_PC+(COST_PC*GV_PC)+(COST_PC*IVA));
+	PRECIO_IMP:= (COST_IMP+(COST_IMP*GV_IMP)+(COST_IMP*IVA));
+	PRECIO_TOTAL:= (PRECIO_PC + PRECIO_IMP);
+	Escribir ("El precio total de la compra es:", PRECIO_TOTAL);
+
+FinAccion.
+

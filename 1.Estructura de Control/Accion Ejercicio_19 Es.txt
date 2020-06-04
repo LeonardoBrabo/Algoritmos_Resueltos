@@ -1,0 +1,16 @@
+Accion Ejercicio_19 Es
+	AMBIENTE
+
+	V, CUADRADO, CUBO: ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa calcula el cuadrado y el cubo de un numero ingresado:");
+	Escribir ("Ingrese un numero:"); Leer(V);
+	CUADRADO:= (V**2);
+	CUBO:= (V**3);
+	Escribir ("El cuadrado de su numero es: ",CUADRADO);
+ 	Escribir ("El cubo de su numero es: ",CUBO);
+Fin_Accion.
+
+

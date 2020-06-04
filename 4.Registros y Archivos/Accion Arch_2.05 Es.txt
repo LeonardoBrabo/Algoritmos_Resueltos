@@ -1,0 +1,54 @@
+Accion Arch_2.05 Es
+
+	AMBIENTE
+
+	FECHA = REGISTRO	
+		AA: N(4);
+		MM: 1..12;
+		DD: 1..31;
+	FR;
+
+	FACULTAD = REGISTRO			
+		APYNOM: AN(50);
+		N_LEG: N(6);
+		FECHA_ING: FECHA;			
+		SEXO: ("M","F");
+		CARRERA: ("ISI","IEM","IQ");
+		FECHA_NAC: FECHA;
+		DNI: N(8):
+		FECHA_UEXAPR: FECHA;
+		NOTA: N(2);
+	FR;
+
+	ARCH_FAC : Archivos de FACULTAD;			
+	REG_FAC : FACULTAD;
+		
+	PROCESO
+	ESCRIBIR("Este programa muestra en pantalla un listado con los alumnos que ingresaron el año pasado y que hayan aprobado una materia con nota mayor a 7");
+
+	ABRIR E/(ARCH_FAC); LEER(ARCH_FAC, REG_FAC);
+
+	ESCRIBIR("|Nro.Legajo| Apellido y Nombre | Carrera |");	
+
+	MIENTRAS NFDA(ARCH_FAC) HACER			
+
+		SI REG_FAC.FECHA_ING = 2018 ENTONCES
+			
+			SI REG_FAC.NOTA > 7 ENTONCES
+				
+				ESCRIBIR(REG_FAC.N_LEG, REG_FAC.APYNOM , REG_FAC.CARRERA);
+			FS;	
+		FS;
+		LEER(ARCH_FAC, REG_FAC);		
+	FM;
+	CERRAR(ARCH_FAC);
+
+Fin_Accion.
+
+
+
+
+
+
+
+

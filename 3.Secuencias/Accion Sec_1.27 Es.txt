@@ -1,0 +1,56 @@
+Accion Sec_1.27 Es 
+	
+	AMBIENTE
+	
+	TARJETAS,SALIDA,AUX: Secuencia de Caracteres;
+	VT,VA: Caracter;
+	I,IMPARES,PARES,SUMA,NUMERO,PAR : Entero;
+
+
+	PROCESO
+
+	ESCRIBIR("Este algoritmo genera una nueva secuencia con los numeros de tarjeta considerados como validos de una secuencia de entrada");
+	ESCRIBIR(" para determinar su validez nos centramos en los numeros pares dentro de los 16 numeros de la tarjeta, los multiplicamos por dos, si el resultado de cada producto es mayor o igual a nueve le restamos nueve, y los sumamos con los digitos impares si, esta suma es multiplo de diez y menor o igual a 150 es una tarjeta valida");
+	ARR(TARJETAS); CREAR (SALIDA); AVZ(TARJETAS,VT);
+	MIENTRAS NFDS(TARJETAS) HACER
+		CREAR(AUX); CC:= 0; PARES:= 0; IMPARES:= 0;			{incializo dentro del ciclo para que vuelvan a ponerse en cero}
+		PARA I:= 1 HASTA 16 HACER							{el ciclo mxc para recorrer cada numero de tarjeta}			
+			CC:= (CC + 1);									{contador de caracter para saber la posicion si es par o impar}
+			SEGUN VT HACER									{tranformo el caracter numerico en un digito para operarlo}
+				"0": NUMERO:= 0;
+				"1": NUMERO:= 1;
+				"2": NUMERO:= 2;
+				"3": NUMERO:= 3;
+				"4": NUMERO:= 4;
+				"5": NUMERO:= 5;
+				"6": NUMERO:= 6;
+				"7": NUMERO:= 7;
+				"8": NUMERO:= 8;
+				"9": NUMERO:= 9;
+			FS;
+			SI  (CC MOD 2 = 0) ENTONCES						{controlo que el digito numerico este en posicion par }
+				PAR:= (NUMERO * 2)							{si es par, lo multiplico por 2}
+				SI PAR > 8 ENTONCES							{si la multiplicacion es mayor o igual a nueve , le resto 9}
+					PAR:= (PAR - 9);
+				FS;
+				PARES:= (PARES + PAR)						{sumo todos los digitos pares}
+			SINO											{si la posicion no es par}
+				IMPARES:= (IMPARES + NUMERO);				{almaceno todos los digitos en posicion impar}
+			FS;	
+			ESCRIBIR(AUX,VT);								{escribo en la secuencia auxiliar}
+			AVZ(TARJETAS,VT);								{avanzo la secuencia de entrada}
+		FP;
+		CERRAR(AUX);										{cierro la secencia aux que estaba en modo escritura, para abrirla en modo lectura}
+		SUMA:= (PARES + IMPARES);							{sumo  los digitos en posicion impar con los digitos en posicion par}
+		SI (SUMA MOD 10 = 0) ^ (SUMA < 151) ENTONCES		{si la suma es multiplo de 10 y es menor o igual a 150 copio el numero completo a la salida}
+			ARR(AUX); AVZ(AUX,VA);					
+			MIENTRAS NFDS(AUX) HACER
+				ESCRIBIR(SALIDA,VA);
+				AVZ(AUX,VA);
+			FM;
+			CERRAR(AUX);				{cierro para volver a crear una secuencia aux}
+		FS;
+	FM;
+	CERRAR(TARJETAS); CERRAR(SALIDA);
+	ESCRIBIR("La secuencia de salida con los numero de tarjetas validos ha sido creada!");
+Fin_Accion.

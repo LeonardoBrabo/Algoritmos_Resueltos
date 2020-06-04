@@ -1,0 +1,114 @@
+ACCION Ticket-Tec ES //Brabo,Leonardo
+    AMBIENTE
+
+    Ventas, Salida : Secuencia de Caracter;
+    V,C1,C2,D1,D2: Caracter;
+    E1,E2,E3,tot,n1,n2: Entero;
+
+    FUNCION Acaracter(N: Entero): Caracter
+        SEGUN N HACER 
+            0: Acaracter := "0";
+            1: Acaracter := "1";
+            2: Acaracter := "2";
+            3: Acaracter := "3";
+            4: Acaracter := "4";
+            5: Acaracter := "5";
+            6: Acaracter := "6";
+            7: Acaracter := "7";
+            8: Acaracter := "8";
+            9: Acaracter := "9";
+        FS;
+    FF;
+
+    PROCEDIMIENTO ContEvento() ES
+        SEGUN V HACER
+            "1": E1:= E1+1;
+            "2": E2:= E2+1;
+            "3": E3:= E3+1;
+        FS;
+    FP:
+
+    FUNCION PorcentajeE(TOTAL,NUMERO: Entero): Entero
+        Porcentaje:= (NUMERO*100) DIV TOTAL;
+    FF;
+
+    PROCESO
+    ESC("Ingrese el numero de un mes en dos cifras, ejemplo Enero 01:");
+    ESC("Ingrese primer cifra"); LEER(n1);
+    ESC("Ingrese segunda cifra"); LEER(n2);
+    C1:= Acaracter(n1);
+    C2:= Acaracter)(n2);
+    ARR(Ventas); CREAR(Salida); AVZ(Ventas,V);
+    E1:= 0; E2:= 0; E3:=0; tot:= 0;
+    MIENTRAS V <> "*" HACER  
+        MIENTRAS V <> "#" HACER
+            AVZ(Ventas,V)
+        FM;           
+        MIENTRAS V <> "&" HACER         
+            MIENTRAS V <> "!" HACER        
+                tot:=tot+1                        
+                AVZ(Ventas,V); D1:= V;
+                AVZ(Ventas,V); D2:= V;
+                AVZ(Ventas,V);
+                SI V = C1 ENTONCES
+                    AVZ(Ventas,V);
+                    SI V = C2 ENTONCES
+                        ESC(Salida,D1); // copio el dia
+                        ESC(Salida,D2); // copio la segunda cifra del dia
+                        ESC(Salida,C1); // copio el mes
+                        ESC(Salida,C2); // copio segunda cifra del mes
+                        AVZ(Ventas,V);  //avanzo hasta el codigo del evento 
+                        ContEvento(); //  cuento segun el codigo de evento
+                        MIENTRAS V <> "!" HACER  // escribo los datos que faltan del ticket
+                            ESC(Salida,V);
+                            AVZ(Ventas,V);
+                        FM;
+                    SINO
+                        PARA I:= 1 HASTA 5 HACER     // avanzo hasta el codigo de evento
+                            AVZ(Ventas,V)  
+                        FP;
+                        ContEvento();
+                        MIENTRAS V <> "!" HACER  
+                            AVZ(Ventas,V);
+                        FM;
+                    FS;
+                SINO
+                    PARA I := 1 HASTA 6 HACER
+                        AVZ(Ventas,V);
+                    FP;
+                    ContEvento();
+                    MIENTRAS V <> "!" HACER
+                        AVZ(Ventas,V);
+                    FM;
+                FS;
+            FM;
+            AVZ(Ventas,V);
+        FM;
+        AVZ(Ventas,V);
+    FM;
+    ESC("El total de tickets Vendidos Fue", tot);
+    ESC("Total de tickets de tipo 1", E1,"Su porcentaje es", PorcentajeE(tot,E1),"%");
+    ESC("Total de tickets de tipo 2", E2,"Su porcentaje es", PorcentajeE(tot,E2),"%");
+    ESC("Total de tickets de tipo 3", E3,"Su porcentaje es", PorcentajeE(tot,E3),"%");
+    CERRAR(Ventas); CERRAR(Salida);
+FIN_ACCION.
+    
+
+                         
+                     
+                    
+
+                        
+
+                        
+                        
+                        
+
+
+
+
+
+
+  
+
+

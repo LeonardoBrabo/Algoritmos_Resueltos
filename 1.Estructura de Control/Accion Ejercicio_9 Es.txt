@@ -1,0 +1,22 @@
+Accion Ejercicio_9 Es
+	AMBIENTE
+
+	NEED_EUR, HAVE_DOLAR, VAL_PESO, VAL_EUR, X, CALCULO : Real;
+	
+	PROCESO
+
+	Escribir ("Este programa permite determinar si los dolares que posee son suficientes para cubrir la cantidad de Euros que necesita, si no es asi la diferencia se muestra en pesos:");
+	Escribir ("Ingrese la cantidad de EUROS que necesita:"); Leer(NEED_EUR);
+	Escribir ("Ingrese la cantidad de DOLARES que posee: "); Leer("HAVE_DOLAR");
+	Escribir ("Ingrese el valor actual del DOLAR en EUROS"); Leer(VAL_EUR);
+	Escribir ("Ingrese el valor actual del PESO en EUROS"); Leer(VAL_PESO);
+	X:=(HAVE_DOLAR * VAL_EUR);
+	SEGUN X HACER
+		= NEED_EUR: Escribir("Felicidades Tiene la equivalencia necesaria de dolares para comprar sus Euros :D ", X );
+
+		> NEED_EUR: CALCULO:=((X - NEED_EUR) * VAL_PESO);  Escribir ("Usted tiene:",X,"En Euros y la diferencia en pesos es:",CALCULO);
+
+		< NEED_EUR: CALCULO:= ((NEED_EUR - X) * VAL_PESO);  Escribir ("Usted tiene:",X,"En Euros y la diferencia en pesos es:",CALCULO);
+	FSEGUN;
+FinAccion.
+

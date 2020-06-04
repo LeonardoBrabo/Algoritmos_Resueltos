@@ -1,0 +1,28 @@
+ACCION Fun_1.2.2 ES
+
+	AMBIENTE
+
+	N:Enetero
+
+	FUNCION Suma_Digitos(Numero:Entero) : Entero
+
+		AMBIENTE
+
+		A,B,C : Real;
+
+		PROCESO
+
+		A:= Numero DIV 100;
+		B:= (Numero MOD 100) DIV 10;
+		C:= Numero MOD 10;
+		Suma_Digitos:= A+B+C; 
+	
+	FIN_FUNCION;
+
+	PROCESO
+
+	ESC("Este Programa devuelve la suma de los digitos del numero natural de 3 cifras ingresado");
+	ESC("Ingrese el numero de 3 cifras:"); LEER(N);
+	Suma_Digitos(N);
+	
+FIN_ACCION.

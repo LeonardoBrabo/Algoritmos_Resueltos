@@ -1,0 +1,23 @@
+Accion Sec_1.02 Es
+
+	AMBIENTE
+
+	LETRAS : Secuencia de Caracteres;
+	V: Caracter;
+	C : Entero;
+	VOCAL = ("A","E","I","O","U");   //TIPO DE DATO: CONJUNTO.//
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo permite determinar cuantas consonantes hay en la secuencia que finaliza con la letra Z:");
+	ARR(LETRA); AVZ(LETRA,V); C:= 0;
+	MIENTRAS V <> "Z" HACER
+		SI V NO EN VOCAL ENTONCES
+			C:= C + 1;
+		FS;
+		AVZ(LETRA,V);
+	FM;
+	ESCRIBIR ("La cantidad de consonantes en la secuencia es:", C);
+	CERRAR(LETRAS);
+
+Fin_Accion.

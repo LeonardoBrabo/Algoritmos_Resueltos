@@ -1,0 +1,22 @@
+Accion Sec_1.16 Es
+
+	AMBIENTE
+
+	SEC,SALIDA :Secuencia de Enteros;
+	V: Entero;
+
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo genera otra secuencia de numeros a partir de los dni que son multiplos de 3:")
+	ARR(SEC); CREAR(SALIDA); AVZ(SEC,V);
+	MIENTRAS NFDS(SEC) HACER
+		SI (V mod 3) = 0 ENTONCES
+			ESCRIBIR (SALIDA, V);
+		FS;
+		AVZ(SEC,V);
+	FM;
+	ESCRIBIR ("Secuencia creada con exito");
+	CERRAR(SALIDA); CERRAR(SEC);
+
+Fin_Accion.

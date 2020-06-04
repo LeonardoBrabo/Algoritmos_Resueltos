@@ -1,0 +1,27 @@
+Accion Sec_1.05 Es
+
+	AMBIENTE
+
+	SOCIOS, NUEVO: Secuencia de Enteros;
+	V, COPIAR, C1, C2, I: Entero;
+
+	
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo genera una secuencia nueva con los numeros de socios que no son correlativos");
+	ARR(SOCIOS); AVZ(SOCIOS,V); CREAR(NUEVO);
+	MIENTRAS NFDS(SOCIOS) HACER
+		C1:= V;
+		AVZ(SOCIOS,V);
+		C2:= V;
+		PARA I:= C1 HASTA C2 HACER
+			COPIAR:= I+1;
+			SI COPIAR < C2 ENTONCES
+				ESCRIBIR (NUEVO,COPIAR);
+			FS;
+		FP;
+	FM;
+	ESCRIBIR ("La secuencia ha sido creada con exito");
+	CERRAR (SOCIOS); CERRAR(NUEVO);
+	
+Fin_Accion.

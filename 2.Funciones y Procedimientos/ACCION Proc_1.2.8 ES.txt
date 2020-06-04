@@ -1,0 +1,24 @@
+ACCION Proc_1.2.8 ES
+
+	AMBIENTE
+
+	PROCEDIMIENTO intercambio(n1,n2 : Entero) ES
+
+		AMBIENTE
+
+		guardado: Entero;
+
+		PROCESO
+
+		guardado:= n1;
+		n1:= n2;
+		n2:= guardado;
+	FPROC;
+
+	PROCESO
+
+	ESC("Ingrese un valor para la variable A"); LEER(A);
+	ESC("Ingrese un valor para la variable B"); LEER(B);
+	intercambio(A,B);
+FACCION.
+

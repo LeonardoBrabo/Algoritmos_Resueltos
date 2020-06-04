@@ -1,0 +1,46 @@
+ACCION Fun_1.2.3 ES
+
+	AMBIENTE
+
+	SALIR: Caracter
+	A,B,C : Entero;
+
+	FUNCION Minimo(N1,N2,N3 :Entero): Entero
+
+		AMBIENTE
+
+		MIN: Entero;
+
+		PROCESO
+
+		SI (N1 < N2) Y (N1 < N3) ENTONCES
+			MIN:= N1;
+		SINO
+			SI (N2 < N1) Y (N2 < N3) ENTONCES
+				MIN:= N2;
+			SINO
+				MIN:= N3;
+			FS;
+		FS;
+
+		Minimo:= MIN;
+
+	F_FUNCION.;
+
+	PROCESO
+
+	SALIR:= "n"
+	MIENTRAS SALIR = "n" HACER
+		ESC("Este programa devuelve el minimo valor entre tres numeros:");
+		ESC("Ingrese el primer valor:"); LEER(A);
+		ESC("Ingrese el segundo valor:"); LEER(B);
+		ESC("Ingrese el tercer valor:"); LEER(C);
+		ESC("El minimo valor entre los tres numeros es:", Minimo(A,B,C));
+		ESC("Desea Salir del Programa s/n"); LEER(SALIR);
+	FM;
+	
+F_ACCION.
+
+
+
+	I

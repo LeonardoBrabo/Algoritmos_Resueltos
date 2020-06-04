@@ -1,0 +1,44 @@
+Accion Ejercicio_23 Es
+
+	AMBIENTE
+	V_UNI, CANT_RENG: ENTERO;
+	CAL_TOT, CAL_UNI, CANT_VEN: REAL;
+	RESPUESTA : CARACTER;
+
+	PROCESO
+
+	Escribir ("Este programa calcula cada renglon de una factura y el total de la misma");
+	Escribir ("Comenzemos agregando el valor unitario y la cantidad vendida del primer articulo:");
+	RESPUESTA:= "S"; CANT_RENG:= 0; CAL_TOT:= 0;
+	MIENTRAS RESPUESTA <> "N" HACER
+		CANT_RENG:= CANT_RENG+1; 
+		CAL_UNI:= 0;                                               //No es necesario inicializarlo en cero, porque dentro del ciclo igualmente se sobrescribira el contenido.
+		Escribir ("Ingrese el valor unitario:"); Leer (V_UNI);		
+		SI (V_UNI) <= 0 ENTONCES									//Controla que el valor unitario sea > 0 sino seguira pidiendo que ingrese un valor correcto.
+			MIENTRAS (V_UNI) <= 0 HACER
+				Escribir ("Ha ingresado un valor unitario no valido");
+				Escribir ("Ingrese el valor unitario:"); Leer (V_UNI);
+			FM;
+		FS;
+		Escribir ("Ingrese la cantidad vendida del producto:"); Leer(CANT_VEN);
+		CAL_UNI:= (V_UNI * CANT_VEN);
+		CAL_TOT:= (CAL_TOT + CAL_UNI);
+		Escribir ("El valor del renglon",CANT_RENG,"es:",CAL_UNI);
+		Escribir ("Desea agregar otro renglon?(S/N):"); Leer (RESPUESTA);
+	FM;
+	Escribir ("La factura en su totalidad tiene",CANT_RENG,"renglones.");
+  	Escribir ("El valor total de la factura es:",CAL_TOT);
+
+Fin_Accion;
+
+
+
+
+
+
+
+
+
+
+		
+

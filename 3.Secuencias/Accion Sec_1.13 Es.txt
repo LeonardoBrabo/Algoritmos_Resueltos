@@ -1,0 +1,41 @@
+Accion Sec_1.13 Es
+
+	AMBIENTE
+
+	SEC : Secuencia de Caracteres;
+	V: Caracter;
+	CONTP, C_ALG: Entero;
+	PORCENTAJE: Real;
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina el porcentaje de las palabras que comienzan con ALG en una secuencia de caracteres");
+	ARR(SEC); AVZ(SEC, V);
+	CONTP:= 0; C_ALG:= 0;
+	MIENTRAS NFDS(SEC) HACER
+		MIENTRAS (V = " ") HACER
+			AVZ(SEC, V);
+		FM;
+		CONTP:= (CONTP+1);
+		SI V = "A" ENTONCES
+			AVZ(SEC, V)
+			SI V = "L" ENTONCES
+				AVZ(SEC,V);
+				SI V = "G" ENTONCES
+					C_ALG:= C_ALG +1;
+					AVZ(SEC,V);
+					MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+						AVZ(SEC,V);
+					FM;
+				FS;
+			FS;
+		FS;
+		MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+			AVZ(SEC,V);
+		FM;
+	FM;
+	PORCENTAJE :=  ((C_ALG * 100)/ CONTP);
+	ESCRIBIR("El porcentaje de palabras que comienzan con ALG es: ", PORCENTAJE);
+	CERRAR (SEC);
+
+Fin_Accion.

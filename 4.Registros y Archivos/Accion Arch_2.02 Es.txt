@@ -1,0 +1,51 @@
+Accion Arch_2.02 Es
+
+	AMBIENTE
+
+	FECHAS = REGISTRO
+		AA: N(4);
+		MM: 1..12;
+		DD: 1..31;
+	FR;
+
+	FACTURAS = REGISTRO
+		N_FACTURA: N(4);
+		FECHA : FECHAS;
+		TOTAL: N;
+	FR;
+
+	ARCH_FACTU:	Archivo de FACTURAS;
+	REG_FACTU: FACTURAS;
+	FECHA_DADA : FECHA;
+
+	PROCESO
+
+	ABRIR E/(ARCH_FACTU); LEER(ARCH_FACTU, REG_FACTU);
+	ESCRIBIR("Este programa le mostrará un listado de las facturas, posterior a una fecha dada y cuyos importes no superen los $1000: ");
+
+	ESCRIBIR ("Ingrese una fecha con el formato (AA/MM/DD)");
+
+	LEER(FECHA_DADA.AA, FECHA_DADA.MM, FECHA_DADA.DD);
+
+	ESCRIBIR("|Nro. de Factura| Fecha | Importe Total|")
+
+	MIENTRAS NFDA(ARCH_FACTU) HACER
+
+		SI REG_FACTU.FECHA > FECHA_DADA ENTONCES
+
+			SI REG_FACTU.TOTAL < 1000 ENTONCES
+			
+				ESCRIBIR(REG_FACTU.N_FACTURA, REG_FACTU.FECHA.DD, REG_FACTU_FECHA.MM,REG_FACTU_FECHA.AA, REG.FACTU.TOTAL);
+			FS;
+		FS;
+		LEER(ARCH_FACTU, REG_FACTU);
+	FM;
+	CERRAR(ARCH_FACTU);
+
+Fin_Accion.
+
+
+
+
+
+

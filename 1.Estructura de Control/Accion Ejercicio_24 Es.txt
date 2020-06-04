@@ -1,0 +1,46 @@
+Accion Ejercicio_24 Es
+
+	AMBIENTE
+	 
+	IMPORTE, IMPUESTO, CUOTAS: REAL;
+	C_CUO : ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa permite calcular el impuesto a pagar y sus repectivas cuotas de un importe de dinero ingresado");
+	Escribir ("Ingrese el importe de dinero;"); Leer(IMPORTE);
+	REPETIR
+		
+		IMPUESTO:= (IMPORTE * 0.1);
+		SI (IMPORTE > 500) ^ (IMPORTE < 1001) ENTONCES
+			CUOTAS:= (IMPUESTO / 2);	
+			C_CUO:= 2;
+		FS;
+		SI (IMPORTE > 1000) ENTONCES
+		 	CUOTAS:= (IMPUESTO / 3);
+		 	C_CUO:= 3;
+		FS;
+		SI (IMPORTE < 501) ENTONCES		
+			CUOTAS:= IMPUESTO;
+			C_CUO:= 1;
+		FS;
+
+		Escribir ("El valor del impuesto es:",IMPUESTO);
+		Escribir (" Y lo puede abonar en",C_CUO,"Cuota/s de:",CUOTAS);
+		Escribir ("¿Desea agregar otro importe? Ingrese su nuevo importe:/ingrese 9999 para salir:"); Leer(IMPORTE);
+
+	HASTA QUE IMPORTE = 9999;
+	
+Fin_Accion;
+
+
+
+
+
+
+
+
+
+
+		
+

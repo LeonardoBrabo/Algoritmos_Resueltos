@@ -1,0 +1,73 @@
+Accion Ejercicio_22 Es
+
+	AMBIENTE
+
+	NUM,RESTO,DIVISOR : ENTERO
+	-------------------------- (para version mxc y pre-tes:)
+	NUM,C, I : ENTERO;
+
+	
+	PROCESO
+
+	Escribir (" este programa determina si un numero es primo:");
+	Escribir ("ingrese un numero:"); Leer(NUM);
+
+	DIVISOR:= 1;
+	RESTO:= 0                             	 //Version propia de resolucion del problema.
+	MIENTRAS (RESTO = 0) HACER
+		RESTO:= NUM mod DIVISOR
+		DIVISOR:= DIVISOR + 1;
+	FM;
+
+	SI DIVISOR > 3 ENTONCES
+		Escribir (" el numero no es primo");
+	SINO
+		Escribir (" el numero es primo");
+	FS;
+Fin_Accion;
+
+------------------------------------------------
+
+C:=0;
+PARA I:= 2 HASTA (NUM-1) HACER  		// para no dividir por 1 y su numero.
+	SI (NUM mod I) = 0 ENTONCES			// I se puede operar y mostrar pero no cambiar su valor.
+		C:= C+1;						// Version presentada por la catedra, es mas eficiente.
+	FS;
+FP;
+
+SI C = 0 ENTONCES  
+	Escribir ("es primo");
+SINO
+	Escribir ("no es primo");
+FS;
+
+-------------------------------------------------
+C:= 0; I:=2;							// asignamos a I:=2 para que no pruebe con 1 ,porque todo numero es divisible por uno.
+MIENTRAS (C = 0) ^ (I < NUM) HACER		// Version presentada por la catedra, tambien es eficiente.
+	SI (NUM mod I) = 0 ENTONCES
+		C:= C + 1;
+	FS;
+	I:= I + 1;
+FM;
+
+SI C = 0 ENTONCES  
+	Escribir ("es primo");
+SINO
+	Escribir ("no es primo");
+FS;
+--------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+		
+

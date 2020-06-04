@@ -1,0 +1,78 @@
+ACCION AFIP ES
+    AMBIENTE
+    
+    Persona,Cuit,Salida: Secuencia de Caracter;
+    VP,VC: Caracter;
+    Vocal = {"A","E","I","O","U"}
+    Tot,Pfisicas,cont: Entero
+
+
+
+    PROCESO
+    ARR(Persona); ARR(Cuit); CREAR(Salida);
+    AVZ(Persona,VP); AVZ(Cuit,VC);
+    cont:= 0;                                    //para indicar que numero de provincia estoy tratando
+    MIENTRAS NFDS(Persona) HACER
+        Tot:=0;  Pfisicas:=0;                   //pongo en cero porque es el total de personas fisicas por provincia
+        MIENTRAS VP <> "&" HACER
+            Tot:= Tot +1; 
+            SI VC = "2" ENTONCES                    // Es una persona fisica
+                Pfisicas:= Pfisicas + 1;
+                SI VP EN VOCAL ENTONCES
+
+                    AVZ(Cuit,VC); AVZ(Cuit,VC)  //Me posiciono en el dni
+                    PARA I:= 1 HASTA 8          //copio dni a la salida y supongo que estan todos continuos
+                        ESC(Salida,VC);
+                        AVZ(Cuit,VC);
+                    FP;
+                    MIENTRAS VP <> "-" HACER    //copio el nombre completo a la salida
+                        ESC(Salida,VP);
+                        AVZ(Persona,VP);
+                    FM;
+                    ESC(Salida,"-");
+                    PARA I:= 1 HASTA 9 HACER    // avanzo hasta el primer caracter del nombre siguiente
+                        AVZ(Persona,VP);
+                    FP;
+                SINO
+                    MIENTRAS  VP <> "-" HACER   // avanzo todo el nombre
+                        AVZ(Persona,VP);
+                    FM;
+                    PARA I := 1 HASTA 9 HACER   //avanzo la fecha hasta el primer caracter del nombre siguiente
+                        AVZ(Persona,VP)
+                    FP;
+                    PARA I:= 1 HASTA 11 HACER  // avanzo todo el cuit y me posiciono en el primer caracter del tipo
+                        AVZ(Cuit,VC);
+                    FP;
+                FS;
+            SINO
+                MIENTRAS  VP <> "-" HACER   // avanzo todo el nombre
+                    AVZ(Persona,VP);
+                FM;
+                PARA I := 1 HASTA 9 HACER   //avanzo la fecha hasta el primer caracter del nombre siguiente
+                    AVZ(Persona,VP)
+                FP;
+                PARA I:= 1 HASTA 11 HACER  // avanzo todo el cuit y me posiciono en el primer caracter del tipo
+                    AVZ(Cuit,VC);
+                FP;
+            FS;
+        FM;
+        cont:= cont +1;
+        ESC("Para la provincia", cont, "el total de personas fisicas es:",Pfisicas);
+        ESC("Y el porcentaje sobre el total de la provincia es:",(Pfisicas*100)DIV tot,"%");
+        AVZ(Persona,VP); // avanzo el "&"
+    FM;
+    CERRAR(Persona); CERRAR(Cuit); CERRAR(Salida);
+FIN_ACCION.
+
+    
+
+
+
+
+                    
+                  
+                    
+
+
+
+

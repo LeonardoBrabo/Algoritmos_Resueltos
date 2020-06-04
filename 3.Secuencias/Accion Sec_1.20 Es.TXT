@@ -1,0 +1,91 @@
+Accion Sec_1.20 Es
+
+	AMBIENTE
+
+	ORACIONES1 , ORACIONES2, SALIDA : Secuencia de Caracteres;
+	V1, V2 : Caracter;
+	CO1, CO2 : Entero;
+
+	PROCESO
+
+	ESCRIBIR("Este programa copia el sujeto de la oracion 1 y el predicado de la oracion 2 en otra secuencia y determina cuantas oraciones tiene cada secuencia: ");
+	ARR(ORACIONES1); ARR(ORACIONES2); CREAR(SALIDA);
+	AVZ(ORACIONES1, V1); AVZ(ORACIONES2, V2); CO1:=0; CO2:= 0;
+
+	MIENTRAS NFDS(ORACIONES1) ^ NFDS(ORACIONES2) HACER  
+		MIENTRAS (V1 <> ".") HACER          {tratare todos los caracteres de la sec 1 hasta el punto}
+			MIENTRAS (V1 <>  ",") HACER		{mientras no sea una coma que trate los blancos y escriba las palabras en una secuencia nueva}	
+				MIENTRAS (V1 = " ") HACER
+					AVZ(ORACIONES1, V1);
+				FM;
+
+				MIENTRAS (V1 <> ",") ^ (V1 <> " ") HACER
+					ESCRIBIR(SALIDA,V1);
+					AVZ(ORACIONES1, V1);
+				FM;
+
+				ESCRIBIR(SALIDA, ",");			{luego de copiar las palabras agrego una coma y un espacio a la secuencia nueva}
+				ESCRIBIR(SALIDA, " ");
+			FM;	
+			MIENTRAS (V <> ".") HACER			{avanzo hasta llegar a un punto, no me interesa el predicado de la primer oracion}
+				AVZ(ORACIONES1, V1);	
+			FM;
+		FM;
+		CO1:= CO1 + 1;						{luego de encontrar el primer punto cuento la oracion}
+		AVZ(ORACIONES1, V1);				{avanzo el punto de la primera secuencia}
+
+		
+		MIENTRAS (V2 <> ",") HACER			{comienzo a tratar la segunda secuencia, avanzo todo el sujeto de la segunda secuencia}
+			AVZ(ORACIONES2,V2);
+		FM;
+		AVZ(ORACIONES2, V2);				{avanzo la coma}
+		MIENTRAS (V2 <> ".") HACER			{comienzo a tratar el predicado de la segunda secuencia, limpio blancos}
+			MIENTRAS (V = " ") HACER
+				AVZ(ORACIONES2, V2);
+			FM;
+			MIENTRAS(V2 <> ".") ^(V2 <> " ") HACER			{copio el predicado de la segunda secuencia}
+				ESCRIBIR(SALIDA,V2)
+				AVZ(ORACIONES2, V2);
+			FM;
+		FM;	
+		ESCRIBIR(SALIDA,".");				{agrego un punto a la secuencia de salida}
+		ESCRIBIR(SALIDA," ");				{agrego un blanco a la secuencia de salida}
+		CO2:= CO2 + 1;						{luego de encontrar un punto en la secuencia cuento la oracion}
+		AVZ(ORACIONES2, V2);				{avanzo el punto de la segunda secuencia}
+	FM;										{sale del ciclo principal cuando una de las dos termine primero}
+
+
+	SI FDS(ORACIONES2) ENTONCES					{controlo cual terminó primero y ejecuto el ciclo para tratar la oracion que falte contar}
+		MIENTRAS NFDS(ORACIONES1) HACER			{si terminó la segunda secuencia}
+			MIENTRAS (V1 <> ".") HACER
+				AVZ(ORACIONES1,V1);
+			FM;
+			CO1:= (CO1 + 1);	
+			AVZ(ORACIONES1, V1);			
+		FM;
+	SINO												{si terminó encambio la primer sec}
+		MIENTRAS NFDS(ORACIONES2) HACER					{cuento la oraciones que falta de la segunda secuencia}
+			MIENTRAS (V <> ".") HACER
+				AVZ(ORACIONES2, V2);
+			FM;
+			CO2:= (CO2 + 1);
+			AVZ(ORACIONES2, V2);	
+		FM;
+	FS;
+	CERRAR(ORACIONES1); CERRAR(ORACIONES2); CERRAR(SALIDA);		
+	ESCRIBIR ("La primer secuencia tiene:", C01 ,"Oraciones");	
+	ESCRIBIR ("La segunga secuencia tiene:", C02 ,"Oraciones");
+	ESCRIBIR ("La secuencia de salida ha sido creada con exito");
+
+Fin_Accion.
+
+
+
+
+
+
+
+
+
+
+

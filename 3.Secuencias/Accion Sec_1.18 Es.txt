@@ -1,0 +1,42 @@
+Accion Sec_1.18 Es
+
+	AMBIENTE
+
+	SEC,SALIDA:Secuencia de Enteros;
+	V,PRIMER_C: Caracter;
+	CP: Entero;
+
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo genera otra secuencia que contenga una oracion formada por las palabras en posicion par de cada horacion, que comienzan con la letra M, de una secuencia de entrada:");
+	ARR(SEC); CREAR(SALIDA); AVZ(SEC,V);
+	MIENTRAS NFDS(SEC) HACER
+		CP:=0;      {se inicializa el contador dentro del ciclo para que no se sumen las palabras entre las oraciones}
+		MIENTRAS NFDS(SEC) ^ (V <> ".") HACER		
+			MIENTRAS (V = " ") HACER
+				AVZ(SEC,V);
+			FM;
+			CP:= (CP + 1);					{cuento la palabra para saber en que posicion esta}
+			PRIMER_C:= V;
+			SI (CP mod 2 = 0) ^ (PRIMER_C = "M") ENTONCES		{si es par y el primer caracter es m, comienzo a copiar}
+				MIENTRAS (V <> ".") ^ (V <> " ") HACER
+					ESCRIBIR(SALIDA,V);
+					AVZ(SEC,V);
+				FM;
+				ESCRIBIR(SALIDA, " ");				{cuando termina de copiar agrego un blanco a la secuencia de salida para separar las palabras}
+			SINO
+				MIENTRAS (V <> ".") ^ (V <> " ") HACER  {sino se cumple con las condiciones avanzo hasta la proxima palabra}
+					AVZ(SEC,V);
+				FM;
+			FS;
+		FM;
+		SI V = "." ENTONCES	 	{pregunto si es punto para no avanzar cuando ya estoy en un FDS que seria un error}		
+			AVZ(SEC,V);
+		FS;
+	FM;
+	ESCRIBIR(SALIDA,"."); {agrego al final de la secuencia creada un punto para que quede armada la oracion}
+	CERRAR(SEC); CERRAR(SALIDA);	
+
+Fin_Accion;					
+		

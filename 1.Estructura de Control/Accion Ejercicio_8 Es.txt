@@ -1,0 +1,25 @@
+Accion Ejercicio_8 Es
+	AMBIENTE
+
+	DA,DN: 1..31;           		//DA:dia de actual, DN:dia de nacimiento//
+	MA,MN: 1..12;    				//MA: mes actual, MN: mes de naciemiento//
+	AA,AN,EDAD: ENTERO;     		//AA: año actual, AN: año de nacimiento//
+	
+	PROCESO
+
+	Escribir ("Este programa permite conocer la edad de una persona, solo ingresando la fecha de nacimiento y la fecha actual");
+	Escribir ("Ingrese la fecha actual en el formato DIA,MES,AÑO");	Leer(DA,MA,AA);
+	Escribir ("Ingrese la fecha de nacimiento en el formato DIA,MES,AÑO"); Leer(DN,MN,AN);
+	Edad:= AA-AN;
+	SI MA = MN ENTONCES
+		SI DA < DN ENTONCES
+			Edad:= Edad-1;
+		FSI;
+	SINO
+		SI MA < MN ENTONCES
+			Edad:= Edad-1;
+		FSI;
+	FSI;
+	Escribir ("La edad de la persona es", EDAD);
+FinAccion.
+

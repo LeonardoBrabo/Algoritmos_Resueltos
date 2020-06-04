@@ -1,0 +1,96 @@
+Accion Corte_2.11 Es
+
+	AMBIENTE
+
+	FECHA = REGISTRO;
+		AA:N(4)
+		MM: 1..12;
+		DD: 1..31;
+	FG;
+
+	ALUMNOS = REGISTRO
+		SEXO: ("F","M");
+		CARRERA: ("IEM","IQ","ISI");
+		NRO_LEG: N(6);
+		FECHA_ING: FECHA;
+		TOTAL_MAT: N;
+	FR;
+
+	ARCH_ALUMNOS: Archivo de ALUMNOS ordenado por SEXO,CARRERA,NRO_LEG;
+	REG_ALUMNOS: ALUMNOS;
+
+	TOTSEXMAS, TOTSEXMEN , TOTCARMAS, TOTCARMEN, TOTGENMAS TOGENMEN : N;
+	RES_SEXO: ("F","M");
+	RES_CARR: ("IEM","IQ","ISI");
+
+	SUBACCION CORTE_CAR ES
+
+		ESCRIBIR(" De la carrera:", RES_CARR);
+
+		ESCRIBIR("El total de alumnos que ingresaron en el año 2009 con mas de 20 materias a probadas es:", TOTCARMAS);
+
+		ESCRIBIR("El total de alumnos que ingresaron en el año 2009 con menos de 20 materias a probadas de la carrera es:", TOTCARMEN);
+
+		TOTSEXMAS:= TOTSEXMAS + TOTCARMAS;
+		TOTSEXMEN:= TOTSEXMEN + TOTCARMEN;
+
+		TOTCARMAS:= 0;	
+		TOTCARMEN:= 0;
+
+		RES_CARR:= REG_ALUMNOS.CARRERA;
+	FSUB;
+
+
+	SUBACCION CORTE_SEXO  ES
+
+		CORTE_CAR;
+
+		ESCRIBIR("Del sexo:", RES_SEXO);
+
+		ESCRIBIR("El total de alumnos que ingresaron en el año 2009 con mas de 20 materias a probadas es:", TOTSEXMAS);
+
+		ESCRIBIR("El total de alumnos que ingresaron en el año 2009 con menos de 20 materias a probadas de la carrera es:", TOTSEXMEN);
+
+		TOTGENMAS:= TOTGENMAS + TOTSEXMAS;
+		TOTOGENMEN:= TOTGENMEN + TOTSEXMEN;
+		
+		TOTSEXMAS:= 0;
+		TOTSEXMEN:= 0;
+
+		RES_SEXO:= REG_ALUMNOS.SEXO;
+	FSUB;
+
+
+	PROCESO
+
+	ABRIR(ARCH_ALUMNOS); LEER(ARCH_ALUMNOS, REG_ALUMNOS)
+
+	RES_CARR:= REG_ALUMNOS.CARRERA;
+	RES_SEXO:= REG_ALUMNOS.SEXO;
+
+	TOTSEXMAS:=0; TOTSEXMEN:=0; TOTCARMAS:=0; TOTCARMEN:=0; TOTGENMAS:=0; TOTGENMEN:=0;
+
+	MIENTRAS NFDA(ARCH_ALUMNOS) HACER
+
+		SI RES_SEXO <> REG_ALUMNOS.SEXO ENTONCES
+			CORTE_SEXO
+		SINO
+			SI RES_CARR <> REG_ALUMNOS.CARRERA ENTONCES
+				CORTE_CAR;
+			FS;
+		FS;
+		SI REG_ALUMNOS.FECHA_ING.AA = 2009 ENTONCES
+			SI REG_ALUMNOS.TOTAL_MAT > 20 ENTONCES
+				TOTCARMAS:= TOTCARMAS + 1;
+			SINO
+				TOTCARMEN:= TOTCARMEN + 1;
+			FS;
+		FS;
+		LEER(ARCH_ALUMNOS, REG_ALUMNOS);
+	FM;
+	CORTE_SEXO;
+	ESCRIBIR("El total general de alumnos que ingresaron en el 2009 con mas de 20 materias aprobadas:", TOTGENMAS);
+	ESCRIBIR("El total general de alumnos que ingresaron en el 2009 con menos de 20 materias aprobadas:", TOTGENMEN);
+	CERRAR(ARCH_ALUMNOS);
+Fin_Accion.
+

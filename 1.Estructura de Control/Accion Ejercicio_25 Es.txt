@@ -1,0 +1,31 @@
+Accion Ejercicio_25 Es
+
+	AMBIENTE
+	 
+	I, ANT1, ANT2, FIBO :ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa calcula los primero 50 numero de la serie de Fibonacci:");
+	ANT1:= 0;
+	ANT2:= 1;
+	PARA I:= 1 HASTA 50 HACER
+		Escribir (ANT1);
+		FIBO:= ANT1 + ANT2;
+		ANT1:= ANT2;
+		ANT2:= FIBO;
+	FP;
+
+Fin_Accion;
+
+
+
+
+
+
+
+
+
+
+		
+

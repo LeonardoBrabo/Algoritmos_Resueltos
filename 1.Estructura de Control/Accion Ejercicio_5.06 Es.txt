@@ -1,0 +1,19 @@
+Accion Ejercicio_5.06 Es
+	AMBIENTE
+
+	A, B, C, D, X, Y :ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa calcula el producto entre dos numeros complejos:");
+	Escribir ("siguiendo el ejemplo: (a,b) ingrese a:"); Leer(A);
+	Escribir ("siguiendo el ejemplo: (a,b) ingrese b:"); Leer(B);
+	Escribir ("segundo numero complejo:");
+	Escribir ("siguiendo el ejemplo: (c,d) ingrese c:"); Leer(C);
+	Escribir ("siguiendo el ejemplo: (c,d) ingrese d:"); Leer(D);
+	X:= (A*C - D*B);
+	Y:= (A*D + B*C);
+	Escribir ("El resultado del producto entre: (" ,A, "," ,B, ") y (" ,C, "," ,D, ") ES: (" ,X, "," ,Y, ")";
+
+FinAccion.
+

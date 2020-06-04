@@ -1,0 +1,35 @@
+Accion Sec_1.17 Es
+
+	AMBIENTE
+
+	SEC:Secuencia de Enteros;
+	V: Caracter;
+	CL,CP: Entero;
+	PROM_L,V1,V2: Real;
+
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina el costo de un telegrama donde cada una vale V1 pero si el promedio de letras por palabra supera las cinco letras vale V2:")
+	ESCRIBIR("Ingrese el valor para V1"); LEER(V1);
+	ESCRIBIR("Ingrese el valor para V2"); LEER(V2);
+	ARR(SEC); AVZ(SEC,V); CP:=0; CL:=0;
+	MIENTRAS NFDS(SEC) HACER
+		MIENTRAS V = "" HACER
+			AVZ(SEC,V);
+		FM;
+		CP:= (CP + 1);
+		MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+			CL:= (CL + 1);
+			AVZ(SEC,V);
+		FM;
+	FM;
+	PROM:= (CL/CP);
+	SI PROM > 5 ENTONCES
+		ESCRIBIR("El valor del telegrama es: ", CP*V2);
+	SINO
+		ESCRIBIR("El valor del telegrama es: ", CP*V1);
+	FS;
+	CERRAR(SEC);
+
+Fin_Accion.

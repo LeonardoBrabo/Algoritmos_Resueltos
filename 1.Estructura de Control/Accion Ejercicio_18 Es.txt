@@ -1,0 +1,40 @@
+Accion Ejercicio_18 Es
+	AMBIENTE
+
+	F, G, COCIENTE, RESTO: ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa calcula el cociente y el resto entre dos enteros, solo empleando sumas y restas:");
+	Escribir ("Ingrese Dividendo: "); Leer(F);
+	Escribir ("Ingrese Divisor: "); Leer(G);
+	COCIENTE:= 0;
+	RESTO:= F;
+	SI G > 0 ENTONCES 
+		MIENTRAS RESTO > G HACER
+			COCIENTE:= (COCIENTE + 1);
+			RESTO:= (RESTO - G);
+		FM;
+		SI RESTO = G ENTONCES
+			COCIENTE:= 1;
+			RESTO:= 0;
+		FS;
+
+		Escribir ("El cociente de la division es: ",COCIENTE);
+		Escribir ("EL resto de la division es:", RESTO);
+	SINO
+
+		Escribir ("no es posible realizar el cociente cuando el divisor es menor o igual a cero");
+	FS;	
+Fin_Accion.
+
+
+----------------------------------
+ejemplo:
+
+23/2 =11.5
+RESTO = 1
+
+contador:= 1 2 3 4 5 6 7 8 9 10 11
+resto:1
+----------------------------------

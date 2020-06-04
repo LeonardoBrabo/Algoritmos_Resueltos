@@ -1,0 +1,71 @@
+Accion Sec_1.26 Es 
+
+ 	AMBIENTE
+
+ 	S1,S2,SAL,AUX : Secuencia de caracteres;
+ 	V1,V2,VA,PRI,ULT: Caracter;
+ 	DIGITOS= ("0","1","2","3","4","5","6","7","8","9");
+ 	CP: Entero;
+ 	BANDERA: booleano;
+
+
+ 	PROCESO
+
+ 	ESCRIBIR ("Este algoritmo copia de s1 las palabras que comienzen y terminen con la misma letra, y de s2 las palabras que contengan almenos un digito numerico y ademas esten en posicion par, a la secuencia de salida de forma intercalada :");
+ 	ARR(S1); ARR(S2); CREAR(SAL);
+ 	AVZ(S1,V1); AVZ(S2,V2); CP:=0;
+ 	MIENTRAS NFDS(S1) ^ NFDS(S2) HACER
+ 		BANDERA:= FALSO;							{bandera que sirve para analizar si se encuentra almenos 1 digito en la palabra de la secuencia s2}
+ 		MIENTRAS V1 = " " HACER						{limpio los blancos de la secuencia 1}
+ 			AVZ(S1,V1);
+ 		FM;
+ 		PRI:= V1;									{guardo el primer caracter de la palabra}
+ 		CREAR(AUX);									{creo la sec auxiliar}
+ 		MIENTRAS NFDS(S1) ^ (V1 <> " ") HACER	
+ 			ESCRIBIR(AUX,V1);						{escribo todos los caracteres en la sec aux}
+ 			ULT:= V1;								{guardo siempre el ultimo caracter}
+ 			AVZ(S1,V1);							
+ 		FM;
+ 		CERRAR(AUX);								{cierro la sec aux para arrancarla}
+ 		SI PRI = ULT ENTONCES						{pregunto qsi el primer caracter es igual al ultimo}
+ 			ARR(AUX);AVZ(AUX,VA);				
+ 			MIENTRAS NFDS(AUX) HACER				{de serlo, copio la palabra almacenada en la sec aux a la salida}
+ 				ESCRIBIR(SAL,VA);
+ 				AVZ(AUX,VA);
+ 			FM;
+ 			ESCRIBIR(SAL," ");						{agrego un blanco en la salida, para separar las palabras}
+ 			CERRAR(AUX);							{cierro la secuencia aux para volver a crear otra}
+ 		FS;
+ 		MIENTRAS V2 = " " HACER						{Limpio los blancos de la secuencia 2}
+ 			AVZ(S2,V2):
+ 		FM;	
+ 		CP:= CP+1									{cuento la palabra, para saber su posicion}
+ 		SI (CP MOD 2 = 0) ENTONCES					{controlo que la posicion sea par}
+ 			CREAR(AUX);								{de serlo creo nuevamente la sec aux, borra todo lo que tenia anteriormente}
+ 			MIENTRAS NFDS(S2) ^ (V2 <> " ") HACER	
+ 				SI V2 EN DIGITO ENTONCES			{pregunto por cada caracter distinto de blanco si es un digito numerico}
+ 					BANDERA:= VERDADERO;			{de serlo la bandera se pondra en verdadero, es decir tiene almenos un digito numerico}
+ 				FS
+ 				ESCRIBIR (AUX,V2)					{escribo en la secuencia aux la palabra}
+ 				AVZ(S2,V2);
+ 			FM;
+ 			CERRAR(AUX);							{cierro la sec aux para arrancarla}
+ 			SI BANDERA = VERDADERO ENTONCES			{controlo que haya almenos un caracter que sea un digito numerico, de serlo copio a la salida}
+ 				ARR(AUX); AVZ(AUX,VA);
+ 				MIENTRAS NFDS(AUX) HACER			{copio a la salida,la palabra almacenada en la sec aux}
+ 					ESCRIBIR(SAL,VA);
+ 					AVZ(AUX,VA);
+ 				FM;
+ 				ESCRIBIR(SAL," ");					{agrego un blanco a la salida, para separar las palabras siguientes}
+ 				CERRAR(AUX);						{cierro la sec aux, para luego volver a crearla}
+ 			FS;
+ 		SINO										{en caso que ya no se cumpla que la palabra esta en posicion par}
+ 			MIENTRAS NFDS(S2) ^ (V2 <> " ") HACER	{avanzo toda la palabra}
+ 				AVZ(S2,V2);
+ 			FM;
+ 		FS;
+ 	FM;
+ 	CERRAR(S1); CERRAR(S2); CERRAR(SAL);
+ 	ESCRIBIR("Secuencia de salida creada con exito")
+ 	
+Fin_Accion.  

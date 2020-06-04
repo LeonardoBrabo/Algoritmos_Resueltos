@@ -1,0 +1,31 @@
+Accion Ejercicio_10 Es
+	AMBIENTE
+
+	A, B : REAL;
+	
+	PROCESO
+
+	Escribir ("Este programa permite determinar si entre dos numeros ingresados, saber cual es divisor entre ellos: ");
+	Escribir ("Ingrese A (Primer Numero)"); Leer(A);
+	Escribir ("Ingrese B (Segundo Numero)"); Leer(B);
+	SI ( A mod B = 0 ) ENTONCES
+		Escribir ("B es divisor de A");
+	SINO
+		SI (B mod A = 0) ENTONCES
+			Escribir("A es divisor de B");
+		SINO
+			Escribir ("ninguno es divisor");
+		FSI;
+	FSI;
+FinAccion.
+
+
+
+---------------------------------------------------
+Operacion para calcular el resto con la calculadora:
+---------------------------------------------------
+
+ 1) a / b = x,y   {a=dividendo, b=divisor, x=parte entera, y= parte decimal}
+ 2) x,y - x = 0,y {2) respresenta que solo miramos la parte decimal del cociente es decir y}
+ 3) 0,y * b = r   {y a la parte decimal la multiplicamos por el divisor (b)}
+

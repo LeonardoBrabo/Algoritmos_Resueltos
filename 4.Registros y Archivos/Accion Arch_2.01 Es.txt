@@ -1,0 +1,48 @@
+Accion Arch_2.01 Es
+
+	AMBIENTE
+
+	FECHA = REGISTRO;	{defino el formato o tipo de dato fecha}
+		AA: N(4);
+		MM: 1..12;
+		DD: 1..31;
+	FR;
+
+	FACULTAD = REGISTRO			{defino el formato que contendra cada registro de mi archivo de facultad}
+		APYNOM: AN(50);
+		N_LEG: N(6);
+		FECHA_ING: FECHA;			{es de tipo fecha, es decir que contendrá los datos que definimos en el registro FECHA}
+		SEXO: ("M","F");
+		CARRERA: ("ISI","IEM","IQ");
+		FECHA_NAC: FECHA;
+		DNI: N(8):
+		FECHA_UEXAPR: FECHA;
+		NOTA: N(2);
+	FR;
+
+	ARCH_FAC: Archivo de FACULTAD;			{defino el nombre de mi archivo, y aclaro que formato tendrá, en este caso el de FACULTAD}
+	REG_FAC: FACULTAD;						{defino la variable, con la que voy a ir leyendo en memoria interna, cada uno de los registros del archivo}
+
+	PROCESO
+
+	ABRIR E/(ARCH_FAC); LEER(ARCH_FAC, REG_FAC);	
+
+	ESCRIBIR(" | Nro.Legajo | Apellido y Nombre | Documento | Carrera |");		{muestro una cabecera, de los datos que voy a mostrar}
+
+	MIENTRAS NFDA(ARCH_FAC) HACER			{ciclo principal con el que voy a recorrer cada uno de los registro que tiene mi archivo}
+
+		ESCRIBIR(REG_FAC.N_LEG, REG_FAC.APYNOM, REG_FAC.DNI, REG_FAC.CARRERA);	{muestro, lo datos de cada registro, en el orden de la cabecera}
+
+		LEER(ARCH_FAC, REG_FAC);		{almaceno el proximo registro de mi archivo en memoria interna, para luego mostrarlo(avanzo al proximo registro)}
+	FM;
+	CERRAR(ARCH_FAC);
+
+Fin_Accion.
+
+
+
+
+
+
+
+

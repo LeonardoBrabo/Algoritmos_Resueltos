@@ -1,0 +1,131 @@
+ACCION PintaDeArgentina ES 
+    AMBIENTE
+
+    Artistas,Obras,Salida : Secuencia de Caracter;
+    Va,Vo: Caracter;
+    cantObras,tot,I,ren,mayor: Entero;
+    
+    FUNCION CaracterACifra(A:Caracter): Entero
+        SEGUN A HACER
+            "0": CaracterACifra:= 0;
+            "1": CaracterACifra:= 1;
+            "2": CaracterACifra:= 2;
+            "3": CaracterACifra:= 3;
+            "4": CaracterACifra:= 4;
+            "5": CaracterACifra:= 5;
+            "6": CaracterACifra:= 6;
+            "7": CaracterACifra:= 7;
+            "8": CaracterACifra:= 8;
+            "9": CaracterACifra:= 9;
+        FS;
+    FF;
+
+    PROCEDIMIENTO AvanzarHastaMas() ES
+        MIENTRAS Va <> "+ " HACER  
+            AVZ(Artista,Va);
+        FM;
+        AVZ(Artistas,Va);
+    FP;
+
+
+    PROCEDIMIENTO ObtenerCantObras() ES
+        cantObras:=0;
+        MIENTRAS Va <> "?" HACER        
+            cantObras:= cantObras * 10 + CaracterACifra(Va); 
+            AVZ(Artista,Va);
+        FM;
+    FP;
+    PROCEDIMIENTO CopiarObras() ES
+        
+        PARA I:= 1 HASTA cantObras HACER
+            MIENTRAS Vo <> "/" HACER
+                MIENTRAS Vo <> "," HACER 
+                    ESC(Salida,Vo);
+                    AVZ(Obras,Vo);
+                FM;
+                Esc(Salida,"+");
+                AVZ(Obras,Vo);
+                MIENTRAS Vo <> "," HACER
+                    ESC(Salida,Vo);
+                    AVZ(Obras,Vo);
+                FM;
+                ESC(Salida,"+");
+                AVZ(Obras,Vo);
+                MIENTRAS Vo <> "/" HACER 
+                    AVZ(Obras,Vo);
+                FM;       
+            FM;
+            AVZ(Obras,Vo);   //EL SIGUIENTE CARACTER DESPUES DE LA BARRA /
+        FP;
+        ESC(Salida,"?");
+        
+    FP;
+    
+
+    PROCEDIMIENTO SecSalida() ES
+        ESC(Salida,"R");
+        ESC(Salida,"+");
+        AVZ(Artistas,Va);
+        AVZ(Artistas,Va);
+        MIENTRAS Va <> "+" HACER //copia el nombre
+            ESC(Salida,Va);
+            AVZ(Artistas,Va);
+        FM;
+        ESC(Salida,"+");
+        AVZ(Artistas,Va);
+        AvanzarHastaMas() //avanzo el lugar de origen
+        AvanzarHastaMas() //avanzo la edad
+        ObtenerCantObras() // Obetengo el numero de obras
+        CopiarObras()
+        
+    FP;
+
+    PROCEDIMIENTO AvanzarObrasyArtistas() ES
+        AvanzarHastaMas() //avanza el tipo
+        AvanzarHastaMas() //avanza el nombre
+        AvanzarHastaMas()   // avanza la ciudad
+        AvanzarHastaMas() //avanza la edad, y queda posicionado en cantidad de obras
+        ObtenerCantObras()
+        PARA I:= 1 hasta cantObras HACER  
+            MIENTRAS <> "/" HACER
+                AVZ(Obras,Vo);
+            FM;
+            AVZ(Obras;Vo);
+        FP;
+    FP;
+
+    PROCEDIMIENTO ESMayor() ES
+        SI cantObras > Mayor ENTONCES 
+             Mayor:= cantObras;
+        FS
+    FP;
+
+
+    PROCESO
+
+    ARR(Artistas);  ARR(Obras); 
+    AVZ(Artistas,Vo) AVZ(Obras,Vo);
+    mayor:=0; ren:=0;
+    MIENTRAS NFDS(Artistas) HACER
+        MIENTRAS Va <> "?" HACER
+            SI Va = "R" ENTONCES
+                SecSalida();
+                ren:= ren+cantObras //cuento la cantidad de obras renacentistas
+                tot:= tot +cantObras;
+                ESMayor()
+
+            SINO
+                AvanzarObrasyArtistas();
+                tot:=tot+1;
+                ESMayor()
+            FS;               
+        FM;
+        AVZ(Artista,Va);
+    FM;
+    CERRAR(Artista); CERRAR(Obras); CERRAR(Salida);
+    ESC("La mayor cantidad de obras vendidas por un artista fue:", mayor);
+    ESC("El porcentaje de obras renacentistas sobre el total fue:", (ren*100)/tot);
+FIN_ACCION.
+
+
+

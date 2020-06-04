@@ -1,0 +1,50 @@
+Accion Ejercicio_12 Es
+	AMBIENTE
+
+	NUM,UNIDAD,AUX,DECENA,CENTENA,MILESIMA: REAL;
+	
+	PROCESO
+
+	Escribir ("Este programa permite determinar si un numero ingresado entre 100 y 1000 es multiplo de tres y lo descompone en unidad,decena,centena y unidad de mil");
+	Escribir ("Ingrese un numero entre 100 y 1000"); Leer(NUM);
+
+	SI (NUM < 100) o (NUM >1000) ENTONCES
+
+		Escribir ("el numero esta fuera del rango");
+	FSI;
+	SI (NUM >=100) y (NUM <=1000) ENTONCES
+
+		SI (NUM mod 3 = 0) ENTONCES
+
+			SI NUM = 1000 ENTONCES                      {Este codigo sirve tambien para descomponer numeros hasta 9999}
+				UNIDAD:= NUM mod 10;					{En este ejercicio seria suficiente con asigarle a cada variable el numero que le corresponde al descomponer el mil}
+				Escribir ("La unidad es:", UNIDAD);		{por que en este caso conocemos que es el unico numero de 4 cifras que puede llegar a tomar.}
+				AUX:= NUM - UNIDAD;
+				AUX:= AUX mod 100;
+				DECENA:= AUX/10;
+				Escribir ("La decena es:", DECENA);
+				AUX:= (NUM-DECENA*10-UNIDAD) -1000;
+				CENTENA:= AUX/100;
+				Escribir ("La centena es: ", CENTENA);
+				MILESIMA:= TRUNC (NUM/1000);
+				Escribir ("La milesima es:", MILESIMA);
+			FSI;
+
+			SI NUM < 1000 ENTONCES  						{pregunto solo si es menor a mil porque anteriormente ya verificamos que este dentro del rango}
+
+				UNIDAD:= NUM mod 10;
+				Escribir ("La unidad es:", UNIDAD);
+				AUX:= NUM - UNIDAD;
+				AUX:= AUX mod 100;
+				DECENA:= AUX/10;
+				Escribir ("La decena es:", DECENA);
+				AUX:= (NUM-DECENA*10-UNIDAD); 
+				CENTENA:= AUX/100;
+				Escribir ("La centena es: ", CENTENA);
+			FSI;
+		SINO
+			Escribir ("El numero no es mutiplo de 3");
+		FSI;
+	FSI;		
+FinAccion.
+

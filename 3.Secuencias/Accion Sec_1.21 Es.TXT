@@ -1,0 +1,75 @@
+Accion Sec_1.21 Es     {mas eficiente, se puede usar para 1.20}
+
+	AMBIENTE
+
+	ORACIONES1 , ORACIONES2, SALIDA : Secuencia de Caracteres;
+	V1, V2 : Caracter;
+	CO1, CO2 : Entero;
+
+	PROCESO
+
+	ESCRIBIR("Este programa copia el sujeto de la oracion 2 y el predicado de la oracion 1 en otra secuencia y determina cuantas oraciones tiene cada secuencia: ");
+	ARR(ORACIONES1); ARR(ORACIONES2); CREAR(SALIDA);
+	AVZ(ORACIONES1, V1); AVZ(ORACIONES2, V2); CO1:= 0; CO2:=0;
+	MIENTRAS NFDS(ORACIONES1) ^ NFDS(ORACIONES2) HACER
+
+		MIENTRAS V1 <> "," HACER		{Avanza sujeto de la primer secuencia}		
+			AVZ(ORACIONES1,V);
+		FM;
+		AVZ(ORACIONES1, V1);			{avanza la coma}
+
+		MIENTRAS V2 <> "," HACER		{copia el sujeto de la segunda secuencia}
+			ESCRIBIR(SALIDA,V2);		
+			AVZ(ORACIONES2,V2);
+		FM;
+		ESCRIBIR(SALIDA,",");			{agrega una coma en la secuencia de salida}
+		AVZ(ORACIONES2, V2);			{avanza la coma}
+
+		MIENTRAS V1 <> "." HACER		{copia el predicado de la primer secuencia}
+			ESCRIBIR(SALIDA,V1);
+			AVZ(ORACIONES1, V1);
+		FM;
+		CO1:= (CO1 + 1);				{cuenta la oracion de la primer secuencia}
+		AVZ(ORACIONES1, V1);			{avanza el punto }
+
+		MIENTRAS V2 <> "." HACER		{avanza el predicado de la segunda secuencia}
+			AVZ(ORACIONES2, V2);
+		FM;
+		CO2:= (CO2 + 1);				{cuenta la oracion de la segunda secuencia}
+		AVZ(ORACIONES2,V2);				{avanza el punto}
+		ESCRIBIR(SALIDA,".");			{escribe en la salida un punto}
+	FM;
+
+	MIENTRAS NFDS(ORACIONES1) HACER			{si queda oraciones en la primer secuencia las cuento si terminó la segunda secuencia}
+		MIENTRAS V <> "." HACER
+			AVZ(ORACIONES, V1);
+		FM;
+		CO1:= (CO1 + 1);
+		AVZ(ORACIONES1, V1);
+	FM;
+
+	MIENTRAS NFDS(ORACIONES2) HACER				{si queda oraciones en la segunda secuencia las cuento si terminó la primer secuencia}
+		MIENTRAS V2 <> "." HACER
+			AVZ(ORACIONES2, V2);
+		FM;
+		CO2:= (CO2 + 1);
+		AVZ(ORACIONES2, V2);
+	FM;
+
+	CERRAR(ORACIONES1); CERRAR(ORACIONES2); CERRAR(SALIDA);
+	ESCRIBIR ("La primer secuencia tiene:", C01 ,"Oraciones");	
+	ESCRIBIR ("La segunga secuencia tiene:", C02 ,"Oraciones");
+	ESCRIBIR ("La secuencia de salida ha sido creada con exito");
+
+Fin_Accion.
+
+
+
+
+
+
+
+
+
+
+

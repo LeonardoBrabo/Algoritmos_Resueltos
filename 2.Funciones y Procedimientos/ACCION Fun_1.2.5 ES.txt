@@ -1,0 +1,35 @@
+ACCION Fun_1.2.5 ES
+	
+	AMBIENTE
+
+	Carac: Caracter;
+
+	FUNCION EsDigito(c:caracter): logico ES
+
+		AMBIENTE
+
+		conjunto = {"0","1","2","3","4","5","6","7","8","9"};
+
+
+		PROCESO
+
+		SI (c EN conjunto) ENTONCES
+
+			EsDigito:= Verdadero;
+		SINO
+
+			EsDigito:= Falso;
+		FS;
+	F_FUNCION;
+
+	PROCESO
+
+	ESC("Ingrese un caracter para verificar si es un digito o no:"); LEER(Carac);
+	ESC("Es un digito: ", EsDigito(Carac));
+F_ACCION.
+
+	
+
+
+
+

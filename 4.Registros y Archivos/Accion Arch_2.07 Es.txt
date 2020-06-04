@@ -1,0 +1,56 @@
+Accion Arch_2.07 Es
+
+	AMBIENTE
+
+	PADRON = REGISTRO
+		NOMYAPE: AN(30);
+		DNI: N(8);
+		MESA: N(2);
+		CIRCUITO: N(2);
+		CLASE: N(4);
+		DIRECCION: AN(30);
+		OBS: AN(100);
+		PARTIDO: 0..3;
+	FR;
+
+	ARCH_PAD: Archivo de PADRON;
+	REG_PAD: PADRON;
+
+	SALIDA = REGISTRO
+		NOMYAPE: AN(30);
+		DNI: N(8);
+		DIRECCION: AN(30);
+	FR;
+	ARCH_C, ARCH_NO: Archivos de SALIDA;
+	REG_C,REG_NO: SALIDA;
+
+	PROCESO
+
+	ESCRIBIR("Este programa genera dos nuevos archivos a partir de alchivo PADRON, uno que contiene lo afiliados al partido c(3) y otro lo que no son afiliados a ningun partido(0), con clase posterior a 1940.");
+
+	ABRIR E/(ARCH_PAD); LEER(ARCH_PAD,REG_PAD); ABRIR S/(ARCH_C);
+
+	ABRIR S/(ARCH_NO);
+
+	MIENTRAS NFDA(ARCH_PAD) HACER
+
+		SI REG_PAD.PARTIDO = 3 ENTONCES
+
+			REG_C.NOMYAPE:= REG_PAD.NOMYAPE;
+			REG_C.DNI:= REG_PAD.DNI;
+			REG_C.DIRECCION:= REG_PAD.DIRECCION;
+			ESCRIBIR(ARCH_C,REG_C);
+		SINO
+			SI (REG_PAD.PARTIDO = 0) ^ (REG_PAD.CLASE > 1940) ENTONCES
+			
+				REG_NO.NOMYAPE:= REG_PAD.NOMYAPE;
+				REG_NO.DNI:= REG_PAD.DNI;
+				REG_NO.DIRECCION:= REG_PAD.DIRECCION;
+				ESCRIBIR(ARCH_NO, REG_NO);
+			FS;
+		FS;
+		LEER(ARCH_PAD,REG_PAD);
+	FM;
+	CERRAR(ARCH_PAD); CERRAR(ARCH_C); CERRAR(ARCH_NO)
+
+Fin_Accion.

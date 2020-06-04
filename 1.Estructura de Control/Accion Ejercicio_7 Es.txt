@@ -1,0 +1,30 @@
+Accion Ejercicio_7_Condicionales Es
+	Ambiente
+	Numero1,Numero2,Suma : Entero;
+
+	Proceso
+
+	Escribir("Este Programa calcula la suma de dos números e imprime un mensaje:");
+	Escribir("Ingrese el Primer Número"); Leer(Numero1);
+	Escribir("Ingrese el Segundo Número"); Leer(Numero2);
+	Suma:= (Numero1 + Numero2);
+	SEGUN Suma HACER
+		<=50:  Escribir	("La suma es menor o igual a 50");                  
+		<=100: Escribir	("La suma es mayor a 50 y menor o igual que 100");		
+		<=200: Escribir ("La suma es mayor a 100 y menor o igual que 200");
+		>200:  Escribir ("La suma es mayor a 200");
+	FSegun;
+FinAccion.
+
+
+
+
+------------------------------------------------------------------------------
+{ La estructura condional multiple pregunta de manera secuencial es decir:}
+{Primero pregunta si la suma es <=50 en el caso de que sea falso,}
+{Preguntara luego si el resultado de la suma es <=100 como anteriormente ya verifico si
+es menor o igual a 50, y no entro en esa accion por dar falso, en la siguiente declaracion <=100
+por simple razonamiento enntenderemos que estara entre los mayores de 50 y los menores o igual a 100(>50 y <=100);
+y asi sucesivamente con las demas sentencias.
+------------------------------------------------------------------------------
+

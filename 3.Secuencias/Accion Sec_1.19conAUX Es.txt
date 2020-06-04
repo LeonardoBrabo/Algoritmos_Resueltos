@@ -1,0 +1,44 @@
+Accion Sec_1.19conAUX Es
+
+	AMBIENTE
+
+	SEC,AUX,SAL:Secuencia de Enteros;
+	V,VAUX: Caracter;
+	CL,CP,CP3: Entero;
+	PORCENT: Real;
+
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo genera una secuencia con todas las palabras de 3 letras, y muetras un % de las mismas:");
+	ARR(SEC); CREAR(SAL); AVZ(SEC,V); CP:= 0; CP3:=0
+	MIENTRAS NFDS(SEC) HACER
+		CL:=0;                   	{contador dentro del ciclo para que cada vez que cambie de palabra cuente las letras y no se sumen}
+		MIENTRAS (V = " ") HACER		
+			AVZ(SEC,V);
+		FM;
+		CP:= (CP + 1);				 {cuento la palabra}
+		CREAR(AUX);						{creo una secuencia auxiliar: para guardar los caracteres de la palabra a tratar}
+		MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+			CL:= (CL + 1);			{cuento cada caracter de la palabra}
+			ESCRIBIR(AUX,V);		{guardo en la secuencia auxiliar cada caracter de esa palabra}
+			AVZ(SEC,V)				
+		FM;
+		CERRAR(AUX); 				{cierro la secuencia para arrancarla es decir abrirla en modo lectura y finalizar el modo de escritura}
+		SI CL = 3 ENTONCES			{si el contador de letras es 3}
+			ARR(AUX); AVZ(AUX,VAUX);	{arranco en modo lectura la secuencia AUX y la trato como una secuencia de entrada}
+			MIENTRAS NFDS(AUX) HACER	{escribo los caracteres que grabe en la secuencia AUX(es decir los 3)}
+				ESCRIBIR (SAL,VAUX);
+				AVZ(AUX,VAUX);
+			FM;
+			ESCRIBIR(SAL," ");   {agrego un blanco para ir separando las palabras dentro de la secuencia salida}
+			CP3:= (CP3 + 1);	{como se cumplio la condicion cuento las palabras de 3 letras para obtener un porcentaje al final}
+			CERRAR(AUX);		{cierro la secuencia AUX, para luego volver a crear otra con el mismo nombre(es decir se borra todo lo que contenia)}
+		FS;
+	FM;
+	PORCENT:= ((CP3 * 100)/ CP);	
+	ESCRIBIR("La cantidad de palabras de tres letras es: ", PORCENT);
+	ESCRIBIR("La secuencia de Salida con las palabras de 3 letras ha sido creada con exito!");
+	CERRAR(SEC); CERRAR(SAL);
+
+Fin_Accion.

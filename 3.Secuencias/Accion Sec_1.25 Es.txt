@@ -1,0 +1,59 @@
+Accion Sec_1.25 Es 
+
+ 	AMBIENTE
+
+ 	ENTRADA,SALIDA1: Secuencia de caracter;
+ 	SALIDA2 : Secuencia de Enteros;
+ 	VE: Cararter;
+ 	VOCAL = ("A","E","I","O","U");
+ 	CV ,CP,CO: Entero;
+ 	PROM : Real;
+
+ 	PROCESO
+
+ 	ESCRIBIR("Este algoritmo almacena las palabras que comienzan con una vocal, en otra secuencia y las transforma a todas las vocales de esa palabra en #, y luego almacena la cantidad de vocales que tenia esa palabra en otra secuencia:")
+
+ 	ARR(ENTRADA); CREAR(SALIDA1); CREAR(SALIDA2); AVZ(ENTRADA, VE);
+
+ 	CO:= 0; CP:= 0;							{inicializo afuera el cont de oraciones y el de palabras}
+ 	MIENTRAS NFDS(ENTRADA) HACER
+
+ 		MIENTRAS VE <> "." HACER
+	 		MIENTRAS VE = " " HACER    		{limpio los blancos}
+	 			AVZ(ENTRADA,VE);
+	 		FM;
+
+	 		CP:= (CP + 1)					{cuento la palabra}
+
+	 		SI VE EN VOCAL ENTONCES			{controlo que el primer caracter distinto de blanco sea una vocal}
+
+	 			CV:= 0;           			{Inicializo el contador de vocales, o lo reinicializo, para que no se sumen 							entre las demas palabras}
+
+	 			MIENTRAS (VE <> ".") ^ (VE <> " ") HACER {trato las letras}
+
+	 				SI VE EN VOCAL ENTONCES					{si la letra es vocal, la cambio por un # en la salida1}
+	 					ESCRIBIR(SALIDA1,"#");
+	 					CV:= (CV + 1);						{cuento las vocales de esa palabra}
+	 				SINO
+	 					ESCRIBIR(SALIDA1, VE);				{en cambio escribo en la salida1 la ventana}
+	 				FS;
+	 				AVZ(ENTRADA,VE);						{avanzo la secuencia de entrada}
+	 			FM;
+
+	 			ESCRIBIR(SALIDA2,CV);						{escribo la cantidad de vocales que tiene la palabra}
+	 		SINO
+
+	 			MIENTRAS (VE <> ".") ^ (VE <> " ") HACER    {si no comienza con vocal avanzo la palabra}
+	 				AVZ(ENTRADA,VE);
+	 			FM;
+	 		FS;
+	 	FM;	
+	 	CO:= (CO + 1);				{cuento la oracion}
+	 	AVZ(ENTRADA,VE);			{avanzo el punto}
+	FM;
+	CERRAR(ENTRADA); CERRAR(SALIDA1); CERRAR(SALIDA2);		
+	PROM:= (CP/CO);												{calculo el promedio}
+	ESCRIBIR("El promedio de palabras por oracion es: ", PROM);
+	ESCRIBIR("Se generaron las dos nuevas secuencias.");
+
+Fin_Accion.  

@@ -1,0 +1,50 @@
+ACCION Proc_1.2.11 ES
+	
+	AMBIENTE
+
+	op,n1,n2,resul: Entero;
+
+
+	PROCEDIMIENTO Menu() ES
+
+		ESC("Calculadora");
+		ESC("1.Suma")
+		ESC("2.Resta")
+		ESC("3.Multiplicacion")
+		ESC("4.Division")
+	F_PROC;
+
+	FUNCION Suma(A,B : Entero) : Entero
+		Suma:= A+B;
+	F_FUNCION;
+
+	FUNCION Resta(A,B: Entero) : Entero
+		Resta:= A-B;
+	F_FUNCION;
+
+	FUNCION Multi(A,B: Entero) :Entero
+		Multi:= A*B;
+	F_FUNCION;
+
+	FUNCION Divi(A,B: Entero): ENTERO
+		Divi:= A DIV B;
+	F_FUNCION;
+
+	PROCESO
+
+	Menu();
+	LEER(op)
+	ESC("Ingrese los numeroa operar:"); LEER(N1); LEER(N2);
+	SEGUN op HACER
+		1: resul:= Suma(n1,n2);
+		2: resul:= Resta(n1,n2);
+		3: resul:= Multi(n1,n2);
+		4: resul:= Divi(n1,n2);
+	OTROS
+		ESC("Valor no valido");
+	FS;
+	ESC("El resultado de la operacion es:", resul);
+
+F_ACCION.
+
+

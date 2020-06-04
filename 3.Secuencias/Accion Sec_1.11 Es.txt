@@ -1,0 +1,30 @@
+Accion Sec_1.11 Es
+
+	AMBIENTE
+
+     SEC: Secuencia de Caracteres
+     V: Caracter;
+     P4L,CONTCA : Entero;                                                                                                                                                          
+	
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina la cantidad de palabras de 4 letras que hay en una secuancia de caracteres:");
+	ARR(SEC); AVZ(SEC,V);
+	P4L:=0
+	MIENTRAS NFDS(SEC) HACER
+		CONTCA:= 0
+		MIENTRAS  (V = " ") HACER
+			AVZ(SEC,V);
+		FM;
+		MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+			CONTCA:= (CONTCA + 1);
+			AVZ(SEC,V);
+		FM
+		SI (CONTCA = 4) ENTONCES
+		 P4L:= (P4L + 1);
+		FS;
+	FM
+	ESCRIBIR ("La cantidad de palabras de 4 letras es de: ", P4L);
+	CERRAR(SEC);
+	
+Fin_Accion.

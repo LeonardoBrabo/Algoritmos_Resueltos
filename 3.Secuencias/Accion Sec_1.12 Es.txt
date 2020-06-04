@@ -1,0 +1,37 @@
+Accion Sec_1.12 Es
+
+	AMBIENTE
+
+	SEC : Secuencia de Caracteres;
+	V: Caracter;
+
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina todas las palabras que comienzan con ALG en una secuencia de caracteres y las muestra en pantalla");
+	ARR(SEC); AVZ(SEC, V);
+	MIENTRAS NFDS(SEC) HACER
+		MIENTRAS (V = " ") HACER
+			AVZ(SEC, V);
+		FM;
+		SI V = "A" ENTONCES
+			AVZ(SEC, V)
+			SI V = "L" ENTONCES
+				AVZ(SEC,V);
+				SI V = "G" ENTONCES
+					ESCRIBIR ("ALG");
+					AVZ(SEC,V);
+					MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+						ESCRIBIR(V);
+						AVZ(SEC,V);
+					FM;
+				FS;
+			FS;
+		FS;
+		MIENTRAS NFDS(SEC) ^ (V <> " ") HACER
+			AVZ(SEC,V);
+		FM;
+	FM;
+	CERRAR (SEC);
+	
+Fin_Accion.

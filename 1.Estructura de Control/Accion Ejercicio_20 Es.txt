@@ -1,0 +1,28 @@
+Accion Ejercicio_20 Es
+	AMBIENTE
+
+	V, CUADRADO, CUBO, I: ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa calcula el cuadrado y el cubo de forma constante y creciente al ir incrementando un numero ingresado:");
+	Escribir ("Ingrese un numero:"); Leer(V);
+	PARA I:= 1 HASTA 10 HACER
+		CUADRADO:= (V**2);
+		CUBO:= (V**3);
+		Escribir ("El cuadrado de",V, " es :",CUADRADO);
+ 		Escribir ("El cubo de",V, " es :",CUBO);
+ 		V:=V+1;
+ 	FINPARA;
+
+Fin_Accion.
+
+-------------------------
+EJEMPLO:
+
+V:= 2 ; 3 ; 4 ..
+I:=1 ;2; 3 ..10
+CUADRADO:= 4 ; 9 ;16 ...
+CUBO:= 8 ; 27 ; 64 ...
+
+--------------------------

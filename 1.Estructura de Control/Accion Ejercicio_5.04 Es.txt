@@ -1,0 +1,18 @@
+Accion Ejercicio_5.04 Es
+	AMBIENTE
+
+	Bmay,Bmen,H,S: REAL;
+
+	PROCESO
+	
+	Escribir ("Este programa calcula la superficie de un trapecio, ingresando la longitud de las bases y la altura:");
+	Escribir ("Ingrese la longitud de la base mayor:"); Leer(Bmay);
+	Escribir ("Ingrese la longitud de la base menor:"); Leer(Bmen);
+	Escribir ("Ingrese la altura del trapecio:"); Leer(H);
+	S:= (((Bmay+Bmen)*H)/ 2);
+	Escribir ("La superficie del trapecio es: ", S);
+	Escribir("Base mayor:", Bmay);
+	Escribir("Base menor:", Bmen);
+	Escribir("Altura:", H);
+FinAccion.
+

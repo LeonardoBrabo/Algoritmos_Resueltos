@@ -1,0 +1,62 @@
+Accion Ejercicio_21 Es
+	AMBIENTE
+
+	V, CUADRADO, CUBO, I, SUMACUA, N: ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa calcula el cuadrado y el cubo de forma constante y creciente al ir incrementando un numero ingresado la cantidad de veces que desea:");
+	Escribir ("Ingrese un numero:"); Leer(V);
+	Escribir ("Ingrese la cantidad de veces que quiera que se produsca el calculo: "); Leer(N);
+	SUMACUA:= 0;
+	PARA I:= 1 HASTA N HACER
+		CUADRADO:= (V**2);
+		CUBO:= (V**3);
+		Escribir ("El cuadrado de",V, " es :",CUADRADO);
+ 		Escribir ("El cubo de",V, " es :",CUBO);
+ 		V:=V+1;
+ 		SUMACUA:= (SUMACUA + CUADRADO);
+ 	FP;
+
+	Escribir ("La suma de los cuadrados es:", SUMACUA);
+
+Fin_Accion.
+
+____________________________________________________________
+			CON PRE-TEST:
+____________________________________________________________
+	I:=0;
+	MIENTRAS I < N HACER  
+		CUADRADO:= (V**2);
+		CUBO:= (V**3);
+		Escribir ("El cuadrado de",V, " es :",CUADRADO);
+ 		Escribir ("El cubo de",V, " es :",CUBO);
+ 		V:=V+1;
+ 		SUMACUA:= (SUMACUA + CUADRADO);
+ 		I:= I + 1;
+ 	FM;
+------------------------------------------------------------
+
+
+____________________________________________________________
+			CON POST-TEST:
+____________________________________________________________
+	I:= 0;
+	REPETIR
+		CUADRADO:= (V**2);
+		CUBO:= (V**3);
+		Escribir ("El cuadrado de",V, " es :",CUADRADO);
+ 		Escribir ("El cubo de",V, " es :",CUBO);
+ 		V:=V+1;
+ 		SUMACUA:= (SUMACUA + CUADRADO);
+ 		I:= I + 1;
+ 	HASTA QUE I = N;
+-------------------------------------------------------------
+
+
+
+
+
+
+
+

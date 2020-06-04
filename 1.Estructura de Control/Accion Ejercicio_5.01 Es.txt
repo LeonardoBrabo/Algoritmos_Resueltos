@@ -1,0 +1,17 @@
+Accion Ejercicio_5.01 Es
+	AMBIENTE
+
+	R= 0.04;
+	C,P: REAL;
+	N,A: ENTERO;
+
+	PROCESO
+
+	Escribir("este programa permite calcular el precio de un artículo para un año dado, considerando que la inflación es del 4% anual");
+	Escribir("Ingrese Precio ACTUAL del articulo:"); Leer(A);
+	Escribir("Ingrese AÑO ACTUAL:"); Leer(A);
+	Escribir("Ingrese AÑO FUTURO:"); Leer(N);
+	P:= C*(1+R)**(N-A);
+	Escribir("El precio del articulo en el año", N ,"sera:", P );
+FinAccion.
+

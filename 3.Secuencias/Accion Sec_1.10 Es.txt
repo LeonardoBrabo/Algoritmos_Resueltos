@@ -1,0 +1,29 @@
+Accion Sec_1.10 Es
+
+	AMBIENTE
+
+     PALABRAS : Secuencia de Caracteres
+     LETRA,DADA: Caracter;
+     CONTADOR : Entero;                                                                                                                                                          
+	
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina la cantidad de palabras que comienzan con una letra dada en una secuencia de caracteres:");
+	ESCRIBIR ("Ingrese una letra: "); LEER(DADA);
+	ARR(PALABRAS); AVZ(PALABRAS,LETRA);
+	CONTADOR:= 0;
+	MIENTRAS NFDS(PALABRAS) HACER
+		MIENTRAS (LETRA = " ") HACER
+			AVZ(PALABRAS,LETRA)
+		FM;
+		SI (LETRA = DADA) ENTONCES
+			CONTADOR:= CONTADOR+1;
+		FS;
+		MIENTRAS NFDS(PALABRAS) ^ (LETRA <> " ") HACER
+			AVZ(PALABRAS,LETRA);
+		FM;
+	FM
+	ESCRIBIR ("La cantidad de palabras que comienzan la  letra ",DADA,"es de:", CONTADOR);
+	CERRAR(PALABRAS);
+
+Fin_Accion.

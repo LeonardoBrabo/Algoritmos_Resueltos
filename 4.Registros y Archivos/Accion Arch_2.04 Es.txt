@@ -1,0 +1,59 @@
+Accion Arch_2.04 Es
+
+	AMBIENTE
+
+	FECHA = REGISTRO	
+		AA: N(4);
+		MM: 1..12;
+		DD: 1..31;
+	FR;
+
+	FACULTAD = REGISTRO			
+		APYNOM: AN(50);
+		N_LEG: N(6);
+		FECHA_ING: FECHA;			
+		SEXO: ("M","F");
+		CARRERA: ("ISI","IEM","IQ");
+		FECHA_NAC: FECHA;
+		DNI: N(8):
+		FECHA_UEXAPR: FECHA;
+		NOTA: N(2);
+	FR;
+
+	ARCH_FAC, ARCH_APROB: Archivos de FACULTAD;			
+	REG_FAC, REG_APROB: FACULTAD;
+
+	AÑO_ACTUAL: N(4);	
+	CARRERA_DADA: ("ISI","IEM","IQ");				
+
+	PROCESO
+	ESCRIBIR("Este programa genera otro archivo con los alumnos de una carrera dada, que hayan aprobado una materia con nota mayor a 7 este año")
+	ESCRIBIR("Ingrese el año actual:");
+	LEER(AÑO_ACTUAL);
+	ESCRIBIR("Ingrese la carrera que desea buscar:");
+	LEER(CARRERA_DADA);
+	ABRIR E/(ARCH_FAC); ABRIR S/(ARCH_APROB); LEER(ARCH_FAC, REG_FAC);	
+
+	MIENTRAS NFDA(ARCH_FAC) HACER			
+
+		SI REG_FAC.FECHA_UEXAPR.AA = AÑO_ACTUAL ENTONCES
+			SI REG_FAC.CARRERA = CARRERA_DADA ENTONCES
+				SI REG_FAC.NOTA > 7 ENTONCES
+					REG_APROB:= REG_FAC;
+					ESCRIBIR(ARCH_APROB, REG_APROB);
+				FS;
+			FS;
+		FS;
+		LEER(ARCH_FAC, REG_FAC);		
+	FM;
+	CERRAR(ARCH_FAC); CERRAR(ARCH_APROB);
+
+Fin_Accion.
+
+
+
+
+
+
+
+

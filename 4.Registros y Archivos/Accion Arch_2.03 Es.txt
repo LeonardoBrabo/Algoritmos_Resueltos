@@ -1,0 +1,35 @@
+Accion Arch_2.03 Es
+
+	AMBIENTE
+
+	BIBLIOTECA = REGISTRO
+		N_SOCIO: N(6);
+		APYNOM: AN(50);
+		DOMICILIO: AN(40);
+		TEL: N(10);
+		CARRERA: ("ISI","IEM","IQ","LAR");
+		CANT_PRES: N(2);
+	FR;
+	ARCH_BIBLIO,ARCH_ISI : Archivos de BIBLIOTECA;
+	REG_BIBLIO, REG_ISI: BIBLIOTECA;
+
+	PROCESO
+	
+	ABRIR E/(ARCH_BIBLIO); ABRIR S/(ARCH_ISI); LEER(ARCH_BIBLIO, REG_BIBLIO);
+	ESCRIBIR("Este programa genera otro archivo con los  alumnos de isi que tienen mas de 4 unidades bibliograficas prestadas");
+	MIENTRAS NFDA(ARCH_BIBLIO) HACER
+		SI REG_BIBLIO.CARRERA = "ISI" ENTONCES
+			SI REG_BIBLIO.CANT_PRES > 4 ENTONCES
+				REG_ISI:= REG_BIBLIO;              {ésta asignacion es posible porque tienen el mismo formato}
+				ESCRIBIR(ARCH_ISI, REG_ISI);		{escribo o guardo el registro en el archivo de salida, ISI}
+			FS;
+		FS;
+		LEER(ARCH_BIBLIO, REG_BIBLIO);
+	FM;
+	CERRAR(ARCH_BIBLIO); CERRAR(ARCH_ISI);
+	ESCRIBIR("se ha generado un archivo con los alumnos de isi con mas de 4 libros prestados.")
+
+Fin_Accion.
+
+
+

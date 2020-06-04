@@ -1,0 +1,18 @@
+Accion Ejercicio_11 Es
+	AMBIENTE
+
+	ACTUAL = 2019;
+	AÑO: N(4);
+	
+	PROCESO
+
+	Escribir ("Este programa determina si el año ingresado es el actual, el pasado o el futuro");
+	Escribir ("Ingrese año a determinar: "); Leer(AÑO);
+	SEGUN AÑO HACER
+		=ACTUAL: Escribir (" El año ingresado es el año actual");
+		<ACTUAL: Escribir (" El año ingresado es un año pasado");
+		>ACTUAL: Escribir (" El año ingresado es un año futuro");
+	FSEGUN;
+
+FinAccion.
+

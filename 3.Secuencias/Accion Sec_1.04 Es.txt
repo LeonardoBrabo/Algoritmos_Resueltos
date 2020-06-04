@@ -1,0 +1,21 @@
+Accion Sec_1.04 Es
+
+	AMBIENTE
+
+	SOCIOS: Secuencia de Enteros;
+	V, C: Entero;
+
+	
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo determina la cantidad de socios en una secuencia");
+	ARR(SOCIOS); AVZ(SOCIOS,V);
+	C:= 0;
+	MIENTRAS NFDS(SOCIOS) HACER
+		C:= C + 1;
+		AVZ(SOCIOS,V);
+	FM;
+	ESCRIBIR ("la cantidad de socios es:", C);
+	CERRAR (SOCIOS);
+
+Fin_Accion.

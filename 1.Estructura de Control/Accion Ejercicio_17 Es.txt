@@ -1,0 +1,17 @@
+Accion Ejercicio_17 Es
+	AMBIENTE
+
+	A, B, SUMA, i : ENTERO;
+	
+	PROCESO
+
+	Escribir ("Este programa calcula el producto de dos enteros ingresados, solo operando con sumas: ");
+	Escribir ("Ingrese primer numero: "); leer(A);
+	Escribir ("Ingrese segundo numero: "); leer(B);
+	SUMA:= 0;
+	PARA i: 1 HASTA B HACER
+		SUMA:= (SUMA + A);
+	FINPARA;
+	Escribir (" el producto es igual a:", SUMA);
+FinAccion.
+

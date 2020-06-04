@@ -1,0 +1,124 @@
+Accion Sec_1.28 Es
+
+	AMBIENTE
+
+	ARTISTAS,OBRAS,SALIDA,AUX: Secuencia de Caracteres;
+	VA, VO, VAUX :Caracter;
+	CONBAR,OBRASVEND,CONOBRAS,OBRASTOTAL,OBRASREN,NUMOBRAS,MAYOBRAS: Entero;
+	PORCENTAJE: Real;
+	BANDERA: Booleano;
+
+	PROCESO
+
+	ESCRIBIR("Este Algoritmo genera una secuencia de salida con los artistas renacentistas, con sus nombres, estilo de arte y sus obras, con los años");
+	ARR(ARTISTAS,) ARR(OBRAS); CREAR(SALIDA);
+
+	OBRASTOTAL:= 0;	OBRASREN:= 0; MAYOBRAS:= 0; 
+
+	MIENTRAS NFDS(ARTISTAS) ^ NFDS(OBRAS) HACER
+
+		CREAR (AUX); BANDERA:= FALSO; CONOBRAS:= 0; CONBAR:=0; OBRASVEND:=0;
+
+		MIENTRAS VA <> "?" HACER
+
+			MIENTRAS VA  <> "+" HACER			{Escribo el nombre del artista de la secuencia artista}
+				ESCRIBIR(AUX,VA);
+				AVZ(ARTISTAS, VA);
+			FM;
+
+			ESCRIBIR(AUX,"+");					{escribo en la secuencia aux el +}
+			AVZ(ARTISTAS,VA);					{avanzo el + de la secuencia artista}
+
+			MIENTRAS V <> "+" HACER				{avanzo el lugar de nacimiento hasta el proximo +}	
+				AVZ(ARTISTAS,VA);
+			FM;
+
+			AVZ(ARTISTAS,VA);					{avanzo el  + de la secuencia artista}
+
+			MIENTRAS VA <> "+" HACER			{avanzo la edad del artista}
+				AVZ(ARTISTAS,VA);
+			FM;
+
+			AVZ(ARTISTAS,VA);					{avanzo el + de la secuencia artista}
+
+			SI VA = "R" ENTONCES				{Pregunto si el estilo de arte es R= renacentista}
+				BANDERA:= VERDADERO;			{Si se cumple cambio la variable bandera a verdadero, para avisar que podemos copiar a la salida}
+				ESCRIBIR(AUX,VA)				{escribo en la secuencia aux el estilo de Arte}
+				ESCRIBIR(AUX,"+")				{escribo en la secuencia aux un +}
+				OBRASREN:= OBRASREN + 1;		{cuento la cantidad de obras renacentistas}
+				AVZ(ARTISTA,VA);				{avanzo el estilo de arte}
+			SINO
+				AVZ(ARTISTA,VA);				{sino solo avanzo el estilo de arte hasta el proximo +}
+			FS;
+			OBRASTOTAL:= OBRASTOTAL + 1;		{cuento la cantidad de obras total}
+			AVZ(ARTISTA,VA);					{avanzo el + de la secuencia artista y me posiciono en el primer caracter o unico de cant de obras}
+			MIENTRAS VA <> "?" HACER			{como no se la longitud de digitos que tendrá la cantidad de obras controlo que el fin sea la marca ?}
+
+				SEGUN VA HACER					{transformo el caracter numerico en un digito numerico, para luego operar con el}
+					"0": NUMOBRAS:= 0;
+					"1": NUMOBRAS:= 1;
+					"2": NUMOBRAS:= 2;
+					"3": NUMOBRAS:= 3;
+					"4": NUMOBRAS:= 4;
+					"5": NUMOBRAS:= 5;
+					"6": NUMOBRAS:= 6;
+					"7": NUMOBRAS:= 7;
+					"8": NUMOBRAS:= 8;
+					"9": NUMOBRAS:= 9;
+				FS;
+
+				CONOBRAS:= CONOBRAS * 10 + NUMOBRAS;	{Formula: Sirve para ir armando el digito numerico segun la posicion de los caracteres numericos}
+				AVZ(ARTISTAS,VA);						{avanzo al proximo digito o a la marca}
+			MF;		
+		FM;
+
+		MIENTRAS (CONBAR <> CONOBRAS) HACER			{CONBAR:contador de la marca de barra"/", ciclo para escribir todos los nombres y años de las 													obras que re corresponde segun la cantidad de obras(CONOBRAS) que indica en la secuencia Artista}
+			MIENTRAS VO <> "/" HACER				
+				MIENTRAS VO <> "," HACER			{Escribo el nombre de la obra en la secuencia aux}
+					ESCRIBIR(AUX,VO);
+					AVZ(OBRAS,VO);
+				FM;
+				ESCRIBIR(AUX,"+");					{escribo un + en la secuencia aux}
+				AVZ(OBRAS,VO);						{avanzo la coma de la secuencia obras}
+
+				MIENTRAS VO <> "," HACER			{escribo el año de la obra en la secuencia aux}
+					ESCRIBIR(AUX)
+					AVZ(OBRAS,VO);
+				FM;
+				ESCRIBIR(AUX,"+");					{escribo un + en la secuencia aux}
+				AVZ(OBRAS,VO);						{avanzo la coma de la secuencia obras}
+
+				MIENTRAS VO <> "," HACER			{avanzo todo el precio de la obra}
+					AVZ(OBRAS,VO);
+				FM;
+				AVZ(OBRAS,VO);						{avanzo la coma de la secuencia obras}
+
+				SI VO = "V" ENTONCES				{Si la obra es de estado vendida}
+					OBRASVEND:= (OBRASVEND +1);		{sumo la cantidad de obras vendidas de ese artista}
+				FS;
+				AVZ(OBRAS,VO);						{avanzo el estado de la obra}
+			FM;
+			CONBAR:=(CONBAR + 1);					{cuento la marca de la barra "/", cuando sea igual a la cantidad de obras asigadas en artista sale}
+			AVZ(OBRAS,VO);							{avanzo la marca "/"}	
+		FM;
+		ESCRIBIR(AUX,"?");							{Escribe en la secuencia aux la marca "?"}
+
+		SI OBRASVEND > MAYOBRAS ENTONCES			{comparo si la obras vendidas del artistas es mayor a la cantidad encontrada}				
+			MAYOBRAS:= OBRASVEND;					{si la cantidad de obras vendidas es mayor la asigno como mayor}
+		FS;
+		CERRAR(AUX);								{cierro la secuencia aux}
+		SI BANDERA = VERDADERO ENTONCES				{si la bandera es verdadero por ser de tipo realista el estilo de arte copia todo lo que tiene aux)
+			ARR(AUX); AVZ(AUX,VAUX);
+			MIENTRAS NFDS(AUX) HACER
+				ESCRIBIR(SALIDA,VAUX);				{copia a la salida}
+				AVZ(AUX,VAUX);
+			FM;
+			CERRAR(AUX);						
+		FS;
+	FM;
+	CERRAR(ARTISTAS); CERRAR(OBRAS); CERRAR(SALIDA);
+	PORCENTAJE:= (OBRASREN * 100)/ OBRASTOTAL;  			 {calculo el porcentaje de obras renacentistas sobre el total de obras}
+	ESCRIBIR("La mayor cantidad de obras vendida es: ", MAYOBRAS);
+	ESCRIBIR("El porcentaje de obras renacentistas es: ", PORCENTAJE);
+
+Fin_Accion.

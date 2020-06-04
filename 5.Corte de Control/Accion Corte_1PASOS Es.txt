@@ -1,0 +1,43 @@
+Accion Corte_PASOS Es
+
+	AMBIENTE
+
+	REGISTROS
+	ARCH
+	REG
+	RESGUARDOS
+	TOTALIZADORES
+
+	SUBACCIONES CORTE ES
+		1) LLAMO CORTE INFERIOR
+		2) MUESTRO RESGUARDO
+		3) MUESTRO TOTALIZADORES DEL NIVEL
+		4) ACUMULO EN EL SIGUIENTE TOTALIZADOR
+		5) PONGO EN CERO LOS TOTALIZADOREWS DE ESTE NIVEL
+		6) VUELVO A RESGUARDAR
+	FINSUB;
+
+	PROCESO
+
+	1) ABRO Y LEO EL REGISTRO
+	2) RESGUARDO
+	3) INICIALIZO TOTALIZADORES
+	4) CICLO PRINCIPAL
+	5) VER CORTE (DE MAYOR A MENOR)
+	6) TRATAR REGISTRO (ACUMULO TOTALIZADOR DE MENOR NIVEL)
+	7) AVANZO (LEO REGISTRO NUEVAMENTE)
+	8) CIERRO CICLO PRINCIPAL
+	9) LLAMO CORTE SUPERIOR (Porque cuando termina el ciclo principal, quedan pendiende mostrar el total acumulado del ultimo corte)
+	10) MUESTRO TOTALES GENERALES
+
+FIN_ACCION.
+
+-------------------------------------------------
+ACLARACIONES:
+-------------------------------------------------
+ *para saber que cantidad de totalizadores: 
+ nos fijamos en la cantidad de cosas que hay que contar y las multiplicamos por los niveles de corte que exista
+ por ejemplo si hay que contar cantidad de hombres y de mujeres y hay tres niveles de corte,  serian 6 totalizadores 
+ mas los totalizadores de totales generales.
+
+

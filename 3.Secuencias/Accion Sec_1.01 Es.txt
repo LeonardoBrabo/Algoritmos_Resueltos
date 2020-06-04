@@ -1,0 +1,22 @@
+Accion Sec_1.01 Es
+
+	AMBIENTE
+
+	LETRAS : secuencia de caracteres;
+	V : caracter;
+	C : entero;
+
+	PROCESO
+
+	ARR(LETRAS); AVZ(LETRAS,V);
+	C:= 0;
+	MIENTRAS V <> "*" HACER
+		SI V = "A" ENTONCES
+			C:= C+1;
+		FS;
+		AVZ(LETRAS,V);
+	FM;
+	ESCRIBIR ("Hay en la secuencia",C," letras A");
+	CERRAR (LETRAS);
+	
+Fin_Accion.

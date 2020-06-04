@@ -1,0 +1,22 @@
+Accion Sec_1.03 Es
+
+	AMBIENTE
+
+	ORIGINAL, SALIDA : Secuencia de Caracteres;
+	V_ORI : Caracter;
+
+	PROCESO
+
+	ESCRIBIR ("Este algoritmo permite copiar los caracteres de una secuancia original a una de salida descartando el caracter $");
+	ARR(ORIGINAL); CREAR(SALIDA); AVZ(ORIGINAL,V_ORI);
+	MIENTRAS NFDS (ORIGINAL) HACER  								 // NFDS= no fin de secuencia//
+		SI V <> "$"" ENTONCES
+			ESCRIBIR (SALIDA,V_ORI);
+		FS;
+		AVZ(ORIGINAL,V_ORI);
+	FM;
+	CERRAR(ORIGINAL); 
+	CERRAR(SALIDA);
+	ESCRIBIR ("La nueva secuencia ha sido creada con exito");
+	
+Fin_Accion.

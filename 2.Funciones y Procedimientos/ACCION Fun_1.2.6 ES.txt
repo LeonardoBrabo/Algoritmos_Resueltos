@@ -1,0 +1,29 @@
+ACCION Fun_1.2.6 ES
+	
+
+	AMBIENTE
+	u:Entero;
+	p:Real;
+
+	FUNCION Descuento(Uni: Entero,Pre : Real) : Real
+		AMBIENTE	
+
+		Pretot : Entero
+
+		PROCESO
+
+		Pretot:= Uni*Pre;
+		SEGUN Uni HACER
+			> 12 : Descuento := (Pretot*10)/100;
+			> 6 :  Descuento := (Pretot*4)/100;
+			< 6 :  Descuento := 0;
+		FS;
+	F_FUNCION;
+
+	PROCESO
+
+	ESC("Ingrese Unidades:"), LEER(u);
+	ESC("Ingrese Precio:"); LEER(p);
+	ESC("Valor del Descuento realizado:", Descuento(u,p));
+
+F_ACCION.

@@ -1,0 +1,48 @@
+Accion Ejercicio_6_condicionales Es
+	Ambiente
+	N1,N2,N3,MAYOR,MEDIO,MENOR :Entero
+
+	Proceso
+	Escribir ("Ingresar primer número"); Leer(N1);
+	Escribir ("Ingresar segudno número"); Leer(N2);
+	Escribir ("Ingresar tercer número"); Leer(N3);
+	Si (N1 > N2) y (N1 > N3) Entonces
+		Escribir (N1, "mayor valor");
+		Si (N2 > N3) entonces
+			Escribir(N2,"valor medio");
+			Escribir(N3,"menor valor")
+		Sino
+			Si (N2 < N3) Entonces
+				Escribir(N3,"valor medio");
+				Escribir(N2,"menor valor");
+			FSi;
+		Fsi
+	Sino
+		Si (N2 > N1) y (N2 > N3) Entonces
+			Escribir(N2,"mayor valor");
+			Si (N1 > N3) entonces
+				Escribir(N1,"valor medio");
+				Escribir(N3,"menor valor")
+			Sino
+				Si (N1 < N3) Entonces
+					Escribir(N3,"valor medio");
+					Escribir(N1,"menor valor");
+				Fsi;
+			Fsi
+		Sino
+			Si (N3 > N1) y (N3 > N2) Entonces
+				Escribir (N3, "mayor valor");
+				Si (N1 > N2) entonces
+					Escribir(N2,"valor medio");
+					Escribir(N3,"menor valor");
+				Sino
+					Si (N1 < N2) Entonces
+						Escribir(N3,"valor medio");
+						Escribir(N2,"menor valor");
+					Fsi;
+				Fsi;
+			Fsi;
+		Fsi;
+	Fsi;
+Fin Accion.
+

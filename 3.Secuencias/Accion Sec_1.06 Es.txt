@@ -1,0 +1,45 @@
+Accion Sec_1.06 Es
+	AMBIENTE
+
+	CAPITALES: Secuencia de Enteros;
+	I,V,TOTAL,VMEN18,VMAY18,MMEN18,MMAY18: Entero;
+	P_VMAY18,P_MMAY18,P_VMEN18,P_MMEN18 : Real;
+
+
+	PROCESO
+	TOTAL:= 0; VMEN18:= 0; MMEN18:=0; VMAY18:=0; MMAY18:=0; 
+	ARR(CAPITALES); AVZ(CAPITALES,V);
+	PARA I:= 1 HASTA 23 HACER
+		TOTAL:=(TOTAL + V);
+		VMEN18:= (VMEN18 + V);
+			AVZ(CAPITALES,V);
+		TOTAL:=(TOTAL + V);
+		MMEN18:= (MMEN18 + V);
+			AVZ(CAPITALES,V);
+		TOTAL:=(TOTAL + V);
+		VMAY18:= (VMAY18 + V);
+			AVZ(CAPITALES,V);
+		TOTAL:=(TOTAL + V);
+		MMAY18:= (MMAY18 + V);
+			AVZ(CAPITALES,V);
+	FP;
+	P_VMAY18:= (VMAY18/TOTAL);
+	P_MMAY18:= (MMAY18/TOTAL);
+	P_VMEN18:= (VMEN18/TOTAL);
+	P_MMEN18:= (MMEN18/TOTAL);
+	ESCRIBIR("El total de la poblacion es:", TOTAL);
+	ESCRIBIR("El promedio de varones mayores de 18 es:",P_VMAY18);
+	ESCRIBIR("El promedio de varones menores de 18 es:",P_VMEN18);
+	ESCRIBIR("El promedio de mujeres mayores de 18 es:", P_MMAY18);
+	ESCRIBIR("El promedio de mujeres menores de 18 es:", P_MMEN18);
+	CERRAR(CAPITALES);
+
+Fin_Accion;
+
+
+
+
+
+
+
+

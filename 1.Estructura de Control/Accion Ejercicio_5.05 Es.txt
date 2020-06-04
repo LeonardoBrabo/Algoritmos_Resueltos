@@ -1,0 +1,18 @@
+Accion Ejercicio_5.05 Es
+	AMBIENTE
+
+	I: ENTERO;
+	C,S,INCRE :REAL;
+
+
+	PROCESO
+
+	Escribir ("Este programa calcula el valor de la seccion de un conductor, segun la corriente elctrica y la conductividad del materia:");
+	Escribir ("Ingrese en la valor de la corriente electrica: "); Leer(I);
+	Escribir ("Ingrese el valor de conductivad del material: "); Leer(C);
+	INCRE:= ((I/C)*0.25);
+	S:= ((I/S)+INCRE);
+	Escribir ("El valor de la seccion del conductor mas un 25% de incremento por seguridad es:", S);
+
+FinAccion.
+

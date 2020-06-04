@@ -1,0 +1,32 @@
+Accion Sec_1.14 Es
+
+	AMBIENTE
+
+	SEC : Secuencia de Caracteres;
+	V: Caracter;
+	CONT : Entero;
+
+	PROCESO
+	ESCRIBIR ("Este algoritmo determina la cantidad de caracteres que hay entre una coma y la siguiente, descartando tanto la primer como la ultima coma por no cumplir con la condicion:")
+
+	ARR(SEC); AVZ(SEC, V);              
+	MIENTRAS (V <> ",") HACER   	{controla que no muestre la subsecuencia incial}       
+		AVZ(SEC,V);
+	FM;
+	MIENTRAS NFDS(SEC) HACER
+		CONT:= 0;				{se inicializa a 0 en el ciclo para que no se sumen los caracteres entre los pares de coma}
+		MIENTRAS V = "," HACER						{avanza las comas y limpia si hay mas seguidas}
+			AVZ(SEC,V);
+		FM;
+		MIENTRAS NFDS(SEC) ^ (V <> ",") HACER		{cuenta todos los caracteres hasta la proxima coma}
+			CONT:=CONT + 1;
+			AVZ(SEC,V);
+		FM;
+		SI NFDS(SEC) ENTONCES     					{controla que no muestre la subsecuencia final}
+
+			ESCRIBIR("Cantidad de caracteres entre coma y coma:",CONTADOR);
+		FS;	
+	FM;
+	CERRAR(SEC);
+
+Fin_Accion.

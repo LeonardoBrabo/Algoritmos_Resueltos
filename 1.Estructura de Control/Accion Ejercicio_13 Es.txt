@@ -1,0 +1,23 @@
+Accion Ejercicio_13 Es
+	AMBIENTE
+
+	NUM, CANT_1PE, CANT_10PE, CANT_100PE : ENTERO;
+	
+	PROCESO
+
+	Escribir ("Este programa determina cuantos billetes de entre 100, 10 y 1 necesita, al ingresar un valor entre 100 y 1000:");
+	Escribir ("Ingrese el valor del dinero que posee entre 100 y 1000:"): Leer(NUM);
+	SI (NUM >99) y (NUM < 1000) ENTONCES
+
+		CANT_1PE:=   (NUM mod 10);
+		CANT_10PE:=  (NUM mod 100) div 10;
+		CANT_100PE:= (NUM div 100);
+		Escribir ("La cantidad de  100 pesos es:", CANT_100PE);
+		Escribir ("La cantidad de  10 pesos es:", CANT_10PE);
+		Escribir ("La cantidad de  1 pesos es:", CANT_1PE);
+	SINO
+
+		Escribir ("El valor esta fuera del rango");
+	FSI;
+FinAccion.
+

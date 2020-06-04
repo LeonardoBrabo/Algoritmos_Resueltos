@@ -1,0 +1,17 @@
+Accion Ejercicio_5.07 Es
+	AMBIENTE
+
+	X, Y, Z, MEDIA : ENTERO;
+
+	PROCESO
+
+	Escribir ("Este programa halla la media geometrica de tres valores:");
+	Escribir ("Ingrese el primer valor: X:"); Leer(X);
+	Escribir ("Ingrese el segundo valor: Y:"); Leer(Y);
+	Escribir ("Ingrese el tercer valor; Z:"); Leer(Z);
+	MEDIA:= (X*Y*Z)/3;
+	Escribir ("Valor de X:" ,X, "Valor de Y:" ,Y, "Valor de Z:" ,Z);
+	Escribir ("el valor de la Media geometrica es:",MEDIA);
+
+FinAccion.
+
