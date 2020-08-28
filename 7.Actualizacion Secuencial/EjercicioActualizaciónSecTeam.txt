@@ -1,0 +1,92 @@
+ Se tiene un archivo con información de URLS sospechosas identificadas en INTERNET. Cada registro tiene el siguiente formato:
+ID (N 8) - URL (AN 25) - ORIGEN (W-Web M-Mobile D-Desconocido) - CANTCLICS (N 5)
+Ordenado por ID
+
+Y un archivo de novedades para actualizar si se ha logrado identificar el Origen o se ha modificado la Cantidad de clics de accesos en una URL existente o dar de alta una nueva URL.
+
+ID (N 8 ) - CODMOV (A|M) - ORIGEN - CANTCLICS
+Ordenado por ID.
+
+Se necesita un archivo actualizado de acuerdo a las novedades recibidas.
+
+
+ACCION URLSOSPECHOSAS ES
+    AMBIENTE
+
+    SOSPECHOSAS = REGISTRO
+        ID: N(8);
+        URL AN(25);
+        ORIGEN: ("W","M","D");
+        CANTCLICS: N(5);
+    FR;
+
+    AMAE,ASAL: Archivo de SOSPECHOSAS ordenado por ID
+    RMAE,RSAL: SOSPECHOSAS;
+
+    NOVEDADES = REGISTRO
+        ID: N(8);
+        CODMOV: ("A","M");
+        ORIGEN: ("W","M","D");
+        CANTCLICS: N(5);
+    FR
+
+    AMOV: Archivo de NOVEDADES  ordenado por ID;
+    RMOV: NOVEDADES;
+
+    SUBACCION LEER_MAE ES
+        LEER(AMAE,RMAE)
+        SI FDA AMAE ENTONCES
+            RMAE.ID:= HV;
+        FS;
+    FSUB;
+
+    SUBACCION LEER_MOV ES
+        LEER(AMOV,RMOV)
+        SI FDA AMOV ENTONCES
+            RMOV.ID:= HV;
+        FS;
+    FSUB;
+
+    PROCESO
+    
+    ABRIR E/(AMAE); ABRIR E/(AMOV); ABRIR /S(ASAL);
+    LEER_MAE; LEER_MOV;
+    MIENTRAS (RMAE.ID <> HV)  v (RMOV.ID <> HV) HACER
+        SI RMAE.ID < RMOV.ID ENTONCES
+            RSAL:= RMAE;
+            ESCRIBIR(ASAL,RSAL);
+            LEER_MAE;
+        SINO 
+            SI RMAE.ID = RMOV.ID ENTONCES
+                SI CODMOV = "A" ENTONCES
+                    ESCRIBIR("Error alta invalida");
+                    RSAL:=RMAE;
+                    ESCRIBIR(ASAL,RSAL);
+                SINO
+                    RSAL:= RMAE;
+                    RSAL.ORIGEN:= RMOV.ORIGEN;
+                    RSAL.CANTCLICS:= RMOV.CANTCLICS;
+                    ESCRIBIR(ASAL,RSAL)
+                FS;
+                LEER_MAE;LEER_MOV;
+            SINO
+                SI CODMOD = "A" ENTONCES
+                    RSAL.ID:= RMOV.ID;
+                    RSAL.URL:= " ";
+                    RSAL.ORIGEN:= RMOV.ORIGEN;
+                    RSAL.CANTCLICS:= RMOV.CANTCLICS;
+                    ESCRIBIR(ASAL,RSAL);
+                SINO
+                    ESCRIBIR("Error de Modificacion,no exite el registro");
+                FS;
+                LEER_MOV;
+            FS;
+        FS;
+    FM;
+    CERRAR(AMAE); CERRAR(ASAL); CERRAR(AMOV);
+Fin_accion.
+
+
+
+            
+

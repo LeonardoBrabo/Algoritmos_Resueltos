@@ -1,0 +1,109 @@
+Accion Act_Unitaria_2.25 Es
+
+	AMBIENTE
+
+	FECHA = REGISTRO
+		AA: N(4);
+		MM: 1..12;
+		DD: 1..31;
+	FR;
+
+	AMIGOS = REGISTRO
+		CLAVE : REGISTRO
+			COD_USUARIO: N(6);
+			COD_AMIGO: N(5);
+		FR;
+		FECHA_AMISTAD:FECHA;
+		MENSAJE_MURO: AN(50);
+	FR;
+
+	A_AMI,A_SAL: Archivo de AMIGOS ordenado por CLAVE;
+	R_AMI,R_SAL: AMIGOS;
+
+	NOTIFICACIONES = REGISTRO
+		CLAVE : REGISTRO
+			COD_USUARIO: N(6);
+			COD_AMIGO: N(5);
+		FR;
+		COD_MOV: ("A","B","M");
+		FECHA_AMISTAD:FECHA;
+		MENSAJE_MURO: AN(50);
+	FR,
+
+	A_NOT: Archivo de NOTIFICACIONES ordenado por CLAVE;
+	R_NOT: NOTIFICACIONES;
+
+	SUBACCION LEER_AMI ES
+		LEER(A_AMI,R_AMI);
+		SI FDA(A_AMI) ENTONCES
+			R_AMI.CLAVE.COD_USUARIO:= HV;
+			R_AMI.CLAVE.COD_AMIGO:= HV;
+		FS;
+	FSUB;
+
+	SUBACCION LEER_NOT ES
+		LEER(A_NOT,R_NOT)
+		SI FDA(A_NOT) ENTONCES
+			R_NOT.CLAVE.COD_USUARIO:= HV;
+			R_NOT.CLAVE.COD_AMIGO:= HV;
+		FS;
+	FSUB;
+
+	PROCESO
+
+	ABRIR E/(A_AMI); ABRIR E/(A_NOT);
+	ABRIR /S(A_SAL);
+	LEER_AMI; LEER_NOT;
+	MIENTRAS (R_AMI.CLAVE <> HV) v (R_NOT.CLAVE <> HV) HACER
+		SI R_AMI.CLAVE < R_NOT.CLAVE ENTONCES
+			R_SAL:= R_AMI;
+			ESCRIBIR(A_SAL,R_SAL);
+			LEER_AMI;
+		SINO
+			SI R_AMI.CLAVE = R_NOT.CLAVE ENTONCES
+               
+                MIENTRAS R_AMI.CLAVE = R_NOT.CLAVE HACER
+
+				    SEGUN R_NOT.COD_MOV HACER
+				    	"A": ESCRIBIR ("ERROR SOLICITUD INVALIDA");
+				    		R_SAL:= R_AMI;
+				    		
+
+				    	"B": ESC("SE A ELIMINADO AL AMIGO", R_AMI.COD_AMIGO )  
+                            //en actualizacion secuencial no se puede borrar fisicamente. solo se avanza
+
+				    	"M": 
+				    		R_AMI.MENSAJE_MURO:= R_NOT.MENSAJE_MURO;
+	    		    		R_SAL:= R_AMI;    		
+				    FS;
+                    LEER_NOT;
+                FM;
+                ESCRIBIR(A_SAL,R_SAL);
+				LEER_AMI;
+			SINO
+				SI R_AMI.CLAVE > R_NOT.CLAVE ENTONCES
+					SEGUN R_NOT.COD_MOV HACER
+						"A": 
+							R_SAL.CLAVE.COD_USARIO := R_NOT.CLAVE.COD_USUARIO;
+							R_SAL.CLAVE.COD_AMIGO :=  R_NOT.CLAVE.COD_AMIGO;
+							R_SAL.FECHA_AMISTAD:= R_NOT.FECHA_AMISTAD;
+							R_SAL.MENSAJE_MURO := R_NOT.MENSAJE_MURO;
+							ESCRIBIR(A_SAL, R_SAL);
+
+						"B": ESCRIBIR("BAJA INVALIDA");
+
+						"M": ESCRIBIR("MODIFICACION INVALIDA");
+					FS;
+					LEER_NOT;
+				FS;
+			FS;
+		FS;	
+	FM;
+	CERRAR(A_MI); CERRAR(A_SAL); CERRAR(A_NOT);
+Fin_Accion.
+
+
+
+
+
+

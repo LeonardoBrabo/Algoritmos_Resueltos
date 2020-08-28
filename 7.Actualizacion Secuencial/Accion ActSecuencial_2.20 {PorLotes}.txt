@@ -1,0 +1,95 @@
+Accion Act_Porlotes_2.20 Es
+
+	AMBIENTE
+
+	FECHA = REGISTRO
+		AA: N(4);
+		MM: 1..12;
+		DD: 1..31;
+	FR;
+
+	FACULTAD = REGISTRO	
+		N_LEG: N(6);	
+		APYNOM: AN(50);
+		FECHA_ING: FECHA;			
+		SEXO: ("M","F");
+		CARRERA: ("ISI","IEM","IQ");
+		FECHA_NAC: FECHA;
+		DNI: N(8):
+		FECHA_UEXAPR: FECHA;
+		NOTA: N(2);
+	FR;
+
+	ARCH_FAC, ARCH_SAL: Archivo de FACULTAD ordenado por N_LEG;			
+	REG_FAC, REG_SAL, AUX: FACULTAD;
+
+	EXAMENES = REGISTRO
+		N_LEG: N(6);
+		CARRERA: ("ISI","IEM","IQ");
+		COD_MATERIA: N(6);
+		FECHA_EX: FECHA;
+		NOTA: N(2);
+	FR;
+
+	ARCH_EX: Archivo de EXAMENES ordenado por N_LEG;
+	REG_EX: EXAMENES;
+
+	SUBACCION LEER_FAC ES
+		LEER(ARCH_FAC,REG_FAC);
+		SI FDA(ARCH_FAC) ENTONCES
+			REG_FAC.N_LEG:= HV;
+		FS;
+	FSUB;
+
+	SUBACCION LEER_EX ES
+		LEER (ARCH_EX,REG_EX);
+		SI FDA(ARCH_EX) ENTONCES
+			REG_EX.N_LEG:= HV;
+		FS;
+	FSUB;
+
+	PROCESO
+	ABRIR E/(ARCH_FAC); ABRIR E/(ARCH_EX);
+	ABRIR /S(ARCH_SAL);
+	LEER_FAC; LEER_EX;
+	MIENTRAS (REG_FAC.N_LEG <>  HV) v (REG_EX.N_LEG <> HV) HACER
+        SI REG_FAC.N_LEG < REG_EX.N_LEG ENTONCES
+            REG_SAL:= REG_FAC;
+            ESC(ARCH_SAL,REG_SAL);
+            LEER_FAC;
+        SINO 
+            SI REG_FAC.N_LEG = REG_EX.N_LEG ENTONCES
+                AUX:= REG_FAC;
+                MIENTRAS REG_FAC.N_LEG = REG_EX.N_LEG HACER
+                    SI REG_EX.NOTA > 5 ENTONCES
+                        AUX.NOTA:= REG_EX.NOTA
+                        AUX.FECHA_UEXAPR:= REG_EX.FECHA_EX
+                    FS;
+                    LEER_EX;
+                FM;
+                REG_SAL:= AUX;
+                ESC(ARCH_SAL,REG_SAL);
+                LEER_FAC;
+            SINO
+                SI REG_FAC.N_LEG > REG_EX.N_LEG ENTONCES
+                    LEER_EX;
+                    ESC("Legajo Erroneo no esta en la base de datos:", REG_EX.N_LEG) 
+                FS;
+            FS;
+        FS;
+    FM;
+    CERRAR(ARCH_FAC); CERRAR(ARCH_EX); CERRAR(ARCH_SAL);
+Fin_Accion.
+
+
+
+
+
+			
+	
+
+
+
+
+
+
