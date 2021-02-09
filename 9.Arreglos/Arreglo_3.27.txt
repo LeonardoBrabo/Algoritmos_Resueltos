@@ -1,0 +1,101 @@
+ACCION Arreglo_3.27 ES
+    AMBIENTE
+
+    FACTURA = REGISTRO
+        N_CLIENTE N(5)
+        ZONA:
+        MERCA:
+        CANT_U:
+        TOTAl_GRAVADO:
+        TOTAL_SINIVA:
+        TOTAL_CONIVA:
+    FR
+
+    REG: FACTURA
+    ARCH: Archivo de FACTURA
+
+    REGIS = REGISTRO  
+        TOTAl_GRAVADO:
+        TOTAL_SINIVA:
+        TOTAL_CONIVA:
+    FR
+
+    i,j: ENTERO
+    A: ARREGLO [1..10, 1..5] DE REGIS
+
+
+
+    PROCESO
+    ABRIR E/(ARCH) LEER(ARCH,REG)
+    PARA I:= 1 HASTA 10 HACER
+        PARA J:= 1 HASTA 5 HACER
+            A[I,J].TOTAL_GRAVADO:=0
+            A[I,J].TOTAL_SINIVA:=0
+            A[I,J].TOTAL_CONIVA:=0
+        FP
+    FP
+
+    MIENTRAS NFDA(ARCH) HACER
+        
+        I:= REG.ZONA
+        J:= REG.MERCA
+
+        A[I,J].TOTAL_GRAVADO:= A[I,J].TOTAL_GRAVADO + REG.TOTAL_GRAVADO
+        A[I,J].TOTAL_SINIVA:= A[I,J].TOTAL_SINIVA   + REG.TOTAL_SINIVA
+        A[I,J].TOTAL_CONIVA:= A[I,J].TOTAL_CONIVA + REG.TOTAL_CONIVA
+
+        //totales por zona
+        A[10,J].TOTAL_GRAVADO:= A[10,J].TOTAL_GRAVADO + REG.TOTAL_GRAVADO
+        A[10,J].TOTAL_SINIVA:= A[10,J].TOTAL_SINIVA   + REG.TOTAL_SINIVA
+        A[10,J].TOTAL_CONIVA:= A[10,J].TOTAL_CONIVA + REG.TOTAL_CONIVA
+
+        //totales por tipo de mercaderia
+        A[I,5].TOTAL_GRAVADO:=A[I,5].TOTAL_GRAVADO + REG.TOTAL_GRAVADO
+        A[I,5].TOTAL_SINIVA:= A[I,5].TOTAL_SINIVA   + REG.TOTAL_SINIVA
+        A[I,5].TOTAL_CONIVA:= A[I,5].TOTAL_CONIVA + REG.TOTAL_CONIVA
+        
+        //total general por zona y mercaderia
+        A[10,5].TOTAL_GRAVADO:=A[I,5].TOTAL_GRAVADO + REG.TOTAL_GRAVADO
+        A[10,5].TOTAL_SINIVA:= A[I,5].TOTAL_SINIVA   + REG.TOTAL_SINIVA
+        A[10,5].TOTAL_CONIVA:= A[I,5].TOTAL_CONIVA + REG.TOTAL_CONIVA
+        LEER(ARCH,REG)
+    FM
+    CERRAR(ARCH)
+    PARA I:= 1 HASTA 9 HACER
+        PARA j:= 1 HASTA 4 HACER
+            ESC("para la zona:",i,"del tipo de mercaderia:",j,":")
+            ESC("el total de gravado:", A[I,J].TOTAL_GRAVADO)
+            ESC("el total de  sin iva:", A[I,J].TOTAL_SINIVA)
+            ESC("el total de  con iva:", A[I,J].TOTAL_CONIVA)
+        FP
+    FP
+
+    PARA J:= 1 HASTA 4  HACER
+    
+        ESC("el total de gravado:", A[10,J].TOTAL_GRAVADO)
+        ESC("el total de  sin iva:", A[10,J].TOTAL_SINIVA)
+        ESC("el total de  con iva:", A[10,J].TOTAL_CONIVA)
+    FP   
+
+    PARA I:= 1 HASTA 9 HACER
+        ESC("el total de gravado:", A[I,5].TOTAL_GRAVADO)
+        ESC("el total de  sin iva:", A[I,5].TOTAL_SINIVA)
+        ESC("el total de  con iva:", A[I,5].TOTAL_CONIVA)
+    FP
+
+    ESC("el total general de gravado:", A[10,5].TOTAL_GRAVADO)
+    ESC("el total general  sin iva:", A[10,5].TOTAL_SINIVA)
+    ESC("el total general  con iva:", A[10,5].TOTAL_CONIVA)
+    
+Fin_accion.
+        
+
+
+
+
+
+
+        
+
+
+

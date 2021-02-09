@@ -1,0 +1,57 @@
+ACCION Arreglo1_3.1 ES
+
+    AMBIENTE
+
+    NUMEROS: ARREGLO [1..100] de ENTERO
+    I,MAYOR,MENOR: ENTERO
+    POSMAYOR,POSMENOR: 1..100
+    ACUMULADOR,CONTADOR: ENTERO
+
+    PROCESO
+    #Cargar el arreglo
+
+    PARA I:= 1 HASTA 100 HACER
+        ESC("Ingrese el numero:")
+        LEER(NUMEROS[I])
+    FP;
+
+    MAYOR:= NUMEROS[1]
+    MENOR:= NUMEROS[1]
+    POSMAYOR:= 1
+    POSMENOR:= 1
+    CONTADOR:= 0
+    PARA I:= 1 HASTA 100 HACER 
+
+        SI NUMEROS[I] MOD 2 = 0 ENTONCES
+            ACUMULADOR:= ACUMULADOR + NUMEROS[I]
+            CONTADOR:= CONTADOR + 1
+        FS
+
+        SI NUMEROS[I] >= MAYOR ENTONCES
+            MAYOR:= SUMEROS[I]
+            POSMAYOR:= I
+        FS
+
+        SI NUMEROS[I] <= MENOR ENTONCES
+            MENOR:= NUMEROS[I]
+            POSMENOR:= I
+        FS
+    FP
+    ESC("la suma de los numero pares es:", ACUMULADOR)
+    ESC("Total de numeros pares:", CONTADOR)
+
+Fin_Acccion.
+
+
+
+
+
+
+
+
+
+
+
+
+
+    

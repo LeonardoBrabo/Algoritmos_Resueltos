@@ -1,0 +1,85 @@
+Accion ListaSimple_4.5 (prim: puntero a nodo) Es
+	ambiente
+
+	Nodo = registro
+		dato = registro
+			nombre: AN(30)
+			capital: AN(30)
+			cant_habitantes: N(8)
+			cant_analfabetos: N(8)
+		FR	
+		prox: puntero a nodo
+	FR
+
+	Nodo2 = registro
+		dato2 = registro
+			nombre: an(30)
+			capital: an(30)
+			porcentaje: real
+		fr
+		prox:puntero a nodo2
+	fr
+
+
+	p: puntero a nodo
+	prim1,prim2,prim3,q: puntero a nodo
+
+
+	//Carga apilada
+	PROCEDIMIENTO CARGARL1(q) ES
+		si prim1 = nil entonces
+
+			prim1:= q
+			*q.prox:= nil
+		sino
+			*q.prox:= prim1
+			prim1:= q
+		fs
+	FP
+	PROCEDIMIENTO CARGARL2(q) ES
+		si prim2 = nil entonces
+
+			prim2:= q
+			*q.prox:= nil
+		sino
+			*q.prox:= prim1
+			prim1:= q
+		fs
+	FP
+	PROCEDIMIENTO CARGARL3(q) ES
+		si prim3 = nil entonces
+
+			prim3:= q
+			*q.prox:= nil
+		sino
+			*q.prox:= prim1
+			prim1:= q
+		fs
+	FP
+
+
+	PROCESO
+
+	p:= prim
+	MIENTRAS p<>nil hacer
+	
+		nuevo(q) 
+		q.dato2.porcentaje:= ((*p.dato.cant_analfabetos * 100 ) /*p.dato2.cant_habitantes)
+		q.dato2.nombre := p.dato.nombre
+		q.dato2.capital:= p.dato.capital
+
+		SEGUN (q.dato2.porcentaje) HACER
+			<11:CARGARL1(q)
+			<26: CARGARL2(q)
+			>=26: CARGARL3(q)
+		FS
+
+		p:= *p.prox
+	FM
+
+
+
+
+
+
+

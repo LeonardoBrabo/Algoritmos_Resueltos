@@ -1,0 +1,148 @@
+En el nuevo DELIVERY VAMOS-RAPIDO se está diseñando una solución informática para la atención de clientes. Se ha pensado en una LISTA por su dinamismo en cuanto a la cantidad de elementos. Diseñe un algoritmo que realice las siguientes funciones:
+
+Registrar su pedido en una lista Doble (se agrega en Estado P (Pendiente), y se mantiene ordenado por Nombre del Cliente).
+Realizar el envío (cambia estado del pedido de P (pendiente) a E (Enviado)).
+Eliminar del listado de atención una vez recibido el cobro (al atender el cobro del cadete que hizo el trabajo).
+Datos a almacenar por pedido: Nombre, Dirección, Teléfono y Total.
+La información almacenada debe mantenerse ordenada por Nombre del cliente.
+
+
+Accion ListaDoble_4.12 ES
+	
+	AMBIENTE
+
+	nodo = registro
+		nombre: an(30)
+		direccion: an(40)
+		tel: n(10)
+		total: n(5)
+		estado:("P","E")
+		prox: puntero a nodo
+		ant: puntero a nodo
+	fr
+	p,q,ult,prim: puntero a nodo
+	nombreCliente: an(30)
+	op: ("s","n")
+
+	PROCEDIMIENTO altaPedido() es
+		nuevo(q); 
+		esc("ingrese nombre:");leer(*q.nombre)
+		esc("ingrese direccion:"); leer(*q.direccion)
+		esc("ingrese telefono:"); leer(*q.tel)
+		esc("ingrese total:");leer(*q.total)
+		*q.estado:= "P"
+		si prim = nil entonces			//unico elemento
+			prim:= q
+			ult:= q
+			*q.prox:= nil
+			*q.ant:= nil
+		sino
+			p:= prim
+			mientras (p<>nil) y (*q.nombre > *p.nombre) hacer  //ordenado de manera creciente
+				p:=*p.prox
+			fm
+			si p = prim entonces		//primer elemento
+				*q.prox:= p
+				*q.ant:= nil
+				*p.ant:= q
+				prim:= q
+			sino
+				si p = nil entonces		//ultimo elemento
+					*q.ant:= ult
+					*q.prox:= nil
+					*ult.prox:= q
+					ult:= q
+				sino					//medio
+					*q.prox:= p
+					*q.ant:= *p.ant
+					*p.ant:= q
+					*(*p.ant).prox:= q
+				fs
+			fs
+		fs
+	FP
+
+	PROCEDIMIENTO eliminarPedido()  es
+		esc("ingrese el nombre del cliente:"); leer(nombreCliente)
+		si prim = nil entonces
+			esc("lista vacia")
+		sino
+			p:= prim
+			mientras (P<> nil) y (*p.nombre <> nombreCliente) hacer
+				p:= *p.prox
+			fm
+			si p = nil entonces
+				esc("no se encontro el elemento")
+			sino
+				si *p.estado = "E" entonces						
+					si prim = ult entonces				//unico elemento a eliminar
+						prim:= nil
+						ult:= nil
+					sino
+						si p= prim entonces				//primer elemento a eliminar
+							prim:= *p.prox
+							*prim.ant:= nil
+						sino
+							si p = ult entonces			//ultimo elemento a eliminar
+								ult:= *p.ant
+								*ult.ant:= nil
+							sino
+								*(*p.prox).ant:= *p.ant 	//elemento medio a eliminar
+								*(*p.ant).prox:= *p.prox
+							fs
+						fs
+					fs
+					disponer(p)				
+				sino
+					esc("no se puede eliminar el estado es pendiente")
+				fs	
+			fs
+		fs
+	fp
+
+	PROCEDIMIENTO realizarEnvio() es
+		esc("ingrese el nombre del cliente:"); leer(nombreCliente)
+		si prim = nil entonces
+			esc("lista vacia")
+		sino
+			p:= prim
+			mientras (P<> nil) y (*p.nombre <> nombreCliente) hacer
+				p:= *p.prox
+			fm
+			si p = nil entonces
+				esc("no se encontro el elemento")
+			sino
+				si P
+				esc("cliente encontrado, estado del envio cambiado a Enviado")
+				p.estado:="E"
+			fs
+		fs
+	fp
+
+
+	PROCESO
+	prim:= nil
+	repetir
+
+		esc("eliga una opcion:")
+		esc("1-registrar Pedido")
+		esc("2-realizar envio")
+		esc("3-eliminar del listado")
+		leer(opcion)
+		segun opcion hacer
+			1:	altaPedido()
+			2:	realizarEnvio()
+			3:	eliminarPedido()
+		fs 	
+
+		esc("desea continuar:", s/n)
+		leer(op)
+	hasta que op = "n"
+
+
+
+
+
+
+
+

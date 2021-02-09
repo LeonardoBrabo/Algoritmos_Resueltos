@@ -1,0 +1,105 @@
+ACCION Actualizacion ES
+    AMBIENTE 
+        CLAVE = REGISTRO
+            PluviometroID
+            FechaRegistro
+        FR
+        PRECIPITACIONES_ANUALES = REGISTRO
+            Clave: CLAVE
+            Precipitaciones 
+            EstadoPluviometro
+        FR 
+        MEDICIONES = REGISTRO 
+            Claven: CLAVE 
+            HoraRegistro 
+            EstadoPluviometro
+            Precipitaciones
+        FR 
+        Pluviometro = REGISTRO
+            PluviometroID
+            Modelo 
+            Descripcion
+            Departamento 
+        FR 
+        A_PrecA, Sal_PrecA: archivo de PRECIPITACIONES_ANUALES ordenado por Clave 
+        A_Med: archivo de MEDICIONES ordenado por  Caven
+        Pluv: archivo de Pluviometro indexado por PluviometroID
+        r_p, rs_p: PRECIPITACIONES_ANUALES
+        r_m: MEDICIONES
+        r_pluv: Pluviometro
+        deptos: arreglo de [1..25] de AN(20)
+        EnMant: entero 
+        
+        Subaccion Leer_Med ES
+        Leer(A:Med,r_m)
+        SI FDA(A_med) ENTONCES
+            r_m.claven:= HV
+        FS
+    FSUB
+
+    Subaccion Leer_PrecA ES
+        Leer(A_PrecA, r_p)
+        SI FDA(A_PrecA) ENTONCES
+            r_p.clave:= HV
+        FS
+    FSUB
+    PROCESO
+        Abrir E/ (A_PrecA)
+        Abrir /S(Sal_PrecA)
+        Abrir E/ (A_Med)
+        Abrir E/ (Pluv)
+        Leer_Med
+        Leer_PrecA
+        MIENTRAS (r_m.claven <> HV) o (r_p.clave <> HV) HACER 
+            SI r_p.clave < r_M.claven ENTONCES 
+                rs_p:= r_p 
+                Escribir( Sal_PrecA, res_p)
+                Leer_PrecA
+            SINO
+                SI r_p.clave = r_M.claven ENTONCES 
+                    MIENTRAS r_p.clave = r_M.claven ENTONCES
+                        SI (r_m.EstadoPluviometro = AC) ENTONCES 
+                            rs_p.clave := r_p.clave
+                            rs_p.Precipitaciones:=  r_m.Precipitaciones + r_p.Precipitaciones
+                            rs_p.EstadoPluviometro:= r_m.EstadoPluviometro
+                            Escribir(Sal_PrecA,rs_p)
+                        SINO 
+                            EnMant:= EnMant + 1
+                            rs_p.clave:= r_p.clave 
+                            rs_p.Precipitaciones:= r_p.Precipitaciones
+                            rs_p.EstadoPluviometro:= r_m.EstadoPluviometro
+                            Escribir(Sal_PrecA, rs_p)
+
+                            r_pluv.PluviometroID:= r_p.Clave.PluviometroID
+                            SI EXISTE ENTONCES
+                                PARA i:= 1 HASTA 25 HACER 
+                                    SI deptos[i] = r_pluv.Departamentos ENTONCES 
+                                        Esc('El  ID del pluviometro en mantenimiento es ', r_pluv.PluviometroID, 'se encuentra en el departamento ', deptos[i])
+                                    FSI 
+                                FP 
+                            SINO 
+                                Esc('Error')
+                            FSI                     
+                        FSI  
+                        Leer_Med
+                    FM
+                    Leer_PrecA 
+                SINO 
+                    rs_p.clave:= r_m.claven 
+                    rs_p.Precipitaciones:= r_m.Precipitaciones
+                    rs_p.EstadoPluviometro:= r_m.EstadoPluviometro
+                    Leer_Med
+                    MIENTRAS rs_p.clave = r_m.claven HACER
+                        rs_p.Precipitaciones:= rs_p.Precipitaciones + r_m.Precipitaciones
+                        rs_p.EstadoPluviometro:= r_m.EstadoPluviometro 
+                        Leer_Med
+                    FM 
+                    Si rs_p.EstadoPluviometro = MA ENTONCES 
+                        EnMant:= EnMant + 1
+                    FSI 
+                FSI 
+            FSI 
+        FM 
+        Cerrar_Archivos 
+    Fin_ACCION
+   

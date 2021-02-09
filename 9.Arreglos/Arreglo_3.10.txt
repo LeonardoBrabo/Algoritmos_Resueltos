@@ -1,0 +1,23 @@
+ACCION Arreglo_3.10 (A: arreglo [1..50] de Datos) Es
+    AMBIENTE
+
+    Datos = REGISTRO
+        cod_localidad: n(5)
+        Lluvia: n(5)
+    FR
+
+    localidad: n(5)
+    i: Entero
+
+    PROCESO
+
+    ESC("ingrese el codigo de localidad que desea buscar:")
+    LEER(localidad)
+    PARA i:= 1 hasta 50 HACER
+        SI localidad = A[i].cod_localidad ENTONCES
+            ESC("Para la localidad",localidad,"lluvia anual:",A[i].Lluvia)
+        SINO
+            ESC("no exite la localidad ingresada")
+        FS
+    FP
+F_ACCION.

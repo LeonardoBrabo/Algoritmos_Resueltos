@@ -1,0 +1,84 @@
+ACCION  ejer_26 ES
+    AMBIENTE
+
+    FACTURAS = REGISTRO
+        NRO_FACTURA: n(5)
+        NRO_USUARIO: n(5)
+        ZONA: ("A","B","C","D")
+        FECHA = REGISTRO
+            AA: N(4)
+            MM: 1..12
+            DD: 1..31
+        FR
+        CONSUMO: n(7,2)
+    FR
+    ARCH: Archivo de FACTURAS
+    REG: FACTURAS
+    TARIFA: REAL
+    i,j : ENTERO
+
+    REGIS = REGISTRO
+        CONSUMO: n(7,2)
+        IMPORTES: N(7,2)
+    FR
+
+    A: ARREGLO [1..13,"A..E"] de REGIS
+
+
+    PROCESO
+    ABRIR E/(ARCH) LEER(ARCH,REG)
+    PARA I:= 1 HASTA 13 HACER
+        PARA J:= "A" HASTA "E" HACER
+            A[I,J].CONSUMO:=0
+            A[I,J].IMPORTES:=0
+        FP
+    FP
+    MIENTRAS NDFA(ARCH) HACER
+       
+        I:= REG.FECHA.MES
+        J:= REG.ZONA
+
+        SEGUN REG.ZONA HACER
+            "A": TARIFA:= 0,05
+            "B": TARIFA:=  0,07
+            "C": TARIFA:=  0,09 
+            "D": TARIFA:= 0,13
+        FS
+
+        A[I,J].CONSUMO  := A[I,J].CONSUMO + REG.CONSUMO
+        A[13,J].CONSUMO := A[13,J].CONSUMO + REG.CONSUMO
+        [I,"E"].CONSUMO := [I,"E"].CONSUMO + REG.CONSUMO
+        A[I,J].IMPORTES:= A[I,J].IMPORTES + REG.CONSUMO * TARIFA
+        A[13,J].IMPORTES:= A[13,J].IMPORTES + REG.CONSUMO * TARIFA
+        [I,"E"].IMPORTES := [I,"E"].IMPORTES + REG.CONSUMO * TARIFA
+        LEER(ARCH,REG)
+    FM
+    CERRAR(ARCH)
+
+    PARA I:= 1 HASTA 12 HACER   
+        PARA J:= "A" HASTA "D" HACER
+            ESC("para el mes:",i,"en la zona:",j,":")
+            ESC("el consumo en kw fue de:", A[I,J].CONSUMO)
+            ESC("el importe es de:", A[I,J].IMPORTES)
+        FP
+    FP
+
+    PARA J:= "A" HASTA "D" HACER
+        ESC("el total general de la zona del consumo:",J,"es:", A[13,j].CONSUMO)
+        ESC("el total general de la zona del importe:",J,"es:", A[13,j].IMPORTES)
+    FP
+
+    PARA i: 1 HASTA 12 HACER
+        ESC("el total general del consumo del mes :",i,"es:", A[i,"E"].CONSUMO)
+        ESC("el total general del importe del mes :",i,"es:", A[i,"E"].IMPORTES)
+    FP
+Fin_accion.
+
+
+        
+        
+
+
+
+
+

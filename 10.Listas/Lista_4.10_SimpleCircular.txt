@@ -1,0 +1,98 @@
+
+Se dispone de una lista circular con un conjunto de números naturales. Este conjunto está dividido en 6 grupos. En cada grupo el primer elemento indica la cantidad de números subsiguientes a él que integran dicho grupo. Se desea generar una nueva lista doblemente encadenada en la cual cada nodo contendrá el promedio de cada grupo. Dicha lista debe quedar ordenada en forma ascendente y, al final se debe informar cuál fue el máximo y el mínimo promedio de todo el conjunto de números.
+
+
+ListaSimpleCircular_4.10 (prim: puntero a nodoCircular) ES
+	
+	AMBIENTE
+
+	nodoCircular= registro
+		natural: entero
+		prox: puntero a nodoCircular
+	FR
+
+	pc,antc: puntero a nodoCircular
+
+	nodoDoble = registro
+		prom: real
+		prox: puntero a nodoDoble
+		ant: puntero a nodoDoble
+	FR
+
+	pd,qd,prim2,ult: puntero a nodoDoble
+
+	grupo, grupomax,grupomin: entero
+	primervalor: entero
+	i,x: entero
+	max,min: real
+
+
+	PROCESO
+	pc:= prim; prim2:= nil; max:=0; min:= 0 grupo:=0
+	mientras (*pc.prox <> prim) hacer
+		suma:= 0;
+		primervalor:= *pc.natural
+		para i:= 1 hasta (primervalor + 1) hacer   //hasta la cantidad que indica el primer nodo y +1 porque se trata a si mismo
+
+			suma:= suma + (*pc.natural)		
+			pc:=*pc.prox					//en la ultima vez queda parado en el primer nodo del siguiente grupo
+		FP
+		grupo:= grupo + 1					//para saber que grupo de los 6 fue el mayor
+		nuevo(qd); *qd.prom:= (suma / i)
+
+		x:=*qd.prom 			//almaceno el valor del promedio para buscar el max y el min
+
+		si x > max entonces				//busco el valor minimo y el maximo
+			max:= x
+			grupomax:= grupo
+		sino
+			si x < min entonces
+				min:= x
+				grupomin:= grupo
+			fs
+		fs
+
+		si prim2= nil entonces				//insercion lista doblemente enlazada 
+			prim2:= qd
+			ult:= qd
+			*qd.ant:= nil
+			*qd.prox:= nil
+		sino
+			pd:= prim2
+			mientras (pd <> nil) y (*qd.prom > *pd.prom) hacer		//insercion ascendente
+				pd:= *pd.prox
+			fm
+			si p= prim2 entonces
+				*qd.prox:= pd
+				prim2:= qd
+				*qd.ant:= nil
+				*pd.ant:= qd
+			sino
+				si	p = nil entonces
+
+					*ult.prox:= qd
+					*qd.ant:= ult
+					*qd.prox:= nil
+					ult:= q
+				sino
+					*qd.prox:= pd
+					*pd.ant:= qd
+					*qd.ant:= *pd.ant
+					*(*pd.ant).prox:= q
+				fs
+			fs
+		fs
+	fm
+	esc("el valor maximo de los promedios es:",max,"que pertenece al grupo numero:",grupomax)
+	esc("el valor minimo de los promedios es:",min,"que pertenece al grupo numero:",grupomin)
+
+Fin_accion.
+
+
+
+
+
+
+
+
+

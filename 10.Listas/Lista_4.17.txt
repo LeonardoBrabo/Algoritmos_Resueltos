@@ -1,0 +1,134 @@
+Teniendo en cuenta el ejercicio 1.20 del TP2:
+
+Se posee 2 secuencias (S1 y S2) con las cuales se desea generar una nueva secuencia (SAL) donde se intercalen las palabras de 
+las secuencias de entrada, de la siguiente manera: copiar de S1 aquellas palabras que empiezan y terminan con la misma letra y 
+de S2 aquellas palabras que posean al menos un digito numérico y además estén en posición par.
+
+Escribir un algoritmo que lo resuelva, teniendo en cuenta que conoce la estructura de listas.
+
+accion 417 es
+    ambiente
+        sec1,sec2, sal:Secuencia de caracteres
+        nodo = registro
+            letra:caracter
+            prox:Puntero a nodo
+        fin registro
+
+        funcion verificar(prim:Puntero a nodo): boolean es
+            ambiente
+                p, m:Puntero a nodo
+                band:boolean
+            algoritmo
+                si (prim = nil) entonces
+                    esc("Error: Lista vacia")
+                    devolver(falso)
+                sino
+                    p:= prim
+                    m:= prim
+                    band:=falso
+                    mientras (*m.prox <> nil) hacer
+                        m:= *m.prox
+                    fin mientras
+                    si (*m.letra = *p.letra) entonces
+                        band:= verdadero
+                    fin si
+                    devolver(band)
+                fin si
+        fin funcion
+        
+        subaccion palabra_sec1(sec,sal:secuencia de caracteres, v:caracter)es
+            ambiente
+                prim, p,q:Puntero a nodo
+                x:caracter
+                band:boolean
+            algoritmo
+                prim:= nil
+                mientras nfds(sec) && (v <> ' ') hacer
+                    nuevo(q)
+                    *q.letra:= v
+                    si (prim = nil) entonces
+                        prim:= q
+                    sino
+                        p:= prim
+                        mientras (*p.prox <> nil) hacer
+                            p:= *p.prox
+                        fin mientras
+                        *p.prox:= q
+                    fin si
+                    *q.prox:= nil
+                    avz(sec,v)
+                fin mientras
+                band:= verificar(prim)
+                si (band = verdadero) entonces
+                    p:= prim
+                    mientras (p <> nil) hacer
+                        x:= *p.letra
+                        esc(sal,x)
+                        p:=*p.letra
+                    fin mientras
+                sino
+                    esc("La palabra no cumple con la condicion")
+                fin si
+        fin subaccion
+
+
+        subaccion palabra_sec2(sec,sal:secuencia de caracteres, v:caracter)
+            ambiente
+                prim,q,p:Puntero a nodo
+                num = ('0','1','2','3','4','5','6','7','8','9')               
+                x:caracter
+                band:boolean
+            algoritmo
+                prim:= nil
+                mientras nfds(sec) && (v <> ' ') hacer
+                    nuevo(q)
+                    *q.letra:= v
+                    si (prim = nil) entonces
+                        prim:= q
+                    sino
+                        p:= prim
+                        mientras (*p.prox <> nil) hacer
+                            p:= *p.prox
+                        fin mientras
+                        *p.prox:= q
+                    fin si
+                    *q.prox:= nil
+                    avz(sec,v)
+                fin mientras
+                band:= falso
+                p:= prim
+                mientras (band <> verdadero) && (p <> nil) hacer
+                    si (*p.letra en num) entonces
+                        band:= verdadero
+                    fin si
+                    p:= *p.prox
+                fin mientras
+
+                si (p <> nil) entonces
+                    p:= prim
+                    mientras (p <> nil) hacer
+                        x:= *p.letra
+                        esc(sec,x)
+                        p:= *p.prox
+                    fin mientras
+                sino
+                    esc("La palabra no cumple la condicion")
+                fin si
+        fin subaccion
+    
+    algoritmo
+        arr(sec1): arr(sec2); crear(sal);
+        avz(sec1,v1): avz(sec2,v2);
+
+        mientras nfds(sec1) && nfds(sec2) hacer
+            mientras (v1 = ' ') hacer
+                avz(sec1,v1)
+            fin mientras
+            palabra_sec1(sec1,sal,v1) // cuando termina la subaccion, v1 queda en un blanco o fds
+            mientras (v2 = ' ')
+                avz(sec2, v2)
+            fin minetras
+            palabra_sec2(sec2,sal,v2) // cuando termina la subaccion, v2 queda en un blanco o fds
+        fin mientras
+        cerrar(sec1); cerrar(sec2); cerrar(sal);
+fin accion

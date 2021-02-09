@@ -1,0 +1,49 @@
+accion Lista_4.2 (Prim: puntero a nodo) ES
+
+	AMBIENTE
+
+	Nodo = registro
+		dato: Entero
+		prox: Puntero a Nodo
+	FR	
+	p,ant,q: puntero a Nodo
+	prim2: puntero a nodo
+	ant2: puntero a nodo
+	PROCESO
+	p:= prim
+	prim2:= nil
+
+	mientras (p<>nil) hacer
+
+		si (*p.dato mod 10 = 0) entonces
+			nuevo(q); *q.dato:= *p.dato;
+			*q.prox:= nil;
+	
+			Si prim2 = nil entonces
+				ant2:= q
+				prim2:= q;
+			sino
+
+				ant2.prox:= q
+				ant2:=q
+			fs
+
+			si (p= prim) entonces
+				p:= *P.prox
+				disponer(prim)
+				prim:= p
+			sino
+				p:=*p.prox
+				disponer(*ant.prox)
+				ant.prox:=p
+			fs
+		sino
+			ant:=p
+			p:=*p.prox
+		fs
+	fm
+Fin_accion.
+
+
+				
+	

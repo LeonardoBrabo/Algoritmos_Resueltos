@@ -1,0 +1,17 @@
+Acción ejercicio22 (mimatriz:arreglo[1..5,1..5] de entero) es
+Ambiente
+	otramatriz:arreglo[1..2,1..5] de entero
+	i,j:1..5
+Algoritmo
+	Para i:=1 a 2 Hacer
+		Para j:=1 a 5 Hacer
+			otramatriz[i,j]:=0
+		FP
+	FP
+	Para i:=1 a 5 hacer
+		Para j:=1 a 5 Hacer
+			otramatriz[1,i]:=otramatriz[1,i]+mimatriz[i,j]
+			otramatriz[2,j]:=otramatriz[2,j]+mimatriz[i,j]
+		FP
+	FP
+FA

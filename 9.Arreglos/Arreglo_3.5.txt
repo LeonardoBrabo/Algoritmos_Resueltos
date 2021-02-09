@@ -1,0 +1,31 @@
+accion cosas es
+    Ambiente
+        A: Arreglo [1..30] de reales
+        B: Arreglo [1..30] de reales
+        C: Arreglo [1..60] de reales
+        indice: entero
+    algoritmo
+        // Se supone que A y B están cargador ya				31 ... 60
+        Para indice:=1 hasta 30 hacer
+            C[indice] := A[indice];				1 2 3 ... 30
+            C[indice+30] := B[indice];				62
+							
+        finpara
+        metodo_de_ordenamiento(C);
+    finaccion
+
+
+para i:= 2 hasta 60 hacer
+	x:=c[i]
+	j:= i-1
+	mientras j>0 y x<c[j] hacer
+		c[j+1]:= c[j]
+		j:= j-1
+	fm
+	c[j+1]:= x
+fp
+
+para I:= 1 hasta 60 hacer
+	esc(c[i])
+fp
+

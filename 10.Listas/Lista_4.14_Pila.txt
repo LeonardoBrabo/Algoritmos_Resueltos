@@ -1,0 +1,43 @@
+Se desea ingresar una serie de números, e imprimirlos en el orden contrario al de ingreso. Diseñar un algoritmo que satisfaga tal requerimiento, utilizando la estructura de datos más apropiada.
+
+ListaPila_4.14 es
+
+	AMBIENTE
+
+	nodo = registro
+		dato: entero
+		prox: puntero a nodo
+	fr
+	p,q,prim: puntero a nodo
+	numero: entero
+	op: ("s","n")
+
+	PROCEDIMIENTO insertar() es
+		nuevo(q); *q.dato:= numero
+		si prim= nil entonces
+			prim:= q
+			*q.prox:= nil
+		sino
+			*q.prox:= prim 			//carga Apilada
+			prim:= q
+		fs
+	fp
+
+
+	PROCESO
+	prim:= nil
+	op:= "s"
+	mientras op = "s" hacer
+		esc("ingrese numero:")
+		leer(numero)
+		insertar()
+		esc("desea ingresar otro numero? s/n":)
+		leer(op)
+	fm
+	p:= prim
+	mientras P<> nil hacer			//muestro en pantalla
+		esc(*p.dato)
+		p:= *p.prox
+	fm	
+Fin_accion.
+

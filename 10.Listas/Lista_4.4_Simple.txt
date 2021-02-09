@@ -1,0 +1,39 @@
+Se dispone de una lista simplemente encadenada cuyos registros están ordenados en forma ascendente por una clave de tipo entero; diseñar un algoritmo que invierta el orden de la lista.
+
+ListaSimple_4.4 (PRIM: puntero a nodo) Es
+	
+	AMBIENTE
+
+	Nodo= registro
+		dato: entero
+		prox: puntero a nodo
+	fr
+	p,q,prim2: puntero a nodo
+
+
+	PROCESO 
+
+	prim2:= nil
+	p:= prim
+	mientras (p<>nil) hacer
+		nuevo(q)
+		*q.dato:= *p.dato
+		si prim2 = nil entonces
+			
+			*q.prox:= nil		
+		sino
+			*q.prox:= prim2		//carga apilada lifo		
+		fs
+		prim2:=	q
+		p:=*p.prox
+	fm
+	Esc("lista invertida");
+	P:= prim2
+	mientras (p<>nil) hacer		//muestro en pantalla la inversa
+		esc(p)
+		p:=*p.prox
+	fm
+
+Fin_accion.
+
+

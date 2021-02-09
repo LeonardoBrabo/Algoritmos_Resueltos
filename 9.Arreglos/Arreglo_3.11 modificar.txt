@@ -1,0 +1,31 @@
+ACCION Arreglo_3.11 (A: arreglo [1..100] de Videos) Es
+    AMBIENTE
+
+    Videos = REGISTRO
+        Titulo: an(15)
+        Director: an(15)
+        Categoria_Pel: an(15)
+        Cantidad_vistas: n(5)
+        Alquilado: ("s","n")    
+    FR
+
+    pelicula_us: n(5)
+    i: Entero
+
+    PROCESO
+
+    ESC("ingrese la pelicula que quiere alquilar:")
+    LEER(pelicula_us)
+    PARA i:= 1 hasta 100 HACER
+        SI pelicula_us = A[i].Titulo ENTONCES
+            SI A[i].Alquilado = "n" ENTONCES
+                ESC("Pelicula Disponible")
+                A[i].Cantidad_vistas:= A[i].Cantidad_vistas + 1
+            SINO
+                ESC("Esta pelicula ya esta alquilada")
+            FS
+        SINO
+            ESC("no exite la Pelicula")
+        FS
+    FP
+F_ACCION.

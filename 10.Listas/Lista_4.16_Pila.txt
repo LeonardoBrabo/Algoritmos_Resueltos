@@ -1,0 +1,59 @@
+
+Supóngase que, utilizando una lista encadenada, se implementa una pila P (estructura 'LIFO', es decir, 'último en entrar, primero en salir'). Diseñar un algoritmo que permita insertar o extraer un elemento, comprobando siempre si la pila está vacía o no.
+
+ListaPila_4.16 es
+	
+	AMBIENTE
+
+	nodo = registro
+		dato: entero
+		prox: puntero a nodo
+	fr
+	p,q,prim: puntero a nodo	
+	op: (1,2)
+	continuar("s","n")
+
+
+	PROCEDIMIENTO insertar() es 			//carga apilada
+		nuevo(q)
+		esc("ingrese valor a insertar:")
+		leer(*q.dato)
+		si prim = nil entonces
+			prim = q
+			*q.prox:= nil
+		sino
+			*q.prox:= prim
+			prim:= q
+		fs
+	FP
+
+	PROCEDIMIENTO extraer() es
+		si prim = nil entonces
+			esc("lista vacia")
+		sino
+			p:= prim
+			esc(*P.dato)
+			prim:= *p.prox
+			disponer(p)
+			esc("elemento extraido")		
+		fs
+	FP
+
+
+	PROCESO
+
+	prim:= nil
+	repetir
+		esc("lista apilada, eliga que desea hacer:");
+		esc("1-insertar")
+		esc("2-extraer")
+		leer(op)
+		SEGUN op HACER
+			1: insertar()
+			2: extraer()
+		FS
+
+		esc("desea continuar? s/n:")
+		leer(continuar)
+
+	hasta que continuar = "n"

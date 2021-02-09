@@ -1,0 +1,20 @@
+ACCION Arreglo_3.4 (A:Arreglo [1..50] de Entero) ES
+
+    AMBIENTE
+    S: Arreglo [1..50] de Entero
+    I,CONT: ENTERO
+
+    PROCESO
+    
+    CONT:= 0
+    PARA I:= 1 HASTA 50 HACER
+        
+        SI A[I] MOD 3 = 0 ENTONCES
+            CONT:= CONT + 1
+        SINO
+            S[I]:= A[I]
+            A[I]:= A[I]* 3            
+        FS
+    FP
+    ESC("el total de numero que son multiplos de 3 es", CONT)
+Fin_accion.

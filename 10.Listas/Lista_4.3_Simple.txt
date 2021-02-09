@@ -1,0 +1,32 @@
+Dada una lista simplemente encadenada de números diseñar un algoritmo que calcule en forma independiente.La suma de los números impares, y la suma de los números pares.
+
+Accion ListaSimple_4.3 (prim: puntero a nodo) Es
+	Ambiente
+
+	Nodo = registro
+		dato: Entero
+		prox: Puntero a Nodo
+	FR	
+	p: puntero a Nodo
+	sumpar: entero
+	sumimpar: entero
+
+	Proceso
+	
+	p:= prim 
+	sumpar:= 0; sumimpar:=0;
+	mientras p<>nil hacer
+		
+		SI (*p.dato mod 2 = 0) entonces
+
+			sumpar:= sumpar + *p.dato
+		SINO
+			sumimpar:= sumimpar + *p.dato
+		FS
+
+		p:= *p.prox
+	FM
+	esc("la suma de los numero pares es:", sumpar)
+	esc("la suma de los numeros impares es:", sumimpar)
+Fin_accion.
+

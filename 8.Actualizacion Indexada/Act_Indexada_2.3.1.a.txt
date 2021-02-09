@@ -1,0 +1,59 @@
+ACCION Act_Indexada_2.3.1.a ES
+    AMBIENTE
+
+    FACTURAS = REGISTRO
+        NRO_CLIENTE: N(5)
+        NRO_FACTURA: N(5)
+        FECHA = REGISTRO    
+            AA:N(4)
+            MM: 1..12
+            DD: 1..31
+        FR;
+        IMPORTE: N(8)
+    FR;
+
+    AFACTURAS: Archivo ordenado por NRO_CLIENTE, NRO_FACTURA;
+    RFACTURAS: FACTURAS;
+
+    CLIENTES = REGISTRO
+        NRO_CLIENTE: N(5)
+        NOMBRE: AN(20)
+        DNI: N(8)
+        CUIT: N(11)
+        DOMICILIO: AN(30)
+    FR;
+    
+    ACLIENTES: Archivo indexado por NRO_CLIENTE;
+    RCLIENTES: CLIENTES
+
+    RES_NROCLIENTE: N(5)
+    
+
+    PROCESO
+    ABRIR E/(AFACTURAS); ABRIR E/(ACLIENTES);
+    LEER(AFACTURAS,RFACTURA)
+    ESC("|Nro_Cliente| |Nombre Cliente| |Numero Factura|");
+    MIENTRAS NFDA(AFACTURAS) HACER
+        
+        RES_NROCLIENTES:= RFACTURAS.NRO_CLIENTE
+        RCLIENTES.NRO_CLIENTE:= RFACTURAS.NRO_CLIENTE
+        LEER(ACLIENTES,RCLIENTES);
+
+        SI EXISTE ENTONCES
+           
+            MIENTRAS NFDA (AFACTURAS) Y (RES_NROCLIENTE =  RFACTURA.NRO_CLIENTE) HACER
+                ESC(RFACTURAS.NRO_CLIENTE, RCLIENTES.NOMBRE, RFACTURAS.NRO_FACTURA);
+                LEER(AFACTURA,RFACTURA);
+            FM;
+        SINO
+             MIENTRAS NFDA (AFACTURAS) Y (RES_NROCLIENTE =  RFACTURA.NRO_CLIENTE) HACER
+                LEER(AFACTURAS,RFACTURAS);
+            FM 
+        FS;      
+    FM;
+    CERRAR(AFACTURAS); CERRAR(ACLIENTES)
+Fin_accion.
+
+        
+    
+

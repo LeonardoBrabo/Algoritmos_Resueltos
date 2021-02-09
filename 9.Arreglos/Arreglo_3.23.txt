@@ -1,0 +1,49 @@
+ACCION Arreglo_3.23 (PACI: arreglo [1..4,1..7,1..50] de entero) ES 
+
+
+    AMBIENTE
+
+    SAL: arreglo [1..50,1..7] de entero
+    MAXIMA,MINIMA,I,J,K,: entero
+    DIAMAX,LECTURAMX,DIAMIN,LECTURAMIN: entero
+    SUMA: entero
+    DIA: AN(10)
+
+    PROCESO
+
+    
+
+        
+    PARA K:= 1 HASTA 50 HACER
+
+        MINIMA:= PACI[1,1,K]        # otra forma seria minima:= HV
+        MAXIMA:= PACI[1,1,K]        # maxima := LV
+
+        PARA J:= 1 HASTA 7 HACER
+            
+            SUMA:= 0
+            
+            PARA I:=  1 HASTA 4 HACER
+
+
+                SI PACI[I,J,K] > MAXIMA ENTONCES
+                    MAXIMA:=  PACI[I,J,K]
+                    DIAMAX:= J
+                    LECTURAMAX:= I
+                FS
+
+                SI PACI[I,J,K] < MINIMA ENTONCES
+                    MINIMA:= PACI[I,J,K]
+                    DIAMIN:= J
+                    LECTURA:= I
+                FS
+                SUMA:= SUMA + PACI[I,J,K]
+            FP
+            SUMA:= SUMA DIV 4
+            SAL[K,J]:= SUMA     
+        FP
+        ESC("Temperatura Maxima del paciente:",K, "es", MAXIMA, "En la lectura:",LECTURAMAX)
+        ESC("Temperatura Minima del paciente:",K, "es", MINIMA, "En la lectura:",LECTURAMIN)
+    FP
+Fin_accion.
+

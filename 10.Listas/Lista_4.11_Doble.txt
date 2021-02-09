@@ -1,0 +1,121 @@
+
+En una empresa de servicios motorizados que NO posee una cantidad fija de integrantes, pero siempre es mayor que 1 (uno). Los datos de las personas está almacenados en un archivo (DNI, Nombre, Antigüedad) ordenado por DNI. Realizar un algoritmo que permita generar una lista de asignación (usando una estructura de lista doblemente encadenada), ordenada al principio por antigüedad, y un proceso que realice dicha asignación, en cada solicitud, por turno según orden en la lista. Una vez asignado dicha persona se va al final de la lista para esperar su nueva asignación. Al final del día informar cuantas asignaciones tuvo cada integrante.
+
+PERSONAL
+
+Nro_Personal N(5)Nombre AN(50)Asignaciones N(5)Antigüedad N(2)
+
+
+Accion ListaDoble_4.11 es
+
+	AMBIENTE
+
+	Datos = registro
+		dni: n(8)
+		nombre: an(30)
+		antiguedad: n(2)
+	FR
+
+	arch: archivo de Datos ordenado por dni
+	reg: Datos
+
+	Nodo= registro
+		dato= registro
+			dni: n(8)
+			nombre: an(30)
+			antiguedad: n(2)
+			asignaciones: n(3)
+		fr
+		ant: puntero a nodo
+		prox: puntero a nodo
+	FR
+
+	p,q,prim,ult: puntero a nodo
+
+
+	PROCEDIMIENTO insertar() Es
+		si prim= nil entonces				//unico elemento
+			prim:= q
+			*q.prox:= nil
+			*q.ant:= nil
+			ult:= q
+		sino
+			p:= prim ; 
+			mientras (p<>nil) y (*q.dato.antiguedad) < (*p.dato.antiguedad) hacer 	//se ordena de mayor a menor
+				p:=*p.prox
+			FM
+			si p= prim entonces			//primer elemento
+				*p.ant:= q
+				*q.ant:= nil
+				*q.prox:= p
+				prim := q
+			sino
+				si p= nil entonces			//ultimo elemento
+					*ult.prox:= q
+					*q.ant:=ult
+					*q.prox:= nil
+					ult:=q
+				sino
+					*q.prox:= p 			//medio
+					*q.ant:= *p.ant
+					*(*p.ant).prox:= q
+					*p.ant:= q
+				fs
+			fs
+		fs
+	fP
+
+	op:(0,1)
+
+	PROCESO
+
+	abrir e/(arch) leer(arch,reg)
+	prim:= nil; ult:=nil
+	mientras nfda(arch) hacer					//creo lista doble ordenada de manera decreciente por antiguedad
+		nuevo(q); 
+		*q.dato.dni:= reg.dni;
+		*q.dato.nombre:= reg.nombre;
+		*q.dato.antiguedad:= reg.antiguedad;
+		*q.dato.asignacion:= 0;
+		insertar()
+		leer(arch,reg)
+	fm
+
+
+	esc("asignar empleado para envio? 1/0")
+	leer(op)
+	mientras op = 1 hacer
+		p:= prim
+		esc("nombre de empleado asignado:",*p.dato.nombre)
+		esc("dni de empleado asignado:",*p.dato.dni)
+		*p.dato.asignacion:= p.dato.asignacion + 1			//cuento sus asignaciones
+
+		*(*p.prox).ant:= nil		//va al final de la lista
+		prim:= *p.prox
+		*p.ant:= ult
+		*ult.prox:= p
+		ult:= p
+		*p.prox:= nil
+
+		esc("asignar otro empleado:?" 1/0)
+		leer(op)
+	fm
+
+	cerrar(arch)
+	p:= prim
+	mientras p<>nil hacer								//muestro la cantidad de asignaciones de cada empleado en el dia
+		esc("nombre de empleado",*p.dato.nombre)
+		esc("cantidad de asigaciones hoy:", *p.dato.asignacion)
+		p:= *p.prox
+	fm
+
+Fin_accion.
+
+		
+
+	
+
+	
+
+
+

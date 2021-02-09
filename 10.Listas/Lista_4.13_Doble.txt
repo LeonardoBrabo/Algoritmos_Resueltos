@@ -1,0 +1,59 @@
+Dada una lista doblemente encadenada de enteros, ordenada en forma creciente, escriba un algoritmo que elimine las entradas repetidas. El algoritmo debe verificar al inicio que la lista que se pasa como argumento está ordenada; en caso afirmativo realizar la depuración y emitir un mensaje de 'ÉXITO'; en caso contrario, emitir un mensaje de 'ERROR'.
+
+ListaDoble_4.13 (prim,ult: puntero a nodo) es
+	
+	AMBIENTE
+
+	nodo = registro
+		prox: puntero a nodo
+		ant: puntero a nodo
+		dato : entero
+	fr
+
+	p,m: puntero a nodo
+
+	PROCEDIMIENTO eliminacion() es
+		si prim = nil entonces
+			esc("lista vacia")
+		sino
+			p:= prim 
+			mientras (*p.prox <> nil)	hacer
+
+				mientras (*p.prox <> nil) y (*p.dato = *(*p.prox).dato) hacer	 	//avanzo solo hasta el anteultimo elemento
+					m:= p	
+					si m = prim entonces			//controlo si se repite el primero
+						prim:= *m.prox
+						*prim.ant:= nil
+					sino							//los demas los trato con eliminacion de medio
+						*(*m.ant).prox:= *m.prox
+						*(*m.prox).ant:= *m.ant
+					fs
+					p:= *p.prox
+					Disponer(m)	
+				fm
+				si (*p.dato <> *(*p.prox).dato	) entonces
+					p:=*p.prox
+				fs
+				
+			fm
+		fs
+	FP
+	
+
+	PROCESO
+
+	p:= prim
+	mientras (*p.prox<>ult) y  (p =< *p.prox) hacer   	//verifico si esta ordenada de forma creciente
+		p:= *p.prox
+	fm
+	si p > *p.prox entonces
+		esc("error la lista no esta ordenada")
+	sino
+		eliminacion()
+		esc("exito en la depuracion de la lista")
+	fs
+
+Fin_accion.
+		
+
+

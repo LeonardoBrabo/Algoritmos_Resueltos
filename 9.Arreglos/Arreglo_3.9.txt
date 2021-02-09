@@ -1,0 +1,34 @@
+Accion Arreglo_3.9 (A: arreglo [1..200] de Libros) ES
+
+    AMBIENTE
+
+    Libros = registro
+        nro_libro: n(6)
+        titulo: an(30)
+        autor: an(15)
+        cant_hojas: n(6)
+    FR
+
+    posicion_libro: 1..200
+    mayor: entero
+    posicion_mayor: 1..200
+    i: 1..200
+
+    PROCESO
+    mayor:= LV
+    PARA i:= 1 HASTA 200 HACER
+        SI A[i].autor = 'Nicklaus Wirth' ENTONCES
+            ESC(a[i].titulo)
+            SI A[i].titulo = 'Algoritmos + Estructuras de Datos=Programa' ENTONCES
+                posicion_libro:= i
+            FS
+            SI A[i].cant_hojas >= mayor ENTONCES
+                posicion_mayor := i
+                mayor:= A[i].cant_hojas
+            FS
+        FS
+    FP
+    ESC(posicion_libro)
+    ESC(a[posicion_mayor].titulo)
+    
+F_accion.

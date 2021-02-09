@@ -1,0 +1,157 @@
+En el restaurante ÑOQUIS se está pensando en una solución informática para el soporte de datos del nuevo sistema de atención a clientes. Se han decidido por LISTAS por su dinamismo en cuanto a la cantidad de elementos. Diseñe un algoritmo que realice las siguientes funciones:
+
+Añadir cliente al ser atendido (lista simple ordenada por Nombre del Cliente).
+Registrar su consumo (Acumular el Total Consumido en valores de montos).
+Realizar el cobro (emitir ticket con Nombre, Fecha, Número de Mesa y Total).
+Eliminar del listado de atención.
+
+La información almacenada debe mantenerse ordenada por Nombre del cliente.
+
+
+Accion ListaSimple_4.6 ES
+	
+	AMBIENTE
+
+	nodo= registro
+		dato= registro
+			nombreCliente: an(30)
+			totalConsumo: n(8)
+			numeroMesa: n(3)
+			fecha= registro
+				aa: 0..2030
+				mm: 1..12
+				dd: 1..31
+			fr
+		fr
+		prox: puntero a nodo
+	fr
+
+	prim,p,q,ant: puntero a nodo
+	consumo: n(8,2)
+	op:(1,2,3,4);
+	op2,op3: ("s","n"); 
+	
+	//ProdecimientoBusqueda 
+	PROCEDMIENTO busquedaCliente() es
+
+		esc("ingrese nombre de cliente a buscar:"); leer(nombreBuscado);
+
+		Si prim = nil entonces
+			esc("lista vacia")
+		sino
+			p:=prim
+			MIENTRAS (p<>nil) y (p.dato.nombre <> nombreBuscado) HACER
+				p:=*p.prox
+			fm
+			si p= nil entonces
+				esc("no existe el cliente");
+			sino
+				esc("cliente Encontrado");
+			fs;
+		fs;
+	fs;
+
+	PROCEDIMIENTO altaCliente() es
+
+		Nuevo(q)
+		*q.dato.fecha:= fechaSistema();
+		esc("ingrese nombre de cliente:"); leer(*q.dato.nombre)
+		esc("ingrese numero de mesa: "); leer(*q.dato.numeroMesa)
+		*q.dato.consumoTotal:=0
+		si prim = nil entonces
+			prim:= q
+			*q.prox:= nil
+		sino
+		p:= prim
+		MIENTRAS (p<>nil) y (q.dato.nombre > p.dato.nombre) HACER
+			ant:= p
+			p:= *p.prox
+		FM
+		si p = prim ent
+			*q.prox:= prim
+			prim:= q
+		sino
+			*ant.prox:=q
+			*q.prox:= p
+		fs;
+	FP
+		
+
+	PROCEDIMIENTO registroConsumo() es
+
+		BusquedaCliente()
+
+		esc("Registro de consumo:")
+		MIENTRAS op3 <> "n" HACER
+			esc("ingrese valor consumo:"); leer(consumo)
+			*p.dato.totalConsumo:= *p.dato.totalConsumo + consumo;
+			esc("ingresar otro valor? s/n"); leer(op3)
+		FM
+	FP
+
+	PROCEDIMIENTO ImprimirTicket() es
+		busquedaCliente()
+		esc("NOMBRE CLIENTE:",*p.dato.nombre)
+		esc("FECHA:",*p.dato.fecha)
+		esc("NUMERO DE MESA:",*p.dato.numeroMesa)
+		esc("TOTAL CONSUMO:",*p.dato.totalConsumo)
+	FP
+
+
+
+	PROCEDIMIENTO EliminarCliente()
+		esc("ingrese nombre de cliente a eliminar");
+		leer(nombreBuscado)
+		si prim= nil entonces
+			esc("lista vacia");
+		sino
+			p:= prim
+			MIENTRAS p<> nil y (p.dato.nombre <> nombreBuscado) HACER
+				ant:= p
+				p:= *p.prox
+			FM
+			si p = nil entonces
+				esc("cliente no encontrado")
+			sino
+				si p = prim entonces
+					prim:= *p.prox
+				sino
+					*ant.prox:= *p.prox
+				fs
+			fs
+			Disponer(p)
+		fs
+	fp
+
+
+	PROCESO
+
+	REPETIR
+	
+		esc("1-REGISTRAR CLIENTE")
+		esc("2-REGISTRO CONSUMO CLIENTE");
+		esc("3-IMPRIMIR TICKET Y REALIZAR COBRO")
+		esc("4-ELIMINAR CLIENTE");
+
+		leer(op)
+		SEGUN  op HACER
+
+			1: altaCliente()
+			2: registroConsumo()
+			3: ImprimirTicket()
+			4: EliminarCliente()
+		FS
+		esc("Continuar? s/n");leer(op2);
+
+	HASTA QUE (op2= "n")
+
+Fin_accion.
+	
+	
+
+
+
+
+
+
+

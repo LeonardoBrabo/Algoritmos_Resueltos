@@ -1,0 +1,25 @@
+ACCION Arreglo_3.20 (A:ARREGLO [1..5] DE ENTERO, B: ARREGLO[1..5] DE ENTERO) ES
+
+    AMBIENTE
+
+    C: ARREGLO [1..5] DE ENTERO
+    i,j: ENTERO
+
+    PROCESO
+
+    Para i:=1 a 5 Hacer
+    	Para j:=1 a 5 Hacer
+    		Si i=j
+    		Entonces
+    			C[i,j]:=0   //Diagonal principal
+    		sino
+    			Si i>j
+    			Entonces
+    				C[i,j]:=B[i,j]//Abajo de la matriz
+    			sino
+    				C[i,j]:=A[i,j]//Arriba de la matriz
+    			FS
+    		FS
+    	FP
+    FP
+fin_accion.

@@ -1,0 +1,36 @@
+buscar el minimo y el maximo
+
+(ejemplo en un tridimensional)
+    PARA K:= 1 HASTA 50 HACER
+
+        MINIMA:= PACIENTE[1,1,K]   tambien puede ser minima:= hv
+        MAXIMA:= PACIENTE[1,1,K]    maxima:= lv
+        
+        PARA J:= 1 HASTA 7 HACER
+            
+            SUMA:= 0
+            
+            PARA I:= 1 HASTA 4 HACER
+
+                SI PACI[I,J,K] > MAXIMA
+                MAXIMA:= PACI[I,J,K]
+                DIAMAX:= J
+                LECTURAMAX:= I
+        
+
+                SI PACI[I,J,K] < MINIMA
+                    MINIMA:= PACI[I,J,K]
+                    DIAMIN:= J
+                    LECTURAMIN:= I
+                FS
+            FP
+        FP
+   
+ 
+
+
+
+        
+
+
+

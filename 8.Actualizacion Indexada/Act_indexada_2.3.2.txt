@@ -1,0 +1,107 @@
+ACCION actualizaCorte ES
+    AMBIENTE
+
+    EMPLEADOS = REGISTRO
+        NRO_SUCURSAL: N(5)
+        CATEGORIA: AN(1)
+        NOMBRE_EMPLEADO: AN(30)
+        COD_CURSO: N(5)
+        TECNICO: AN(2)
+    FR;
+
+    AEMPLEADOS: Archivo ordenado por NRO_SUCURSAL,CATEGORIA;
+    REMPLEADOS: EMPLEADOS;
+
+    CURSO = REGISTRO    
+        COD_CURSO: N(5)
+        NOMBRE: AN(20)
+        FECHA = REGISTRO
+            AA:N(4)
+            MM:1..12
+            DD:1..31
+        FR;
+        CANT_HORAS: N
+    FR;
+
+    ACURSO: Archivo de CURSO indexado por COD_CURSO;
+    RCURSO: CURSO;
+
+    RES_SUCU: N(5)
+    RES_CATE: AN(1)
+
+    TOTSITEC_CAT,TOTNOTEC_CAT,TOTEMP_CAT: N
+    TOTSITEC_SUC,TOTNOTEC_SUC,TOTEMP_SUC: N 
+    TOTSITEC_GEN,TOTNOTEC_GEN,TOTEMP_GEN: N
+
+    SUBACCION CORTE_CATEGORIA ES
+        ESC("Para la categoria:",RES_CATE)
+        ESC("Total de empleados tecnicos", TOTSITEC_CAT)
+        ESC("Total de empleados  no tecnicos", TOTNOTEC_CAT)
+        ESC("Total empleados:", TOTEMP_CAT)
+        TOTSITEC_SUC:= TOTSICTEC_SUC + TOTSITEC_CAT;
+        TOTNOTEC_SUC:= TOTNOTEC_SUV + TOTNOTEC_CAT;
+        TOTEMP_SUC:= TOTEMP_SUC + TOTEMP_CAT;
+        TOTSITEC_CAT:=0;
+        TOTNOTEC_CAT:=0;
+        TOTEMP_CAT:=0;
+        RES_CATE:= REMPLEADOS.CATEGORIA;
+    FSUB     
+
+    SUBACCION CORTE_SUCURSAL ES
+        CORTE_CATEGORIA;
+        ESC("Para la sucursal:",RES_SUCU)
+        ESC("Total de empleados tecnicos", TOTSITEC_SUC)
+        ESC("Total de empleados  no tecnicos", TOTNOTEC_SUC)
+        ESC("Total empleados:", TOTEMP_SUC)
+        TOTSITEC_GEN:= TOTSICTEC_GEN + TOTSITEC_SUCT;
+        TOTNOTEC_GEN:= TOTNOTEC_GEN + TOTNOTEC_SUCT;
+        TOTEMP_GEN:= TOTEMP_GEN + TOTEMP_SUC;
+        TOTSITEC_SUC:=0;
+        TOTNOTEC_SUC:=0;
+        TOTEMP_SUC:=0;
+        RES_SUCU:= REMPLEADOS.NRO_SUCURSAL;
+    FSUB
+
+    PROCESO
+    ABRIR E/(AEMPLEADOS) ABRIR E/(ACURSO)
+    LEER(AEMPLEADOS,REMPLEADOS)
+    TOTSITEC_CAT:=0;TOTNOTEC_CAT:=0;TOTEMP_CAT:=0;
+    TOTSITEC_SUC:=0;TOTNOTEC_SUC:=0;TOTEMP_SUC:=0;
+    TOTSITEC_GEN:=0;TOTNOTEC_GEN:=0;TOTEMP_GEN:=0;
+    RES_CATE:= REMPLEADOS.CATEGORIA;
+    RES_SUCU:= REMPLEADOS.NRO_SUCURSAL;
+    MIENTRAS NFDA(AEMPLEADOS) HACER
+        SI RES_CSUCU <> REMPLEADOS.NRO_SUCURSAL ENTONCES
+            CORTE_SUCURSAL;
+        SINO 
+            SI RES_CATE <> REMPLEADOS.CATEGORIA ENTONCES
+                CORTE_CATEGORIA;
+            FS;
+        FS;
+        RCURSO.COD_CURSO:= REMPLEADOS.COD_CURSO;
+        LEER(ACURSO,RCURSO)
+        SI EXISTE ENTONCES
+            ESC(REMPLEADOS.NRO_SUCURSAL, REMPLEADOS.CATEGORIA, REMPLEADO.NOMBRE_EMPLEADO, RCURSO.NOMBRE);
+        SINO
+            ESC(REMPLEADOS.NRO_SUCURSAL, REMPLEADOS.CATEGORIA, REMPLEADO.NOMBRE_EMPLEADO, "nombre no disponible");
+        FS;
+        TOTEMP_CAT:= TOEMP_CAT + 1;
+        SI REMPLEADOS.TECNICO = "SI" ENTONCES
+            TOTSITEC_CAT:= TOTSITEC_CAT +1
+        SINO
+            TOTNOTEC_CAT:= TOTNOTEC_CAT + 1;
+        FS;
+        LEER(AEMPLEADOS,REMPLEADOS)
+    FM;
+    CORTE_SUCURSAL;
+    ESC("Total de empleados tecnicos de la empresa", TOTSITEC_GEN)
+    ESC("Total de empleados  no tecnicos de la empresa", TOTNOTEC_GEN)
+    ESC("Total empleados de la empresa:", TOTEMP_GEN)
+    CERRAR(AEMPLEADOS); CERRAR(ACURSO);
+Fin_accion.
+
+        
+        
+       
+
+

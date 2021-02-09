@@ -1,0 +1,38 @@
+accion Lista_4.1 (Prim: puntero a nodo) ES
+
+	AMBIENTE
+
+	Nodo = registro
+		dato: Entero
+		prox: Puntero a Nodo
+	FR	
+	p: puntero a Nodo
+	k: entero
+
+	PROCESO
+
+	ESC("Ingrese el valor de k:"); LEER(k)
+	p:= Prim
+
+	SI p= nil ENTONCES
+		ESC("Error lista vacia")
+	SINO
+		MIENTRAS (p<>nil) y (k > 0) HACER
+			p:= *p.prox
+			k:= k - 1
+		FM
+		SI p = nil ENTONCES
+			ESC("error k era mas grande que el tamaño de la lista")
+		SINO
+			ESC("El k-esimo elemento es:",*p.numero)
+		FS
+	FS
+Fin_accion. 
+	
+
+
+	
+	
+
+
+

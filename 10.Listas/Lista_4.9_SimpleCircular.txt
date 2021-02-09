@@ -1,0 +1,93 @@
+Dada una lista circular de 8 elementos que contienen, cada uno, un valor numérico entero para encriptación, encriptar un texto ingresado por teclado (arreglo de caracteres de 255 elementos como máximo). El texto encriptado debe almacenarse en una lista de salida simplemente encadenada y, por último mostrar por pantalla.
+
+ENCRIPTAR
+
+Multiplicador: N(5)
+Prox :Puntero
+
+La encriptación se realiza según las siguientes pautas:
+
+Dada la posición del carácter dentro del texto, buscar en la lista circular de encriptación el multiplicador correspondiente, de acuerdo a su posición lógica en la lista. Por ejemplo: como solo hay 8 multiplicadores, si se ingresa un arreglo de 10 caracteres, para encriptar los ultimos dos se utilizarían los multiplicadores 1 y 2.
+Se usa la función ASCII(Carácter) para convertir cada carácter del arreglo en un entero.
+Luego se lo multiplican los valores obtenidos en los 2 pasos anteriores.
+Por último se descompone el resultado obtenido en 3 en cada uno de sus dígitos, se los suma y se guarda en la lista de salida. Ej: si en el paso 3 me dio 123, 1+2+3=6.
+
+ListaSimpleCircular_4.9  (prim: puntero a nodo)es
+	
+	AMBIENTE
+
+	a: arreglo de [1..255] de caracter
+
+	NodoCircular= registro
+		Multiplicador: Entero
+		prox: puntero a NodoCircular
+	FR
+	pc : puntero a nodoCircular
+
+	NodoSimple = registro
+		dato: Entero
+		prox: puntero a NodoSimple
+	FR
+
+	qs,ps,ants,prims: putnero a NodoSimple
+	valorCaracter: entero
+	valorSalida : entero
+	descomp: entero
+	numero: entero
+	i: entero
+
+	PROCESO
+	i:=1
+	esc("ingrese un texto de no mas de 255 caracteres y que finalice en punto: ")
+	repetir
+
+		leer(a[i])
+		i:= i + 1
+	hasta que (i>255) o (a[i] = ".")
+
+
+	i:=1; pc:= prim ; prims:= nil
+	mientras a[i] <> "." hacer								//marca de fin con el  punto
+
+		valorCaracter:= ASCII(a[i]) 						//transformo el caracter en entero
+		valorSalida:= valorcaracter * (*pc.multiplicador)  //multiplico el valor del caracter con el multiplicador
+
+		numero:= valorSalida; descomp:= 0				//descomp tiene la sumatoria de los digitos del valor multiplicado anteriormente, para un caracter
+		mientras numero <> 0 hacer
+			descomp:= descomp + (numero mod 10)
+			numero:= numero div 10
+		fm
+
+		nuevo(qs); *qs.dato:= descomp  		//añado a la lista de salida el valor encriptado del caracter, carga encolada
+		si prims= nil entonces
+			prims:= qs
+			*qs.prox:= nil
+		sino
+			ps:=prims ants:=nil
+			mientras ps <> nil hacer
+				ants:= ps
+				ps:= *ps.prox
+			fm
+			*ants.prox:= qs
+			*qs.prox:= ps
+		fs:
+		
+		i:= i + 1   			//avanzo en el arreglo
+		pc:= *pc.Prox 			//avanzo en la lista de los multiplicadores
+	fm
+	ps:= prims
+	mientras ps<> nil hacer		//muestro la lista de salida 		
+		esc(*ps.dato)
+		ps:= *ps.prox
+	fm
+Fin_accion.
+
+
+
+
+
+
+
+
+
+

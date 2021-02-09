@@ -1,0 +1,63 @@
+ACCION Indexado_2.3.3 ES
+    AMBIENTE
+
+    PEAJE = REGISTRO
+        PATENTE: AN(6)
+        FECHA = REGISTRO
+            AA:N(4)
+            MM: 1..12
+            DD: 1..31
+        FR;
+        ULT_HORA: N(4)
+        COSTO: N
+    FR;
+
+    ARCHP: Archivo de PEAJE indexado por PATENTE,FECHA;
+    REGP: PEAJE 
+
+    PAT: AN(6)
+    CATEGORIA: N(1)
+    OP: AN(1)
+
+    PROCESO
+    ABRIR E/S(ARCHP)
+    ESC("Desea comenzar s/n:")
+    LEER(OP)
+    MIENTRAS OP = "s" HACER
+        ESC("Ingrese patente")
+        LEER(PAT) 
+        REGP.PATENTE:= PAT
+        REGP.FECHA:= FECHA_SISTEMA()
+        SI EXISTE ENTONCES
+            ESC("|PATENTE| |FECHA| |ULT_HORA| |COSTO|")
+            ESC( REGP.PATENTE, REGP.FECHA, REGP.ULT_HORA, REGP.COSTO)
+            REGP.ULT_HORA:= HORA_SISTEMA()
+            RE-ESCRIBIR(ARCHP,REGP)
+            ESC("Tiene pase libre, ya paso en el dia")
+        SINO
+            ESC("Ingrese categoria")
+            LEER(CATEGORIA)
+            SEGUN CATEGORIA HACER
+                1: REGP.COSTO:= 1,20
+                2: REGP.COSTO:= 2,50
+                3: REGP.COSTO:= 4,00
+                4: REGP.COSTO:= 5,00
+            FS;
+            REGP.PATENTE:= PAT
+            REGP.ULT_HORA:= HORA_SISTEMA();
+            REGP.FECHA:= FECHA_SISTEMA();
+            RE-ESCRIBIR(ARCHP,REGP)
+            ESC("|PATENTE| |FECHA| |ULT_HORA| |COSTO|")
+            ESC( REGP.PATENTE, REGP.FECHA, REGP.ULT_HORA, REGP.COSTO)
+        FS
+        ESC("desea continuar? s/n")
+        LEER(OP)
+    FM
+    CERRAR(ARCHP)
+Fin_accion.
+    
+
+
+
+            
+

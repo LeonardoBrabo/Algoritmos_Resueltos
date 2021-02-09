@@ -1,0 +1,117 @@
+accion ejer_2parcial (A: arreglo [1..10] de regis) es
+    ambiente
+
+    regis = registro
+        origen: an(30)
+        destino: an(30)
+    fr
+
+    VIAJES = registro
+        FECHA : registro
+            AA:
+            MM:
+            DD:
+        FR
+        origen:
+        destino:
+        millas_compradas:
+    fr
+    reg: VIAJES
+    arch: archivo de VIAJES
+
+    B: ARREGLO [1..10] de Real
+    i: entero
+    menor_millas:
+    millas_1cuatri
+    millas_2cuatri
+    millas_3cuatri
+
+    proceso
+    
+    ABRIR E/(ARCH) LEER(ARCH,REG)
+
+    para i:= 1 hasta 10 HACER
+        b[i]:= 0
+    fp
+    MAX: LV
+    MIN: HV
+    ORIGEN_MAX
+    ORIGEN_MIN
+    TRIMESTRE_MAYOR
+    CUATRIMESTRE_MAYOR:
+    millas_1cuatri:=0
+    millas_2cuatri:=0
+    millas_3cuatri:=0
+    millas_1tri:=0
+    millas
+
+    MIENTRAS NDFA(ARCH) HACER
+        SEGUN REG.FECHA.MES HACER   
+            1..4: millas_1cuatri:=  milla_1cuatri + REG.millas_compradas
+            5..8: millas_2cuatri:= millas_2cuatri + REG.millas_compradas
+            9..12: millas_3cuatri:= millas_3cuatri + REG.millas_compradas
+        FR
+        i:= reg.origen
+        B[i]:= B[i] + millas_compradas
+        SEGUN REG.FECHA.MES HACER
+            1..3: milla_1tri:= millas_1tri + reg.millas_compradas
+            4..6: millas_2tri := millas_2tri + reg.millas_compradas
+            7..9: millas_3tri := millas_3tri + reg.millas_compradas
+            10..12: millas_4tri := millas_4tri + reg.millas_compradas
+        FS
+        LEER(ARCH,REG)
+    FM
+   
+    PARA I:= 1 HASTA 10 HACER
+        SI B[I] > MAX
+            MAX:= B[I]
+            ORIGEN_MAX:= i
+        FS
+        
+        SI B[I] < MIN
+            MIN:= B[I]
+            ORIGEN_MIN:= i
+        FS
+    FP
+
+    SI milla_1cuatri > milla_2cuatri y milla_1cuatri > milla_3cuatri    entonces
+        CUATRIMESTRE_MAYOR:= 1
+    SINO
+        SI milla_2cuatri > milla_1cuatri y milla_2cuatri > milla_3cuatri entonces
+            CUATRIMESTRE_MAYOR:= 2
+        SINO
+            CUATRIMESTRE_MAYOR:= 3
+        FS
+    FS
+    
+    SI milla_1tri > milla_2tri y milla_1tri > milla_3 tri y milla_1 > milla_4tri entonces
+        TRIMESTRE_MAYOR:= 1
+    SINO
+        SI milla_2tri > milla_1tri y milla_2tri > milla_3 tri y milla_2 > milla_4tri
+            TRIMESTRE_MAYOR:= 2
+        SINO
+            SI milla_3tri > milla_2tri y milla_3tri > milla_1 tri y milla_3 > milla_4tri
+                TRIMESTRE_MAYOR:= 3
+            SINO
+                TRIMESTRE_MAYOR:= 4
+            FS
+        FS
+    FS
+
+    ESC("EL origen con mayor numero de compras de millas fue", A[ORIGEN_MAX].origen)
+    ESC("EL origen con menor numero de compras de millas fue", A[ORIGEN_MIN].origen)
+    ESC("el cuatrimestre con mayor compras fue ", CUATRIMESTRE_MAYOR)
+    ESC("el trimestre con mayot compras fue:", TRIMESTRE_MAYOR)
+
+Fin_accion.
+    
+
+
+
+
+
+
+
+
+   
+

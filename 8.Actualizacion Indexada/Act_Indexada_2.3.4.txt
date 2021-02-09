@@ -1,0 +1,108 @@
+ACCION Act_indexada_2.3.4 ES
+    AMBIENTE
+
+    PRODUCTOS = REGISTRO 
+        COD_PROD: N(5)
+        NOMBRE: AN(30)
+        STOCK: N(4)
+        PRECIO: N
+    FR
+
+    A_PROD: Archivo de PRODUCTOS indexado por COD_PROD
+    R_PROD: PRODUCTOS
+
+    TICKET = REGISTRO
+        NRO_TICKET: N(5)
+        FECHA = REGISTRO
+            AA: N(4)
+            MM: 1..12
+            DD: 1..31
+        FR
+        CLIENTE: AN(20)
+    FR
+
+    A_TICKET: Archivo de TICKET indexado por NRO_TICKET
+    R_TICKET: TICKET
+
+    DETALLE_TICKET = REGISTRO
+        NRO_TICKET: N(5)
+        NRO_LINEA: N(5)
+        COD_PROD: N(5)
+        CANTIDAD: N
+    FR
+
+    A_DTICKET: Archivo de DETALLE_TICKET indexado por NRO_TICKET
+    R_DTICKET: DETALLE_TICKET
+    
+    OP,OP2: AN(1)
+    EMPRESA: AN(30)
+    CUIT: N(11)
+    CPROD_ING: N(5)
+    CANTPROD: N  
+    TOTAL,SUBTOTAL: N
+
+    PROCESO
+
+
+    ABRIR E/S(A_PROD); ABRIR/S(A_TICKET) ABRIR/S(A_DTICKET)
+    
+    ESC("Ingrese empresa:"); LEER(EMPRESA);
+    ESC("Cuit Usuario:"); LEER(CUIT)
+    ESC("Comenzar a registrar ventas? S/N: ")
+    LEER(OP)
+    MIENTRAS OP = "S" HACER
+        
+        R_TICKET.NRO_TICKET:= OBTENER_TICKET();
+        R_TICKET.FECHA:= FECHA_SISTEMA();
+        R_TICKET.CLIENTE:= "Consumidor Final"
+        ESCRIBIR(A_TICKET,R_TICKET)
+        R_DTICKET.NRO_LINEA:=0
+        ESC("COMPROBANTE")
+        ESC("EMPRESA:",EMPRESA," CUIT:",CUIT,"Fecha:",FECHA_SISTEMA)
+        ESC("CLIENTE:  Consumidor Final")
+        ESC("|PRODUCTO| |CANTIDAD| |SUBTOTAL|")
+        
+        TOTAL:= 0; 
+        ESC("Comezar a ingresar productos? S/N");
+        LEER(OP2)
+        MIENTRAS OP2 = "S" HACER
+            SUBTOTAL:=0;
+            ESC("Ingrese codigo producto:");LEER(CPROD_ING);    
+            ESC("Cantidad del producto:"); LEER(CANTPROD)
+            R_PROD.COD_PROD:= CPROD_ING
+            LEER(A_PROD,R_PROD)
+
+            SI EXISTE ENTONCES
+                R_PROD.STOCK:= R_PROD.STOCK - CANTPROD
+                RE-ESCRIBIR(A_PROD,R_PROD)
+                
+                R_DTICKET.NRO_LINEA:= R_DTICKET.NRO_LINEA + 1
+                R_DTICKET.NRO_TICKET:= R_TICKET.NRO_TICKET;
+                R_DTICKET.COD_PROD:= R_PROD.COD_PROD;
+                R_DTICKET.CANTIDAD:= CANTPROD;
+                ESCRIBIR(A_DTICKET,R_DTICKET)
+
+                SUBTOTAL:= CANTPROD * R_PROD.PRECIO 
+                TOTAL:= TOTAL + SUBTOTAL 
+
+                ESC(R_PROD.NOMBRE, CANTPROD, SUBTOTAL)
+            SINO
+                ESC("PRODUCTO NO EXITE")
+            FS;
+            ESC("Registrar nuevo producto? S/N");
+            LEER(OP2)
+        FM;
+        ESC("TOTAL DE LA COMPRA:", TOTAL);
+        ESC("Registrar nueva venta S/N");
+        LEER(OP)
+    FM;
+    CERRAR(A_PROD); CERRAR(A_TICKET); CERRAR(A_DTICKET)
+Fin_accion.
+
+    
+
+       
+
+
+          
+

@@ -1,0 +1,107 @@
+Se dispone de una lista circular con un conjunto de números naturales. Este conjunto está dividido en 6 grupos. En cada grupo 
+el primer elemento indica la cantidad de números subsiguientes a él que integran dicho grupo. Se desea generar una nueva lista 
+doblemente encadenada en la cual cada nodo contendrá el promedio de cada grupo. Dicha lista debe quedar ordenada en forma 
+ascendente y, al final se debe informar cuál fue el máximo y el mínimo promedio de todo el conjunto de números.
+
+
+accion 410 (prim: puntero a nodo1)es
+    ambiente
+        nodo1 = registro
+            dato: entero
+            prox: puntero a nodo1
+        fin registro
+
+        nodo2 = registro
+            valor: real
+            prox: puntero a nodo2
+            ant: puntero a nodo2
+        fin registro
+
+        lista_doble = registro
+            prim: puntero a nodo2
+            ult: puntero a nodo2
+        fin registro
+        
+        ls: lista_doble
+
+        funcion tratar_grupo(p:puntero a nodo1):real es
+            ambiente
+                promedio: real
+                i,cantidad: entero
+            algoritmo
+                cantidad:= *p.dato
+                promedio:= 0
+                para (i:= 1 a cantidad) hacer
+                    promedio:= promedio + *p.dato
+                    p:= *p.prox
+                fin para
+                //Al final del ciclo, p apunta al primer nodo del siguiente grupo
+                promedio:= promedio / cantidad
+                devolver(promedio)
+        fin funcion
+
+        subaccion insertar(ls: lista_doble, q: puntero a nodo2) es
+            si (ls.prim = nil) entonces
+                *q.ant:= nil
+                *q.prox:= nil
+                ls.prim:= q
+                ls.ult:= q
+            sino
+                p:= ls.prim
+                mientras (p <> nil) Y (*p.valor < *q.valor) hacer
+                    p:= *p.prox
+                fin mientras
+                si (p = ls.prim) entonces
+                    *q.ant:= nil
+                    *q.prox:= prim
+                    *p.ant:= q
+                    ls.prim:= q
+                sino
+                    si (p = ls.ult) entonces
+                        *q.ant:= ls.ult
+                        *q.prox:= nil
+                        *p.prox:= q
+                        ls.ult:= q
+                    sino
+                        *q.ant:= *p.ant
+                        *q.prox:= p
+                        *(*p.ant).prox:= q
+                        *p.ant:= q
+                    fin si
+                fin si
+            fin si
+        fin subaccion
+
+        funcion cargar(prim: Puntero a nodo1):lista_doble 
+            ambiente
+                ls: lista_doble
+                p,q:puntero a nodo2
+                m:puntero a nodo1
+                i: entero
+            algoritmo
+                ls.prim:= nil; ls.ult:= nil;
+                si (prim = nil) entonces
+                    esc('Error lista vacia')
+                sino
+                    m:= prim
+                    para (i:= 1 a 6) hacer
+                        nuevo(q)
+                        *q.valor:= tratar_grupo(m) //m apunta al primer nodo del siguiente grupo
+                        //Ahora debemos insertar en nodo en la lista doble
+                        insertar(ls, q)
+                    fin para
+                fin si
+                devolver(ls)
+        fin funcion
+
+    algoritmo
+        ls:= cargar(prim)
+        si (ls.prim = ls.ult = nil) entonces
+            esc('La lista circular esta vacia')
+        sino
+            esc('El valor maximo es: ', ls.prim)
+            esc('El valor minimo es: ', ls.ult)
+        fin si
+fin accion
+
+

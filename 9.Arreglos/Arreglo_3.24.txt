@@ -1,0 +1,61 @@
+ACCION Arreglo_3.24 ES
+
+    AMBIENTE
+
+    EMPLEADOS = REGISTRO
+        NOMYAPE: AN(20)
+        N_CAJA: N(5)
+        IMPORTE: N(7,2)
+        HORARIO: N(2)
+    FR
+
+    ARCH: Archivo de EMPLEADOS ordenado por NOMYAPE
+    REG: EMPLEADOS
+    i,j: Enteros
+    CAJEROS: arreglo [1..11][1..6] de Reales
+    HORARIOS: AN(15)
+
+    PROCESO
+    ABRIR E/(ARCH)
+    LEER(ARCH,REG)
+    PARA i:= 1 HASTA 11 HACER
+        PARA j:= 1 HASTA 6 HACER
+            CAJEROS[i,j]:= 0
+        FP
+    FP
+    MIENTRAS NFDA(ARCH) HACER
+        i:= REG.N_CAJA
+        SEGUN .HREGORARIO HACER
+            8..9:   j:= 1
+            10..11: j:= 2
+            12..15: j:= 3
+            16..17: j:= 4
+            18..20: j:= 5
+        FS           
+        CAJEROS[i,j]:=  CAJEROS[i,j] + REG.IMPORTE
+        CAJEROS[i,6]:=  CAJEROS[i,6] + REG.IMPORTE
+        CAJEROS[11,J]:= CAJEROS[11,j] + REG.IMPORTE
+        CAJEROS[11,6]:= CAJEROS[11,6] + REG.IMPORTE
+        LEER(ARCH,REG)
+    FM
+    CERRAR(ARCH)
+    PARA i:= 1 hasta 10 HACER
+        ESC("para la caja",i,"importe total:", CAJEROS[i,6])
+    FP
+    PARA J:= 1 HASTA 5 HACER
+        SEGUN J HACER
+            1: HORARIOS:= "8-10"
+            2: HORARIOS:= "10-12"
+            3: HORARIOS:= "12-16"
+            4: HORARIOS:= "16-18"
+            5: HORARIOS:= "18-20"
+        FS
+        ESC("Para el horario:", HORARIOS, "el total recaudado fue:", CAJEROS[11,J])
+    FP
+    ESC("El total general fue de:", CAJEROS[11,6])
+    
+Fin_accion.
+            
+
+        
+                
