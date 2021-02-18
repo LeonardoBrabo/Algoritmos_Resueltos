@@ -1,0 +1,32 @@
+Escribir una función recursiva que encuentre el número de nodos de un árbol binario.
+
+funcion NumerosDeNodos(p: puntero a nodo,numero: entero) : entero Es
+
+
+	si p <> nil entonces
+		si numero = 1 entonces
+			NumerosDeNodos:= 1		// si hay un solo nodo
+		sino
+
+			NumerosDeNodos:=NumerosDeNodos(*p.izq ,numero +1)		
+			NumerosDeNodos:= NumerosDeNodos(*p.der, numero +1)
+		fs
+	sino
+		NumerosDeNodos:= 0  // si es vacio
+	fs
+ff
+
+-------------------------------------------------
+otra forma
+
+	si r = nil entonces
+		sum:= 0
+	sino
+		sum:= 1+ sum(*r.izq) + sum(*r.der)
+
+---------------------------------------------------
+
+
+
+
+

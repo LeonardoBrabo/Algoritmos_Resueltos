@@ -1,0 +1,25 @@
+subaccion En-orden (p: puntero a t);
+	si P<> nil entonces
+		En-Orden(*p.izq);
+		[TRATAR RAIZ]
+		En-Orden(*p.Der);
+	Fsi;
+Fin_sub;
+
+Subaccion Pre-orden (p: puntero a T)
+	si p<> nil entonces
+		[TRATAR RAIZ]
+		Pre-Orden(*p.izq)
+		Pre-Orden(*p.Der)
+	Fsi;
+Fin_subaccion;
+
+Subaccion Post-Orden (P: puntero a T)
+	si p<> Nil entonces
+		Post-Orden(*p.Izq)
+		Post-Orden(*p.Der)
+		[TRATAR RAIZ]
+	fsi;
+Fsub;
+
+

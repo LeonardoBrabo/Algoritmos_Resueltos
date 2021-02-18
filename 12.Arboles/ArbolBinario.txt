@@ -1,0 +1,22 @@
+Dado un arbol binario, realizar un procedimiento para mostrar todos los nodos de un nivel dado. (considere que la raiz tiene  nivel = 1)
+
+procedimiento ArbolBinario (p: puntero a T, nivel,contador: entero)
+	si p <> nil entonces
+
+		
+		si contador = nivel entonces
+			esc(*p.dato)
+		fsi
+		ArbolBinario(*p.izq,nivel,contador + 1)
+		ArbolBinario(*p.der,nivel,contador + 1)
+	fsi
+fin_procedimiento
+
+
+ArbolBinario(p,2,1)
+
+
+
+
+	
+
