@@ -1,0 +1,44 @@
+5.2.1
+Procedimiento inverso(n:entero)
+Algoritmo
+	Escribir(n MOD 10)
+	Si N>9
+	entonces
+		inverso(n DIV 10)
+	FS
+FP
+
+5.2.2
+
+Procedimiento revesarreglo(A:arreglo [1..N] de caracter,i:entero)
+Algoritmo
+	Si i<n
+	entonces
+		revesarreglo(A,i+1)
+	FS
+	Escribir(A[i])
+FP
+
+5.2.3 //no simplificado!
+Procedimiento reveslista(p:puntero a nodo)
+Algoritmo
+	Si p*.prox<>NIL
+	entonces
+		reveslista(p*.prox)
+		Escribir(p*.nombre)
+	contrario
+		Escribir(p*.nombre)	
+	FS
+FP
+
+5.2.4
+
+Procedimiento binario(n:entero)
+Algoritmo
+	Si n<2
+	Entonces
+		Escribir(n)
+	contrario
+		binario(n DIV 2)
+		Escribir(n MOD 2)
+FP

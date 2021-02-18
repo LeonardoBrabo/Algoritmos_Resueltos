@@ -1,0 +1,9 @@
+Dado un número n como parámetro de entrada, calcular el n-ésimo número de la serie de Fibonacci. Tener en cuenta la siguiente definición:
+
+funcion  fibo (n: entero) : entero es
+	si n = 1 o n = 2 entonces
+		fibo:= 1
+	sino
+		fibo:= fibo(n-1)+ fibo(n-2)
+	fs
+fin_funcion.

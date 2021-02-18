@@ -1,0 +1,50 @@
+dado un arbol binario, realizar un procedimiento para mostrar todos los nodos de un nivel dado
+
+procedimiento arbolBinario (p:puntero a nodo,nivel, nivelRaiz) es
+	
+	si p <> nil entonces
+ 		si nivelRaiz = nivel entonces
+ 			esc(*p.dato)
+ 		fs	
+		arbolBinario(*p.izq,nivel,nivelRaiz +1)
+		arbolBinario(*p.der,nivel,nivelRaiz +1)
+		
+	fs
+fp
+	
+	
+arbolBinario(*p.izq,2,2)
+arbolBinario(*p.izq,2,3)
+
+______________________________________________________________________________
+
+funcion concava(a: arreglo de [1..20],i:entero) :entero es
+		
+	
+	si a[i] > a[i+1] entonces
+		
+		esc("la posicion k se encuentra en la posicion",i)
+		esc("y el valor es:", a[i])
+		concava:= i
+	sino
+		concava:= concava(a,i+1)
+	fs
+
+ff	
+
+		   k
+1 2 3 4 5 10 9 8 7
+
+a[1] = 1 > a[2] = 2
+
+ 2		3
+
+ 4		5
+
+10		9
+
+
+
+
+
+

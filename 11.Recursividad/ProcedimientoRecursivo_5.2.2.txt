@@ -1,0 +1,18 @@
+Leer una palabra (una cadena de caracteres) y la cantidad de caracteres y generar su palíndromo. El palíndromo de “Venezuela” es “aleuzeneV”.
+
+
+Procedimiento Cadena(arreglo[1..N]:caracter, i:entero) ES 
+    SI I=N ENTONCES 
+        Esc(arreglo[i]) // U
+    SINO 
+        Cadena(arreglo, i+1); //P E R U 
+        Esc(arreglo[i]) // R E P 
+    FSI
+F-Proc
+
+
+
+P E R U 
+1 2 3 4
+
+
