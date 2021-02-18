@@ -1,0 +1,120 @@
+Ejercicio 4.9
+El ciclo de desarrollo de software tradicional, incremental e iterativo cuenta con las siguientes etapas: Captura de Requisitos, Análisis, Diseño, Desarrollo, Implementación y Prueba. De la última etapa se obtiene un informe que contiene las modificaciones que deben realizarse al software para que cumpla con las funcionalidades para las cuales fue creado inicialmente.
+
+Suponga que cuenta con una lista de proyectos de software de los cuales se tiene la siguiente información:
+
+Proy AN(20)Resp AN(30)Fch_Ini FechaC_Error N(3)
+El dato Cant_Errores indica la cantidad de errores que deben solucionarse en cada proyecto.
+
+La información respecto a cada Error se almacena en una lista de acuerdo al orden de los proyectos y teniendo en cuenta la cantidad que le corresponden a éste. Por ejemplo si en la Lista 1 el Proyecto A tiene 3 errores, los 3 primeros nodos de la Lista 2 corresponden al Proyecto A. La información que se almacena por Error es la siguiente:
+
+Desc_E AN(30)Est AN(1)
+Est – M: En Modificación | O: En Observación | R: Resuelto
+
+Durante el proceso de Control de Proyectos se analiza cada error de cada proyecto, y se le consulta al Responsable el estado del Error (en caso que no haya sido Resuelto) para actualizarlo. El Responsable debe tener la opción de recorrer todos los proyectos, en el orden almacenados, las veces que considere necesario, luego de analizar el último en la lista.
+
+Suponiendo que se necesita simular el control de los proyectos, creando dos listas para almacenar por un lado Proyectos y por otro Errores. Y que además se debe informar al final del proceso qué cantidad de proyectos pasaron el control con todos sus errores resueltos. Se le solicita a ud:
+
+Dado el Algoritmo resuelto pero incompleto, analice la propuesta presentada e indique las sentencias incorrectas, encerrándolas con un círculo, e indique las modificaciones necesarias para que funcione, complete la líneas de puntos y agregue las acciones que falten.
+
+Desarrolle la acción Control_Proyectos y complete el ambiente si fuera necesario
+
+
+SOLUCION DEL EJERCICIO COMPLETO :
+--------------------------------
+
+
+ Accion Ej_1  (PRIM: Puntero a Nodo, PRIM2: Puntero a Nodo2) Es
+     Ambiente
+      NODO = Registro
+       Proy: N(30)
+       Resp: AN(30)
+       Fecha: Fecha
+       C_error: N(3)
+       Prox: Puntero a Nodo
+      FinRegistro
+      NODO1 = Registro
+       Desc_E: AN(30)
+       Est: AN(1)
+       Prox: Puntero
+      FinRegistro
+      P, K: Puntero a Nodo
+      Q : Puntero a Nodo1
+      Cont, cant_proy: N(3)
+      Opc, Opc2: caracter
+
+      Subaccion Cargar_Proyectos es
+        Escribir(“Ingrese ‘S’ para empezar o cualquier otro caracter para salir“)  
+        Leer(opc)
+        Mientras opc = ‘S’ hacer          nuevo(p)
+          Leer(*P.Proy, *P.Resp, *P.Fch_Ini, *P.C)
+
+          Si prim = nil Entonces
+                     P := *P.prox;
+                      PRIM:=P;
+          Sino                          
+                     K := PRIM
+                     Mientras (*K.prox <> PRIM) hacer
+                        K := *K.prox
+                     FinMientras
+                     *K.prox := P
+                     *P.prox := PRIM
+          Fsi;
+        Cont:= 0
+         Cargar_Errores 
+         Escribir(“Ingrese ‘S’ para seguir cargando proyectos o cualquier
+          otro caracter para salir”)
+          Leer(opc)
+        Fin Mientras
+      Fin Subaccion
+
+    Subacción Cargar_Errores es
+      Mientras Cont <= *P.C_error hacer
+           NUEVO(Q)
+           Escribir(*Q.Desc_E, *P.Est)
+           Si PRIM2 = NIL Entonces
+                     *Q.prox := Nil
+
+                     prim2:= Q
+            Sino
+                     *Q.prox := PRIM2
+                     PRIM2 := Q
+             FinSi
+
+             cont:= cont + 1
+      Fin Mientras
+    FinSubaccion
+
+    Subaccion Control_Proyectos() es
+      esc("ingrese s para  comenzar el control de proyectos o cualquier otro caracter para salir.")
+      leer(opc2)
+      mientras (opc2) = "s" hacer
+        P:= prim q:= prim2
+        mientras p <> nil hacer
+          para i:= 1 hasta *p.c_error hacer
+            esc("el estado del proyecto:", *p.Proy,"es el de:",*q.Est)
+            esc("desea modificar el estado? s/n")
+            leer(Opc)
+            si Opc = "s" entonces
+              Esc("ingrese el nuevo estado del proyecto: M|O|R:")
+              leer(*q.ESt)
+            fs
+            si *q.ESt = "R" entonces
+              cant_proy:= cant_proy +1
+            fs
+            q:= *q.prox
+          fp
+          P:= *p.prox
+        fm
+        esc("desea volver a controlar los proyectos? s/n")
+        leer(opc2)
+      fm
+    fin_sub
+
+
+  Algoritmo
+    cant_proy:= 0;
+     Cargar_Proyectos;
+     Control_Proyectos;
+     Escribir(‘La cantidad de proyectos con errores resueltos es de’, cant_proy)
+  Fin Accion

@@ -1,0 +1,162 @@
+Una empresa FARMACÉUTICA, posee una lista simplemente enlazada de pedidos realizados por sus clientes en el último mes. Se desea generar dos grupos con la siguiente información:
+
+    Los pedidos de los clientes deudores.
+    Los pedidos de los clientes regulares.
+
+Para ello se cuenta con un archivo “CLIENTES” indexado por Nro_cliente.
+
+Deben tenerse en cuenta las siguientes consideraciones:
+
+    La lista de entrada está ordenada por Nro_cliente y pueden existir varios pedidos de un mismo cliente.
+    En el caso de recibir un pedido de un cliente que se encuentre dado de baja, debe ser dado de alta automáticamente.
+    El total (Monto $) de Dinero_deuda debe ser actualizado con la suma de los pedidos en Cuenta Corriente. Modificar la condición a Deudor si esa suma es mayor a cero.
+
+Formato lista de entrada
+
+    Nro_cliente Nro pedido Precio pedido TipoPedido (C:Contado, R: Cuenta Corriente) 
+
+Formato archivo “Clientes”
+
+    Nro_cliente DNI Domicilio Dinero_deuda Deudor (si/no) Baja 
+
+Formato lista salida
+
+    Nro_cliente Total pedido 
+
+
+Accion Lista_4.5 (prim:puntero a nodo) es
+
+	ambiente
+
+	clientes = registro
+		nro_cliente: n(5)
+		dni: n(8)
+		domicilio: an(15)
+		dinero_deuda: n(6)
+		deudor: ("si","no")
+		baja: caracter
+	fr
+	archcliente: archivo de clientes indexado por nro_cliente
+	regcliente: clientes
+
+	nodo = registro
+		nro_cliente: n(5)
+		nro_pedido: n(5)
+		precio_pedido: n(6)
+		tipoPedido: ("c","r")
+		prox: puntero a nodo
+	fr
+
+	nodoSalida= registro
+		nro_cliente: n(5)
+		total_pedido: n(6)
+		prox: puntero a nodoSalida
+	fr
+	p,p1,q1,q2,p2,ant1,ant2,prim1,prim2: puntero a nodo
+
+	p1//clientes regulares
+	p2//clientes deudores
+
+	res_nrocliente, total: n(5)
+
+
+
+	proceso
+
+	//si es un pedido con el campo baja activado, debo darle el alta; cambiar el valor del campo en el archivo
+	//control de que puede haber mas de un pedido por cliente
+	//si el pedido esta hecho en cuenta corriente(TipoPedido) actualizar
+	el campo Dinero_deuda, si la suma es mayor a cero. cambiar estado a deudor
+
+
+	abrir e/s(archclient)
+	p:= prim
+	prim1:= nil; prim2:= nil
+	mientras p <> nil hacer
+		res_nrocliente:= *p.nro_cliente
+		total:= 0
+		regcliente.nro_cliente:= res_nrocliente
+		leer(archcliente,regcliente)
+		si existe entonces
+
+			si regcliente.baja = "x" entonces
+				regcliente.baja:= " "	//en blanco significa alta, x baja logica
+			fs
+
+			mientras *p.nro_cliente = res_nrocliente hacer
+				si *p.tipoPedido = "R" entonces
+					regcliente.Dinero_deuda:= regcliente.Dinero_deuda + *P.Precio_pedido.
+				fs
+				total:= *p.precio_pedido + total
+	
+				p:= *p.prox  //maneja los dos ciclos
+			fm
+
+			si regcliente.Dinero_deuda > 0 entonces
+				regcliente.Deudor:= "si"		 
+				cargarDeudor()
+			sino
+				cargarRegular()		
+			fs
+			re-escribir(archcliente,regcliente) 
+		sino
+			p:= *p.prox 
+		fs	
+	fm	
+fin_accion.
+
+procedimiento cargarDeudor() Es
+	nuevo(q2)
+	*q2.nro_cliente:= res_nrocliente 		
+	*q2.total_pedido:= total
+	si prim2 = nil entonces			
+		prim2:= q2
+		*q2.prox:= nil
+	sino
+		p2:= prim2
+		mientras p2<> nil y *q.nro_cliente > *p.nro_cliente hacer
+			ant2:= p
+			p:= *p.prox
+		fm
+		si p2= prim2 entonces
+			*q2.prox:= p2
+			prim2:= q2
+		sino
+			*ant2.prox:= q2
+			*q.prox:= p2
+		fs
+	fs
+fp
+
+
+
+procedimiento	cargarRegular() es
+	nuevo(q1)
+	*q1.nro_cliente:= res_nrocliente 		
+	*q1.total_pedido:= total
+	si prim1 = nil entonces			
+		prim1:= q1
+		*q1.prox:= nil
+	sino
+		p1:= prim1
+		mientras p1<> nil y *q.nro_cliente > *p.nro_cliente hacer
+			ant1:= p
+			p:= *p.prox
+		fm
+		si p1= prim1 entonces
+			*q1.prox:= p2
+			prim1:= q2
+		sino
+			*ant1.prox:= q2
+			*q.prox:= p2
+		fs
+	fs
+fp
+	
+
+
+
+
+
+
+

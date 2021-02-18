@@ -1,0 +1,57 @@
+Complementario lista:
+
+
+Dada una lista simplemente encadenada de números enteros, diseñar un algoritmo que a partir de ella genere otra lista conteniendo los nodos cuyos datos sean múltiplos de 3, dichos elementos deberán ser eliminados de la lista original. Se asume que la lista está cargada y que el algoritmo recibe como parámetro de entrada la dirección del primer elemento.
+
+
+ACCION Lista_4.2 (prim: puntero a nodo)ES
+	ambiente
+
+	nodo = registro
+		dato: entero
+		prox: puntero a nodo
+	fr
+
+	p,q ant, prim2: puntero a nodo
+
+
+
+	proceso
+	p:= prim; prim2:= nil ant:= nil
+	mientras p <> nil hacer
+		si (*p.dato mod 3 = 0) entonces
+			nuevo(q); *q.dato:= *p.dato
+			si prim2 = nil entonces			//carga encolada
+				ant2:= q
+				prim2:= nil
+			sino
+				ant2.prox:= q
+				ant2:= q
+			fs
+			
+			si p = prim entonces			//eliminacion de nodos al recorrer
+				p:= *p.prox
+				disponer(prim)
+				prim:= p
+			sino
+				p:= *p.prox
+				disponer(*ant.prox)
+				ant.prox:= p
+			fs
+		sino
+			ant:= p
+			p:= *p.prox
+		fs
+	fm
+	
+		
+			
+
+		
+	fs
+
+
+
+
+
+

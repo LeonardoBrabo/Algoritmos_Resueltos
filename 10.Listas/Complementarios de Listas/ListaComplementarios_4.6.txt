@@ -1,0 +1,46 @@
+Ejercicio 4.6
+
+Usando las operaciones de Lista, escribir un procedimiento AGRUPA (PRIM, ULT: puntero a nodo; A:entero) que, dada una lista doblemente encadenada de enteros L agrupe (sume) elementos de tal manera que en L queden sólo elementos mayores o iguales que A. El algoritmo recorre la lista y cuando encuentra un elemento menor empieza a agrupar (sumar) el elemento con los siguientes hasta llegar al valor A o hasta que se acabe la lista (el elemento menor se debe eliminar de la lista.)
+
+Por ejemplo si:
+
+L = {3,4,2,4,1,4,4,3,2,2,4,1,4,1,4,4,1,4,4,2},
+
+entonces AGRUPA(PRIM, ULT,10) da
+
+L = {13,12,13,10,10}.
+
+En la lista final NO deben quedar elementos menores que A, salvo, 
+eventualmente, el último.
+
+procedimiento agrupa( prim,ult: puntero a nodo, a: entero) es
+
+	P:= prim
+	mientras p<> nil hacer
+		si *p.dato < a entonces
+
+			si p = prim entonces	
+				prim:= *prim.prox
+				*prim.ant:=  nil
+			sino
+				si p = ult entonces
+					ult:= *p.ant
+					*ult.prox:= nil
+				sino
+					*(*p.ant).prox:= *p.prox
+					*(p.prox).ant:= *p.ant
+				fs
+			fs
+			K:= p
+			p:= *p.prox
+			si p <> nil hacer
+				*p.dato:= *p.dato + *k.dato
+			fs
+			disponer(k)
+		sino
+			P:= *p.prox
+		fs
+	fm
+fin_proc.
+
+

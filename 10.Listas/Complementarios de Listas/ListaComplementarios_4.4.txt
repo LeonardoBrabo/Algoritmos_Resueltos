@@ -1,0 +1,84 @@
+Dada una lista circular con los datos de los socios de un club: número, nombre y condición ( ´A´= alta, ´B´= baja); hacer un algoritmo que cree otra lista simplemente encadenada con los socios múltiplos de 100, que no estén dados de baja y eliminar de la lista original los socios dados de baja ( cond = ´B´).
+
+Accion Lista_4.4 (prim: puntero a nodo) Es
+	
+	ambiente
+
+
+	nodo = registro
+		dato = registro
+			numero: N(5)
+			nombre: an(30)
+			condicion: ("a","b")
+		fr
+		prox: puntero a nodo
+	fr
+
+	k,ant,p,q,p2,ant2,prim2: puntero a nodo
+
+	procedimiento cargarLista() es
+		nuevo(q)
+		*q.dato:= *p.dato
+		si prim2:= nil entonces
+			prim2:= q
+			*q.prox:= nil
+		sino
+		p2:=prim2
+		mientras (p2<> nil) hacer
+			ant2:= p2
+			p2:= *p2.prox
+		fm
+		*ant2.prox:= q
+		*q.prox:= p2
+	fp
+
+
+	procedimiento EliminarNodo()
+		si prim = nil entonces
+			esc("lista vacia")
+		sino
+			si p = *P.prox entonces
+				prim:= nil
+				disponer(p)
+			sino
+				si p = prim entonces
+					k:=prim
+					mientras *k.prox <> prim hacer
+						k:= *k.prox
+					fm
+					prim:= *p.prox
+					*k.prox:= *p.prox
+					ant:= k					//la posicion de k era la anterior al primer elemento donde estaba p
+					k:=p					//asigno  k a p para eliminar k, y seguir avanzando en el ciclo con p
+					P:= *p.prox				//avanzo para no perder p
+					disponer(k)				
+				sino
+					k:= P
+					*ant.prox:= *p.prox
+					diponer(k)
+					ant:= p
+					P:= *p.prox		
+				fs		
+			fs
+		fs
+	fp
+
+
+	proceso
+
+	prim2:= nil
+	p:= prim
+	mientras *p.prox<> prim hacer
+		si *p.condicion = "a" entonces
+			si *p.numero mod 100 = 0 entonces
+				cargarLista()
+			fs
+			ant:= p
+			p:= *p.prox
+		sino
+			eliminarNodo()
+		fs
+		
+	fm
+
+

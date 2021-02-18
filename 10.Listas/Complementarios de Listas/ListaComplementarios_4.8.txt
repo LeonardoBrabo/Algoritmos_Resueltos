@@ -1,0 +1,93 @@
+Ejercicio 4.8
+
+Se dispone de una lista doblemente enlazada con un conjunto de números naturales. Este conjunto está dividido en 10 grupos. En cada grupo el primer elemento indica la cantidad de números subsiguientes a él que integran dicho grupo. Se desea generar una nueva lista circular, simplemente encadenada, en la cual cada nodo contendrá el valor máximo de cada grupo. Dicha lista debe quedar ordenada en forma ascendente y, al final se debe informar cuál es el promedio de todos los máximos.
+
+//lista doble con numeros naturales, dividido en 10 grupos
+//el primer elemento de cada grupo  indica la cantidad de numeros subsiguientes del grupo
+//generar una lista circular
+//cada nodo tendra el valor maximo de cada grupo.
+//la lista tiene que quedar ordenada de forma ascendente
+//al final informar el promedio de todos los maximos
+
+
+Accion Grupos(prim,ult: puntero a nodo) es
+	
+	ambiente
+
+	nodo= registro
+		numero: entero
+		prox: puntero a nodo
+		ant: puntero a nodo
+	fr
+
+	pdoble: puntero a nodo
+
+	nodoCir = registro
+		numeromaximo: entero
+		prox: puntero a nodoCir
+	fr
+	k,q,pcir,antcir,primcir: puntero a nodo
+
+    max,numeroNodos: entero
+
+
+  	subaccion promediar() es
+  		contador:= contador + 1
+  		sumar:= sumar + (*q.numeroMaximo)
+  	fsub
+
+    subaccion cargarListaCircular() es 
+    	nuevo(q) *q.numeroMaximo:= max
+    	promediar()
+    	si primcir = nil entonces
+    		primcir:= q
+    		*q.prox:= q
+    	sino
+    	pcir:= primcir
+    	mientras (*pcir.prox <> primcir) y (*q.numeromaximo >*pcir.numeromaximo) hacer
+    		antcir:= pcir
+    		pcir:= *pcir.prox
+    	fm
+    	si pcir = primcir entonces
+    		k:= primcir
+    		mientras *k.prox <> pricir hacer
+    			k:= *k.prox
+    		fm
+    		*k.prox:= q
+    		*q.prox:= pcir
+    		primcir:= q
+    	sino
+    		si *pcir.prox = primcir entonces
+    			*q.prox:= primcir
+    			*pcir.prox:= q
+    		sino
+    			*antcir.prox:= q
+    			*q.prox:= pcir
+    		fs
+    	fs
+    fsub
+
+	
+	proceso
+
+	pdoble:= prim; primcir:= nil, contador:= 0, suma:=0
+	mientras pdoble <> nil hacer
+		max:= 0
+		numeroNodos:= *pdoble.numero
+		pdoble:= *pdoble.prox		//avanzo el primer elemento de cada grupo
+		para i:= 1 hasta numeroNodos hacer
+			si *p.doble.numero > max entonces
+				max:= *pdoble.numero
+			fs
+			pdoble:= *pdoble.prox  //parado en el siguiente grupo
+		fp
+		cargarListaCircular()
+	fm
+	esc("el promedio total de todos los maximos es de:",(suma)div contador)
+
+Fin_accion.
+
+
+
+
+

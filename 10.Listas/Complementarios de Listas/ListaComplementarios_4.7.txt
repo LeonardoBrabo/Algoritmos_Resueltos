@@ -1,0 +1,80 @@
+Ejercicio 4.7
+
+La empresa "Remises Yapú S.A." necesita solucionar el problema de asignación de vehículos para sus clientes. La empresa posee 105 autos, y maneja dos colas (estructuras FIFO) una llamada "No Asignados" y otra llamada "Asignados". En la primera se encuentran todos los autos que no han sido asignados a algún cliente en lo que va del día y en la segunda los autos que ya han sido asignados. La idea de la cola “Asignados” es manejar en forma equitativa la asignación de turnos, es decir que cada vehículo tenga igual oportunidad de obtener un cliente. Los vehículos se asignan de la siguiente forma:
+
+    Si existen autos “No Asignados”, se toma uno de ellos y se lo mueve a la cola de “Asignados”.
+    Si no existen autos “No Asignados”, se toma uno de la cola de “Asignados” , y se lo coloca al final de la cola.
+
+Siempre que se asigna un vehículo se debe incrementar en uno un campo “cantidad_de_clientes", a fin de saber cuantos clientes tuvo. Por final de proceso se requiere saber la cantidad total de clientes de ese día. Se pide: Confeccionar una subacción que realice la asignación de vehículos y el mantenimiento de las colas, usando listas.
+
+
+Accion Remiseria(prim1: puntero a nodo) Es
+	
+	ambiente
+
+	nodo = registro
+		matricula_auto: an(6)
+		cantidad_de_clientes: entero
+		prox: puntero a nodo
+	fr
+	p1,p2,ant1,ant2,prim2: puntero a nodo
+
+	total: entero
+	op: ("s","n")
+
+subaccion MoveraAsignados() es
+		p1:= prim1				//puntero externo de no asignados
+		prim1:= *p1.prox 		//avanzo el puntero primero
+
+		*p1.cantidad_de_clientes:= cantidad_de_clientes + 1	
+		total:= total + p1.cantidad_de_clientes.
+		si prim2 = nil entonces
+			prim2:= p1
+			*prim2.prox:= nil	
+		sino
+		p2:= prim2
+		mientras p2 <> nil hacer
+			ant2:= p2
+			p2:= *p2.prox
+		fm
+		*ant2.prox:= p1
+		*p1.prox:= p2
+	fsub
+
+	subaccion MoveraNoAsignados() es
+		p2:= prim2					//puntero externo de asignados
+		prim2:= *p2.prox
+
+		si prim1 = nil entonces
+			prim1:= p2
+			*prim2.prox:= nil
+		sino
+		p1:= prim1
+		mientras p1<> nil hacer
+			ant1:= p1
+			p1:= *p1.prox
+		fm
+		*ant.prox:= p2
+		*p2.prox:= p1
+	fsub
+
+
+	proceso
+
+	total:= 0;
+	repetir 
+
+	si prim1 <> nil entonces		//prim1 lista de noAsignados
+
+		MoveraAsignados()
+	sino
+
+		MoveraNoAsignados()
+	fs
+
+	esc("desea continuar? s/n:")
+	leer(op)
+	hasta que opcion = "s"
+	esc("el total de clientes del dia es de:", total)
+fin_accion.
+	

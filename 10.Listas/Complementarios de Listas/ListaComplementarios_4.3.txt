@@ -1,0 +1,52 @@
+Ejercicio 4.3 complementario Lista
+
+Dada una lista doblemente encadenada que contiene datos de todas las provincias de la República Argentina: nombre, capital, cantidad total de habitantes y cantidad de analfabetos, y está ordenada alfabéticamente por nombre de provincia, se desea generar otra lista simplemente encadenada pero ordenada en orden decreciente por número de habitantes analfabetos.
+
+Accion Lista_4.3  (prim,ult: puntero a nodo) Es
+	ambiente
+
+	nodo = registro
+		nombre:
+		capital:
+		cant_ha:
+		cant_ana:
+		prox: puntero a nodo
+		ant: puntero a nodo
+	fr
+
+	p,q,p2,ant2,prim2: puntero a nodo
+
+	procedimiento cargaSimple() es
+		nuevo(q);
+		*q.nombre:= *p.nombre
+		*q.capital:= *p.capital
+		*q.cant_ha:= *p.cant_ha
+		*q.cant_ana:= *q.cant_ana
+
+		si prim2:= nil entonces
+			prim2:= q
+			*q.prox:= nil
+		sino
+			p2:= prim2
+			mientras p2 <> nil y *q.cant_ana < *p2.cant_ana hacer
+				ant2:= p2
+				p2:= *p2.prox
+			fm
+			si p2= prim2 entonces
+				*q.prox:= p2
+				prim2:= q
+			sino
+				*ant2.prox:= q 
+				*q.prox:= p2
+			fs
+		fs
+	fs
+
+
+	proceso
+	prim2:= nil
+	p:= prim
+	mientras P <> nil hacer
+		cargaSimple()
+		p:=*p.prox
+	fm
