@@ -1,0 +1,108 @@
+//lista ordenada por rubro de producto, existe mas de un producto por rubro
+
+//generar lista doble, con los productos con mayor porcentaje de descuento que tengan en cada rubro
+
+
+Accion Lista_ExamenISIA  (prim: puntero a nodo1)Es
+	AMBIENTE
+
+	nodo1 = registro
+		codigo: N(5)			//codigo
+		rubro_Prod: an(30)		//rubro del producto
+		precio_of: N(5,2)		//precio de oferta
+	FR
+		
+	p,ant: puntero a nodo1
+
+	nodo2= registro
+		codigo: N(5)
+		nombre: an(30)
+		precio_of: N(5,2)
+		porcentaje_des: N(5,2)
+		prox: puntero a nodo2
+		ant: puntero a nodo2
+	Fr
+
+	prim2, q, ult,p2: puntero a nodo2
+
+
+	productos = registro
+		codigo: N(5)
+		nombre: an(30)
+		precio: N(5,2)
+		rubro: an(30)
+		stock: n(6)
+	fr
+
+	arch: archivo de productos indexados por codigo
+	reg: productos
+
+	descuento:
+	res_rubro: an(30)
+	mayordescuento:
+
+	PROCESO
+	abrir /e(arch);
+	P:= prim
+	prim2:= nil
+	mientras (p<> nil) hacer
+		res_rubro:= *p.rubro_prod
+		mayordescuento:= 0;
+		nuevo(q)
+		mientras (*p.rubro_prod = res_rubro) hacer
+
+			reg.codigo:= *p.codigo
+			leer(arch,reg)
+			SI existe entonces
+				descuento:=	 (*p.precio_of * 100) / reg.precio
+				si descuento > mayordescuento entonces
+					mayordescuento:= descuento
+					*q.codigo:= *p.codigo
+					*q.nombre:= reg.nombre
+					*q.precio_of:= *p.precio_of
+					*q.porcentaje_des:= mayordescuento
+				fs
+			fs
+			p:= *p.prox
+		fm
+		p2:= prim2
+		si prim2:= nil entonces		//carga encolada
+			prim2:= q
+			ult:= q
+			*q.prox:= nil
+			*q.ant:= nil
+		sino
+			p2:= prim2
+			mientras p2<>nil hacer		
+				p2:= *p2.prox
+			fm
+			ult:= q
+			*p2.prox:= q
+			*q.prox:=nil
+			*q.ant:= p
+		fs
+	fm;
+Fin_accion.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
