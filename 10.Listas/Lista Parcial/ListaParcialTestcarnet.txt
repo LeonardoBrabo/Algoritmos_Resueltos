@@ -1,0 +1,166 @@
+
+//generar test y plantillas de correcion
+// archivo indexado por numero de pregunta, con las preguntas
+
+// numero_ pregunta Pregunta Respuesta A  Respuesta B Respuesta C Respuesta correcta 	cantidad_usada
+
+//restricciones a la hora de generar los test
+// se ingresa la cantidad de preguntas por el usuario al principio.
+//se ingresa la cantidad que puede repetirse cada pregunta
+//cuando aparesca repetida la pregunta no se la tiene en cuenta
+//metodo de seleccion de las preguntas es aleatorio con Random()
+//generado el test  mostrar por pantalla, avanzando una pregunta a la vez
+hasta que la haya respondido
+//al final mostrar el resultado del test
+//para aprobar se necesita el 70% de las respuestas correctas
+
+Acccion test_examenes_conducir Es
+	
+	ambiente
+	preguntas = registro
+		Numero_pregunta: n(3)
+		Pregunta: an(30)
+		RespuestaA: an(30)
+		RespuestaB: an(30)
+		RespuestaC: an(30)
+		RespuestaCorrecta: caracter
+		Cantidad_usada: entero
+	fr
+	archPreg: archivo de preguntas indexado por Numero_pregunta.
+	regPreg: preguntas
+
+	op: ("s","n")
+	cantidad_preguntas: entero
+	cantidad_repetidas: entero
+	contrep: entero
+	cont_preguntas: entero
+	contCorrectas: entero
+	porcentaje: real
+	
+	nodotest = registro
+		numero_pregunta: n(5)	
+		RespuestaIngresda: caracter
+		prox: puntero a nodo
+	fr
+
+	p,q,prim: puntero a nodotest
+
+
+	subaccion CargarTest() es
+		nuevo(q)
+		*q.numero_pregunta:= regPreg.numero_pregunta
+		si prim = nil entonces		//carga apilada
+			prim:= q
+			*q.prox:= nil
+		sino
+			*q.prox:= prim
+			prim:= q
+		fs
+	fin_sub.
+
+
+	proceso
+
+	abrir e/s(archPreg) prim:= nil
+
+	esc("ingrese la cantidad de preguntas para los examenes:")
+	leer(cantidad_preguntas)
+	esc("ingrese la cantidad de repeticiones que puede tener una pregunta:")
+	leer(cantidad_repetidas)
+
+	esc("para comenzar ingrese s o para salir ingrese cualquier otro caracter:")
+	leer(op)
+	mientras op = "s" hacer
+		cont_preguntas:= 0 contCorrectas:= 0
+		mientras cantidad_preguntas < cont_preguntas hacer
+			
+			archPreg.numero_pregunta:= random()
+			leer(archPreg,regPreg)
+			si existe entonces
+				
+				regPreg.cantidad_usada:= regPreg.cantidad_usada + 1
+				si regPreg.cantidad_usada < cantidad_repetidas 
+					CargarTest()
+					cont_preguntas:= cont_preguntas +1
+				fs
+			fs	
+		fm
+		re-escribir(archPreg,regPreg)
+		p:= prim
+		mientras p<> nil hacer
+			regPreg.numero_pregunta:= *p.numero_pregunta
+			leer(archPreg,regPreg)
+			si existe entonces		//ver si hace falta
+				esc(regPreg.pregunta)
+				esc(regPreg.RespuestaA)
+				esc(regPreg.RespuestaB)
+				esc(regPreg.RespuestaC)
+				esc("ingrese su respuesta:")
+				leer(*p.RespuestaIngresada)
+				si *p.respuestaIngresada = regPreg.RespuestaCorrecta entonces
+					contCorrectas:= contCorrectas +1
+				fs
+			fs	
+			p:= *p.prox
+		fm
+
+		porcentaje:= (cantidad_preguntas / contCorrectas ) *100
+		si porcentaje >69 entonces
+			esc("aprobado")
+		sino
+			esc("desaprobado")
+		fs 
+
+		esc("desea generar otro examen? s/n")
+		leer(op)
+	fm
+
+	cerrar(archPreg)
+Fin_accion.
+
+
+
+
+
+
+	
+
+
+
+
+
+
+
+
+
+
+999
+
+-
+-
+-
+-
+-
+-
+
+10
+cont 1
+random: 
+	si existe	
+		cantida-usada
+		si cantidad usada no supero el maximo entonces
+			*q.dato:
+
+
+
+
+
+
+
+			-  -  -  -  -  - - - 
+
+
+
+
+
+
