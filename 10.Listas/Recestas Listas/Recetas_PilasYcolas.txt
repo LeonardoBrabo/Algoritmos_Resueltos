@@ -61,6 +61,18 @@ Accion cargar_cola (prim: puntero a nodo)es
 	fs	
 Fin_accion.
 
+otra opcion:
+sin usar un ciclo =>	
+			si prim = nil entonces
+				*q.prox:= nil
+				prim:= q
+				P:= prim
+			sino				//carga encolada 
+				*P.prox:= q
+				*q.prox:= nil
+				P:= q
+			fs
+
 
 extraer los datos
 ------------------
