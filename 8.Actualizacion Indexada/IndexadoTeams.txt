@@ -1,7 +1,0 @@
-ACCION EJER1 ES
-    AMBIENTE
-
-    
-
-
-    PROCESO
